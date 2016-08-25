@@ -54,7 +54,7 @@ namespace jphtml.Core.Html
 		public string FormatWord(WordInfo word)
 		{
 			var cssClass = EnumToCssClass(word.PartOfSpeech);
-			return $"<span class='jp-part {cssClass}'>{word.Text}</span>";
+			return $"<span class='jp-part {cssClass}'><ruby>{word.Text}<rt>{word.Reading}</rt></ruby></span>";
 		}
 
 		string EnumToCssClass(Enum value) => $"jp-{value.ToString().ToLowerInvariant()}";
