@@ -5,9 +5,9 @@ namespace jphtml.Core
 {
 	public class MecabParser
 	{
-		public WordInfo ParseResponse(StringBuilder input)
+		public WordInfo ParseWord(string input)
 		{
-			var data = input.ToString().Split(new char[] { '\t' });
+			var data = input.Split(new char[] { '\t' });
 			var surface = data[0];
 			var feature = data[1].Split(new char[] { ',' });
 			return new WordInfo
@@ -20,8 +20,8 @@ namespace jphtml.Core
 				Inflection = feature[4],
 				Conjugation = feature[5],
 				RootForm = feature[6],
-				Reading = feature[7],
-				Pronunciation = feature[8]
+				Reading = feature.Length > 7 ? feature[7] : null,
+				Pronunciation = feature.Length > 8 ? feature[8] : null
 			};
 		}
 
@@ -30,6 +30,8 @@ namespace jphtml.Core
 			switch (input)
 			{
 				case "助詞": return PartOfSpeech.Particle;
+				case "名詞": return PartOfSpeech.Noun;
+				case "助動詞": return PartOfSpeech.AuxillaryVerb;
 				default: return PartOfSpeech.Unknown;
 			}
 		}

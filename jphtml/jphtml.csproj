@@ -38,11 +38,13 @@
     <Compile Include="Core\Ipc\MecabRunner.cs" />
     <Compile Include="Core\MecabParser.cs" />
     <Compile Include="Core\Format\WordInfo.cs" />
+    <Compile Include="Core\Html\HtmlPrinter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\" />
     <Folder Include="Core\Ipc\" />
     <Folder Include="Core\Format\" />
+    <Folder Include="Core\Html\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

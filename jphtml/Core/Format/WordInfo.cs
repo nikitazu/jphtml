@@ -17,7 +17,9 @@
 	public enum PartOfSpeech
 	{
 		Unknown,
-		Particle
+		Particle,
+		Noun,
+		AuxillaryVerb
 	}
 
 	public enum Subclass1
