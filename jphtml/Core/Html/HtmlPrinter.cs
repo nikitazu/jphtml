@@ -2,6 +2,7 @@
 using System.IO;
 using System.Xml.Linq;
 using jphtml.Core.Format;
+using System.Linq;
 
 namespace jphtml.Core.Html
 {
@@ -44,6 +45,10 @@ namespace jphtml.Core.Html
 
 .jp-part:hover > .jp-contexthelp > span {
   display: block;
+}
+
+.jp-part:hover > .jp-contexthelp .jp-contextlable {
+  font-size: 10px;
 }
 
 .jp-particle {
@@ -91,18 +96,30 @@ namespace jphtml.Core.Html
         }
 
         XElement RubyWord(WordInfo word) =>
-            word.Text.Equals(word.Reading) || string.IsNullOrEmpty(word.Reading) ?
+            word.Text.Equals(word.Furigana) || string.IsNullOrEmpty(word.Furigana) ?
                 Ruby(word.Text) :
-                Ruby(word.Text, Rt(word.Reading));
+                Ruby(word.Text, Rt(word.Furigana));
 
         XElement ContextHelp(WordInfo word) => Span(
             CssClass("jp-contexthelp"),
-            Span("t: " + word.Text),
-            Span("r: " + word.Reading),
-            Span("p: " + word.Pronunciation));
+            ContextField("text", word.Text),
+            ContextFieldMaybe("furigana", word.Furigana),
+            ContextFieldMaybeStar("root", word.RootForm),
+            ContextFieldMaybeStar("conj", word.Conjugation),
+            ContextFieldMaybeStar("infl", word.Inflection),
+            ContextLablePartOfSpeech(word.PartOfSpeech, word.Subclass1, word.Subclass2, word.Subclass3));
+
+        XElement ContextLablePartOfSpeech(params Enum[] values) =>
+            ContextLable(string.Join("|", values.Select(v => v.ToString()).Where(s => !"None".Equals(s))));
+
+        XElement ContextFieldMaybeStar(string name, string value) => "*" == value ? null : ContextFieldMaybe(name, value);
+        XElement ContextFieldMaybe(string name, string value) => string.IsNullOrEmpty(value) ? null : ContextField(name, value);
+        XElement ContextField(string name, string value) => Span(ContextLable(name), Br, value);
+        XElement ContextLable(string name) => Span(CssClass("jp-contextlable"), name);
 
         string EnumToCssClass(Enum value) => $"jp-{value.ToString().ToLowerInvariant()}";
 
+        static readonly XElement Br = new XElement("br");
         XElement Span(params object[] content) => new XElement("span", content);
         XElement Ruby(params object[] content) => new XElement("ruby", content);
         XElement Rt(params object[] content) => new XElement("rt", content);
