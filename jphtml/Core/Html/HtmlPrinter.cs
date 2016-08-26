@@ -6,7 +6,7 @@ namespace jphtml.Core.Html
 {
 	public class HtmlPrinter
 	{
-		public void PrintDocument(TextWriter writer, Func<string> getBody)
+		public void PrintDocumentBegin(TextWriter writer)
 		{
 			writer.WriteLine(@"<!DOCTYPE html>
 <html>
@@ -17,11 +17,32 @@ namespace jphtml.Core.Html
 
 <style type='text/css'>
 .jp-text {
-  font-size: 26px;
+  font-size: 30px;
+}
+
+.jp-text {
+  outline: 1px solid blue;
 }
 
 .jp-part:hover {
-  background: darkcyan;
+  background: #99C3D1;
+}
+
+.jp-part > .jp-contexthelp {
+  display: none;
+}
+
+.jp-part:hover > .jp-contexthelp {
+  display: block;
+  position: absolute;
+  left: 71%;
+  top: 10px;
+  font-size: 35px;
+  font-family: monospace;
+}
+
+.jp-part:hover > .jp-contexthelp > span {
+  display: block;
 }
 
 .jp-particle {
@@ -37,25 +58,43 @@ namespace jphtml.Core.Html
 }
 </style>
 
-<p class='jp-text'>
+<div style='display:inline-block;margin:0;padding:0;width:70%;border:1px solid red;'>
 ");
-			string bodyPart;
-			while (!string.IsNullOrEmpty(bodyPart = getBody()))
-			{
-				writer.WriteLine($"  {bodyPart}");
-			}
+		}
+
+		public void PrintDocumentEnd(TextWriter writer)
+		{
 			writer.WriteLine($@"
-</p>
+</div>
+
 </body>
 </html>
 ");
 		}
 
-		public string FormatWord(WordInfo word)
+		public void PrintParagraphBegin(TextWriter writer)
+		{
+			writer.WriteLine("<p class='jp-text'>");
+		}
+
+		public void PrintParagraphEnd(TextWriter writer)
+		{
+			writer.WriteLine("</p>");
+		}
+
+		public void PrintWord(TextWriter writer, WordInfo word)
 		{
 			var cssClass = EnumToCssClass(word.PartOfSpeech);
-			return $"<span class='jp-part {cssClass}'><ruby>{word.Text}<rt>{word.Reading}</rt></ruby></span>";
+			writer.WriteLine($"<span class='jp-part {cssClass}'>{RubyText(word)}{ContextHelp(word)}</span>");
 		}
+
+		string RubyText(WordInfo word) =>
+			word.Text.Equals(word.Reading) ? 
+		        $"<ruby>{word.Text}</ruby>" : 
+		        $"<ruby>{word.Text}<rt>{word.Reading}</rt></ruby>";
+
+		string ContextHelp(WordInfo word) =>
+			$"<span class='jp-contexthelp'>k: {word.Text}<span>r: {word.Reading}</span><span>p: {word.Pronunciation}</span></span>";
 
 		string EnumToCssClass(Enum value) => $"jp-{value.ToString().ToLowerInvariant()}";
 	}
