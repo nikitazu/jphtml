@@ -22,10 +22,6 @@ namespace jphtml.Core.Html
   font-size: 30px;
 }
 
-.jp-text {
-  outline: 1px solid blue;
-}
-
 .jp-part:hover {
   background: #99C3D1;
 }
@@ -37,7 +33,7 @@ namespace jphtml.Core.Html
 .jp-part:hover > .jp-contexthelp {
   display: block;
   position: absolute;
-  left: 71%;
+  left: 72%;
   top: 10px;
   font-size: 35px;
   font-family: monospace;
@@ -64,7 +60,7 @@ namespace jphtml.Core.Html
 }
 </style>
 
-<div style='display:inline-block;margin:0;padding:0;width:70%;border:1px solid red;'>
+<div style='display:inline-block;margin:0;padding:10px;width:70%;border:1px solid red;'>
 ");
         }
 
