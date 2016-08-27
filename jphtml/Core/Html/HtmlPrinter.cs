@@ -84,10 +84,10 @@ namespace jphtml.Core.Html
             writer.WriteLine("</p>");
         }
 
-        public void PrintWord(TextWriter writer, WordInfo word)
+        public void PrintWord(TextWriter writer, WordInfo word, string translation)
         {
             var cssClass = EnumToCssClass(word.PartOfSpeech);
-            var part = Span(CssClass($"jp-part {cssClass}"), RubyWord(word), ContextHelp(word));
+            var part = Span(CssClass($"jp-part {cssClass}"), RubyWord(word), ContextHelp(word, translation));
             writer.WriteLine(part);
         }
 
@@ -96,11 +96,12 @@ namespace jphtml.Core.Html
                 Ruby(word.Text) :
                 Ruby(word.Text, Rt(word.Furigana));
 
-        XElement ContextHelp(WordInfo word) => Span(
+        XElement ContextHelp(WordInfo word, string translation) => Span(
             CssClass("jp-contexthelp"),
             ContextField("text", word.Text),
             ContextFieldMaybe("furigana", word.Furigana),
             ContextFieldMaybeStar("root", word.RootForm),
+            ContextFieldMaybe("trans", translation),
             ContextFieldMaybeStar("conj", word.Conjugation),
             ContextFieldMaybeStar("infl", word.Inflection),
             ContextLablePartOfSpeech(word.PartOfSpeech, word.Subclass1, word.Subclass2, word.Subclass3));

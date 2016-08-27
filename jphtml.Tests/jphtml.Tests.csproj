@@ -35,6 +35,7 @@
   <ItemGroup>
     <Compile Include="Core\MecabReaderTest.cs" />
     <Compile Include="Core\MecabParserTest.cs" />
+    <Compile Include="Core\Dic\JmdictionaryTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -47,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\" />
+    <Folder Include="Core\Dic\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
