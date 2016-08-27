@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml;
 using System.IO;
+using System.Diagnostics;
 
 namespace jphtml
 {
@@ -12,9 +13,15 @@ namespace jphtml
         public JmdicFastReader(string path)
         {
             _path = path;
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
             Console.WriteLine($"Indexing {path}");
             using (var stream = new StreamReader(_path))
-            using (var reader = new XmlTextReader(stream))
+            using (var reader = new XmlTextReader(stream)
+            {
+                WhitespaceHandling = WhitespaceHandling.None,
+                Namespaces = false
+            })
             {
                 string result = null;
                 if (reader.ReadToDescendant("entry"))
@@ -43,7 +50,8 @@ namespace jphtml
                     }
                 }
             }
-            Console.WriteLine("done");
+            sw.Stop();
+            Console.WriteLine($"done in {sw.ElapsedMilliseconds}ms");
         }
 
         public string Lookup(string kanji)

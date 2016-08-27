@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Xml;
-using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics;
 
 namespace jphtml.Core.Dic
 {
@@ -12,12 +11,15 @@ namespace jphtml.Core.Dic
 
         public JmdicReader(string path)
         {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
             Console.WriteLine($"Loading {path}");
             _document = new XmlDocument();
             _document.Load(path);
             Console.WriteLine($"Indexing {path}");
             _dictionary = CreateDictionary();
-            Console.WriteLine("done");
+            sw.Stop();
+            Console.WriteLine($"done in {sw.ElapsedMilliseconds}ms");
         }
 
         public string Lookup(string kanji)
