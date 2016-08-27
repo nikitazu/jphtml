@@ -86,18 +86,18 @@ namespace jphtml.Core.Html
 
         public void PrintWord(TextWriter writer, WordInfo word, string translation)
         {
-            var cssClass = EnumToCssClass(word.PartOfSpeech);
-            var part = Span(CssClass($"jp-part {cssClass}"), RubyWord(word), ContextHelp(word, translation));
+            var cssClass = Dom.EnumToCssClass(word.PartOfSpeech);
+            var part = Dom.Span(Dom.CssClass($"jp-part {cssClass}"), RubyWord(word), ContextHelp(word, translation));
             writer.WriteLine(part);
         }
 
         XElement RubyWord(WordInfo word) =>
             word.Text.Equals(word.Furigana) || string.IsNullOrEmpty(word.Furigana) ?
-                Ruby(word.Text) :
-                Ruby(word.Text, Rt(word.Furigana));
+                Dom.Ruby(word.Text) :
+                Dom.Ruby(word.Text, Dom.Rt(word.Furigana));
 
-        XElement ContextHelp(WordInfo word, string translation) => Span(
-            CssClass("jp-contexthelp"),
+        XElement ContextHelp(WordInfo word, string translation) => Dom.Span(
+            Dom.CssClass("jp-contexthelp"),
             ContextField("text", word.Text),
             ContextFieldMaybe("furigana", word.Furigana),
             ContextFieldMaybeStar("root", word.RootForm),
@@ -111,16 +111,7 @@ namespace jphtml.Core.Html
 
         XElement ContextFieldMaybeStar(string name, string value) => "*" == value ? null : ContextFieldMaybe(name, value);
         XElement ContextFieldMaybe(string name, string value) => string.IsNullOrEmpty(value) ? null : ContextField(name, value);
-        XElement ContextField(string name, string value) => Span(ContextLable(name), Br, value);
-        XElement ContextLable(string name) => Span(CssClass("jp-contextlable"), name);
-
-        string EnumToCssClass(Enum value) => $"jp-{value.ToString().ToLowerInvariant()}";
-
-        static readonly XElement Br = new XElement("br");
-        XElement Span(params object[] content) => new XElement("span", content);
-        XElement Ruby(params object[] content) => new XElement("ruby", content);
-        XElement Rt(params object[] content) => new XElement("rt", content);
-        XAttribute CssClass(string value) => new XAttribute("class", value);
+        XElement ContextField(string name, string value) => Dom.Span(ContextLable(name), Dom.Br, value);
+        XElement ContextLable(string name) => Dom.Span(Dom.CssClass("jp-contextlable"), name);
     }
 }
-

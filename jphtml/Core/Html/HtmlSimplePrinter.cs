@@ -75,8 +75,8 @@ namespace jphtml.Core.Html
 
         public void PrintWord(TextWriter writer, WordInfo word)
         {
-            var cssClass = EnumToCssClass(word.PartOfSpeech);
-            var part = Span(CssClass($"jp-part {cssClass}"), RubyWord(word));
+            var cssClass = Dom.EnumToCssClass(word.PartOfSpeech);
+            var part = Dom.Span(Dom.CssClass($"jp-part {cssClass}"), RubyWord(word));
             writer.WriteLine(part);
         }
 
@@ -94,11 +94,11 @@ namespace jphtml.Core.Html
 
         XElement RubyWord(WordInfo word) =>
             word.Text.Equals(word.Furigana) || string.IsNullOrEmpty(word.Furigana) ?
-                Ruby(word.Text) :
-                Ruby(word.Text, Rt(word.Furigana));
+                Dom.Ruby(word.Text) :
+                Dom.Ruby(word.Text, Dom.Rt(word.Furigana));
 
-        XElement ContextHelp(WordInfo word) => P(
-            CssClass("jp-contexthelp"),
+        XElement ContextHelp(WordInfo word) => Dom.P(
+            Dom.CssClass("jp-contexthelp"),
             ContextField(
                 $"{word.TextMaybeRootForm} [{word.Furigana}] - ",
                 $"({FormatSpeechInfo(word)}) {word.Translation}"));
@@ -106,15 +106,8 @@ namespace jphtml.Core.Html
         string FormatSpeechInfo(WordInfo word) =>
             string.Join("|", word.SpeechInfo.Select(v => v.ToString()).Where(s => !"None".Equals(s)));
 
-        XElement ContextField(string value, string translation) => Span(value, Span(CssClass("jp-translation"), translation));
-
-        string EnumToCssClass(Enum value) => $"jp-{value.ToString().ToLowerInvariant()}";
-
-        XElement P(params object[] content) => new XElement("p", content);
-        XElement Span(params object[] content) => new XElement("span", content);
-        XElement Ruby(params object[] content) => new XElement("ruby", content);
-        XElement Rt(params object[] content) => new XElement("rt", content);
-        XAttribute CssClass(string value) => new XAttribute("class", value);
+        XElement ContextField(string value, string translation) =>
+            Dom.Span(value, Dom.Span(Dom.CssClass("jp-translation"), translation));
     }
 }
 
