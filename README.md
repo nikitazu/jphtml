@@ -3,10 +3,10 @@ Japanese text analyzer with html output
 
 # Included 3rd party dependencies
 
-## JMDict
+### JMDict
 * Creative Commons Attribution-ShareAlike Licence (V3.0)
 * http://www.edrdg.org/edrdg/licence.html
 
-## Other
+### Other
 * foo
 * bar
