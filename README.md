@@ -1,12 +1,14 @@
 # jphtml
 Japanese text analyzer with html output
 
-# Included 3rd party dependencies
+# 3rd party dependencies
 
-### JMDict
+### JMDict (included)
 * Creative Commons Attribution-ShareAlike Licence (V3.0)
 * http://www.edrdg.org/edrdg/licence.html
 
-### Other
-* foo
-* bar
+### MeCab (not included)
+* GPLv2
+* https://sourceforge.net/projects/mecab/
+* http://taku910.github.io/mecab/
+* https://github.com/taku910/mecab
