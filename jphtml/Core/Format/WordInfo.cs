@@ -1,4 +1,7 @@
-﻿namespace jphtml.Core.Format
+﻿using System;
+using System.Collections.Generic;
+
+namespace jphtml.Core.Format
 {
     public class WordInfo
     {
@@ -12,8 +15,22 @@
         public string RootForm { get; set; }
         public string Reading { get; set; }
         public string Pronunciation { get; set; }
+        public string Translation { get; set; }
 
         public string Furigana => string.IsNullOrWhiteSpace(Pronunciation) ? Reading : Pronunciation;
+
+        public string TextMaybeRootForm => string.IsNullOrWhiteSpace(RootForm) || Text == RootForm ? Text : $"{Text} ({RootForm})";
+
+        public IEnumerable<Enum> SpeechInfo
+        {
+            get
+            {
+                yield return PartOfSpeech;
+                yield return Subclass1;
+                yield return Subclass2;
+                yield return Subclass3;
+            }
+        }
     }
 
     public enum PartOfSpeech

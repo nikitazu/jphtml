@@ -44,6 +44,7 @@
     <Compile Include="Core\Dic\JmdicReader.cs" />
     <Compile Include="Core\Dic\JmdicFastReader.cs" />
     <Compile Include="Core\Dic\Jmdictionary.cs" />
+    <Compile Include="Core\Html\HtmlSimplePrinter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\" />

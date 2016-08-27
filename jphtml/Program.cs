@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using System.Text;
 using jphtml.Core;
 using jphtml.Core.Ipc;
 using jphtml.Core.Html;
-using jphtml.Core.Dic;
+using System.Collections.Generic;
+using jphtml.Core.Format;
 
 namespace jphtml
 {
@@ -18,7 +18,7 @@ namespace jphtml
             var runner = new MecabRunner();
             var reader = new MecabReader();
             var parser = new MecabParser();
-            var printer = new HtmlPrinter();
+            var printer = new HtmlSimplePrinter();
             var dicReader = new JmdicFastReader("../../../data/dic/JMdict_e");
 
             runner.RunMecab(process =>
@@ -34,9 +34,11 @@ namespace jphtml
                 {
                     printer.PrintDocumentBegin(fileWriter);
                     bool isNewParagraph = true;
+                    var words = new List<WordInfo>();
                     foreach (var line in lines)
                     {
                         var word = parser.ParseWord(line);
+                        words.Add(word);
 
                         if (isNewParagraph)
                         {
@@ -44,14 +46,16 @@ namespace jphtml
                             isNewParagraph = false;
                         }
 
-                        var translation = dicReader.Lookup(word.RootForm);
+                        word.Translation = dicReader.Lookup(word.RootForm);
 
-                        printer.PrintWord(fileWriter, word, translation);
+                        printer.PrintWord(fileWriter, word);
 
                         if (word.Text.Equals("。"))
                         {
                             printer.PrintParagraphEnd(fileWriter);
+                            printer.PrintContextHelp(fileWriter, words);
                             isNewParagraph = true;
+                            words.Clear();
                         }
 
                     }
