@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace jphtml
+namespace jphtml.Core.Dic
 {
-    public class Jmdictionary
+    public class Jmdictionary : IMultiDictionary
     {
         readonly Dictionary<string, List<string>> _dictionary = new Dictionary<string, List<string>>();
 

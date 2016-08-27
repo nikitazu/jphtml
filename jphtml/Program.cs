@@ -6,6 +6,7 @@ using jphtml.Core.Ipc;
 using jphtml.Core.Html;
 using System.Collections.Generic;
 using jphtml.Core.Format;
+using jphtml.Core.Dic;
 
 namespace jphtml
 {
@@ -19,7 +20,7 @@ namespace jphtml
             var reader = new MecabReader();
             var parser = new MecabParser();
             var printer = new HtmlSimplePrinter();
-            var dicReader = new JmdicFastReader("../../../data/dic/JMdict_e");
+            var dicReader = new JmdicFastReader("../../../data/dic/JMdict_e", new Jmdictionary());
 
             runner.RunMecab(process =>
             {

@@ -3,16 +3,17 @@ using System.Xml;
 using System.IO;
 using System.Diagnostics;
 
-namespace jphtml
+namespace jphtml.Core.Dic
 {
     public class JmdicFastReader
     {
         readonly string _path;
-        readonly Jmdictionary _dictionary = new Jmdictionary();
+        readonly IMultiDictionary _dictionary;
 
-        public JmdicFastReader(string path)
+        public JmdicFastReader(string path, IMultiDictionary dictionary)
         {
             _path = path;
+            _dictionary = dictionary;
             Stopwatch sw = new Stopwatch();
             sw.Start();
             Console.WriteLine($"Indexing {path}");

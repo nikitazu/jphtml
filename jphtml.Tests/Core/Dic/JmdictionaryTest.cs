@@ -1,11 +1,12 @@
 ﻿using NUnit.Framework;
+using jphtml.Core.Dic;
 
 namespace jphtml.Tests
 {
     [TestFixture]
     public class JmdictionaryTest
     {
-        Jmdictionary _dictionary;
+        IMultiDictionary _dictionary;
 
         [SetUp]
         public void Setup()
