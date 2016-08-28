@@ -48,6 +48,7 @@
     <Compile Include="Core\Html\Dom.cs" />
     <Compile Include="Core\Dic\IMultiDictionary.cs" />
     <Compile Include="Core\IO\FilePipeLine.cs" />
+    <Compile Include="Core\Text\Kana.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\" />
@@ -56,6 +57,7 @@
     <Folder Include="Core\Html\" />
     <Folder Include="Core\Dic\" />
     <Folder Include="Core\IO\" />
+    <Folder Include="Core\Text\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

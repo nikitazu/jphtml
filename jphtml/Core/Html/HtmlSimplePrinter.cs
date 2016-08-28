@@ -4,6 +4,7 @@ using System.Linq;
 using System.Xml.Linq;
 using System.Collections.Generic;
 using jphtml.Core.Format;
+using jphtml.Core.Text;
 
 namespace jphtml.Core.Html
 {
@@ -88,10 +89,13 @@ body {
             }
         }
 
-        XElement RubyWord(WordInfo word) =>
-            word.Text.Equals(word.Furigana) || string.IsNullOrEmpty(word.Furigana) ?
-                Dom.Ruby(word.Text) :
-                Dom.Ruby(word.Text, Dom.Rt(word.Furigana));
+        object RubyWord(WordInfo word)
+        {
+            var kana = word.Furigana;
+            return string.IsNullOrEmpty(kana) || word.Text.Equals(kana) || word.Text.Equals(kana.KatakanaToHiragana()) ?
+                word.Text :
+                (object)Dom.Ruby(word.Text, Dom.Rt(word.Furigana));
+        }
 
         XElement ContextHelp(WordInfo word) => Dom.P(
             Dom.CssClass("jp-contexthelp"),

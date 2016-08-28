@@ -36,6 +36,7 @@
     <Compile Include="Core\MecabReaderTest.cs" />
     <Compile Include="Core\MecabParserTest.cs" />
     <Compile Include="Core\Dic\JmdictionaryTest.cs" />
+    <Compile Include="Core\Text\KanaTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -49,6 +50,7 @@
   <ItemGroup>
     <Folder Include="Core\" />
     <Folder Include="Core\Dic\" />
+    <Folder Include="Core\Text\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
