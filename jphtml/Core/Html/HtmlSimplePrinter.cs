@@ -72,9 +72,16 @@ body {
 
         public void PrintWord(TextWriter writer, WordInfo word)
         {
-            writer.WriteLine(Dom.Span(
-                Dom.CssClass(Dom.EnumToCssClass(word.PartOfSpeech)),
-                RubyWord(word)));
+            if (word.PartOfSpeech == PartOfSpeech.Unknown)
+            {
+                writer.WriteLine(RubyWord(word));
+            }
+            else
+            {
+                writer.WriteLine(Dom.Span(
+                    Dom.CssClass(Dom.EnumToCssClass(word.PartOfSpeech)),
+                    RubyWord(word)));
+            }
         }
 
         public void PrintContextHelp(TextWriter writer, IEnumerable<WordInfo> words)

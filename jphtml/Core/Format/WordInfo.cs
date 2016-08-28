@@ -57,7 +57,5 @@ namespace jphtml.Core.Format
     {
         None
     }
-
-
 }
 
