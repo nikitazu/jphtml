@@ -37,9 +37,13 @@ namespace jphtml
                     Console.WriteLine($"MeCab EXIT {process.ExitCode}");
                 };
 
+                int iteration = 0;
                 filePipeLine.Run((fileReader, fileWriter) =>
                 {
-                    printer.PrintDocumentBegin(fileWriter);
+                    if (iteration == 0)
+                    {
+                        printer.PrintDocumentBegin(fileWriter);
+                    }
 
                     Console.WriteLine("Send response");
                     process.StandardInput.WriteLine(fileReader.ReadLine());
@@ -79,6 +83,8 @@ namespace jphtml
                     {
                         printer.PrintDocumentEnd(fileWriter);
                     }
+
+                    iteration++;
                 });
             });
 
