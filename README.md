@@ -8,7 +8,10 @@ Japanese text analyzer with html output
 * Allow to setup which Kanji are names
 * Allow to setup MeCab executable path
 * Try to use alternatives to MeCab as a backend
+* Try to use MeCab as a library
 * Try to build on windows
+* Support EPUB output format
+* Support PDF output format
 
 # 3rd party dependencies
 
