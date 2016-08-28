@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using System;
+
 namespace jphtml.Core
 {
     public class Options
@@ -8,6 +9,7 @@ namespace jphtml.Core
         public string InputFile { get; }
         public string OutputFile { get; }
         public IReadOnlyList<string> ChapterMarkers { get; }
+        public bool Simulation { get; }
 
         public Options(string[] args)
         {
@@ -21,6 +23,7 @@ namespace jphtml.Core
                     case "--inputFile": InputFile = value; break;
                     case "--outputFile": OutputFile = value; break;
                     case "--chapterMarkers": ChapterMarkers = value.Split(',').ToArray(); break;
+                    case "--simulation": Simulation = value == "true"; break;
                 }
             }
         }
@@ -30,6 +33,7 @@ namespace jphtml.Core
             Console.WriteLine($"Input file: {InputFile}");
             Console.WriteLine($"Output file: {OutputFile}");
             Console.WriteLine($"Chapter markers: {string.Join(",", ChapterMarkers)}");
+            Console.WriteLine($"Simulation: {Simulation}");
         }
     }
 }

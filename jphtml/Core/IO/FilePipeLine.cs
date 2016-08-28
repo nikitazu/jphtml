@@ -17,6 +17,7 @@ namespace jphtml.Core.IO
 
         public void Run(Action<StreamReader, StreamWriter> processData)
         {
+            Console.WriteLine($"Running file pipeline: {_inputFile} -> {_outputFile}");
             using (var reader = new StreamReader(_inputFile))
             using (var writer = new StreamWriter(_outputFile, false, Encoding.UTF8))
             {

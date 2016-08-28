@@ -2,8 +2,6 @@
 Japanese text analyzer with html output
 
 # TODO
-* Break input to pages
-* Try to detect chapters
 * Allow to setup which parts of speech to highlight
 * Allow to setup which Kanji are names
 * Allow to setup MeCab executable path

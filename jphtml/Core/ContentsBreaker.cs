@@ -1,17 +1,20 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using jphtml.Core.Format;
 
 namespace jphtml.Core
 {
     public class ContentsBreaker
     {
+        const string _workdir = "tmp";
         readonly IReadOnlyList<string> _chapterMarkers;
 
         public ContentsBreaker(IReadOnlyList<string> chapterMarkers)
         {
-            _chapterMarkers = chapterMarkers;
+            _chapterMarkers = chapterMarkers ?? new List<string>();
         }
 
         public ContentsInfo Analyze(TextReader reader)
@@ -29,7 +32,7 @@ namespace jphtml.Core
             {
                 contents.ChapterFiles.Add(new ContentsMapping()
                 {
-                    FilePath = $"tmp/ch{chapterIndex}",
+                    FilePath = $"{_workdir}/ch{chapterIndex}",
                     StartLine = startLine,
                     LengthInLines = counts[chapterIndex]
                 });
@@ -38,12 +41,38 @@ namespace jphtml.Core
 
             contents.ChapterFiles.Add(new ContentsMapping()
             {
-                FilePath = $"tmp/ch{chapterIndex}",
+                FilePath = $"{_workdir}/ch{chapterIndex}",
                 StartLine = startLine,
-                LengthInLines = CountLinesUntilEof(reader)
+                LengthInLines = CountLinesUntilEof(reader) + (startLine > 0 ? 1 : 0)
             });
 
             return contents;
+        }
+
+        public void Break(string input, ContentsInfo contents)
+        {
+            if (Directory.Exists(_workdir))
+            {
+                Directory.Delete(_workdir, true);
+            }
+            Directory.CreateDirectory(_workdir);
+
+            using (var reader = new StreamReader(input))
+            {
+                foreach (var chapter in contents.ChapterFiles)
+                {
+                    int linesToCopy = chapter.LengthInLines;
+                    using (var writer = new StreamWriter(chapter.FilePath, false, Encoding.UTF8))
+                    {
+                        while (linesToCopy > 0 && !reader.EndOfStream)
+                        {
+                            var line = reader.ReadLine();
+                            writer.WriteLine(line);
+                            linesToCopy--;
+                        }
+                    }
+                }
+            }
         }
 
         int CountLinesUntilMarker(TextReader reader, string marker, int i)
@@ -54,14 +83,14 @@ namespace jphtml.Core
             bool done = false;
             do
             {
-                if (!hasSkipped && line == marker)
+                if (!hasSkipped && isLineMarked(marker, line))
                 {
                     hasSkipped = true;
                 }
                 line = reader.ReadLine();
                 count++;
 
-                done = line == null || line == marker && hasSkipped;
+                done = line == null || hasSkipped && isLineMarked(marker, line);
             }
             while (!done);
             return i == 0 ? count - 1 : count;
@@ -69,8 +98,10 @@ namespace jphtml.Core
 
         int CountLinesUntilEof(TextReader reader)
         {
-            return CountLinesUntilMarker(reader, null, -1) + 1;
+            return CountLinesUntilMarker(reader, null, -1);
         }
+
+        bool isLineMarked(string marker, string line) =>
+            marker != null && line != null && line.StartsWith(marker, StringComparison.InvariantCulture);
     }
 }
-

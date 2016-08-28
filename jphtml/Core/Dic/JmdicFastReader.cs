@@ -7,16 +7,32 @@ namespace jphtml.Core.Dic
 {
     public class JmdicFastReader
     {
+        readonly Options _options;
         readonly string _path;
         readonly IMultiDictionary _dictionary;
 
-        public JmdicFastReader(string path, IMultiDictionary dictionary)
+        public JmdicFastReader(Options options, string path, IMultiDictionary dictionary)
         {
+            _options = options;
             _path = path;
             _dictionary = dictionary;
+
+
             Stopwatch sw = new Stopwatch();
             sw.Start();
             Console.WriteLine($"Indexing {path}");
+
+            if (!_options.Simulation)
+            {
+                ReadDictionary();
+            }
+
+            sw.Stop();
+            Console.WriteLine($"done in {sw.ElapsedMilliseconds}ms");
+        }
+
+        void ReadDictionary()
+        {
             using (var stream = new StreamReader(_path))
             using (var reader = new XmlTextReader(stream)
             {
@@ -51,8 +67,6 @@ namespace jphtml.Core.Dic
                     }
                 }
             }
-            sw.Stop();
-            Console.WriteLine($"done in {sw.ElapsedMilliseconds}ms");
         }
 
         public string Lookup(string kanji)

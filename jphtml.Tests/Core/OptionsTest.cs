@@ -14,7 +14,8 @@ namespace jphtml.Tests
             _options = new Options(new string[] {
                 "--inputFile", "path/to/in",
                 "--outputFile", "path/to/out",
-                "--chapterMarkers", "a,b,c"
+                "--chapterMarkers", "a,b,c",
+                "--simulation", "true"
             });
         }
 
@@ -37,6 +38,12 @@ namespace jphtml.Tests
             Assert.AreEqual("a", _options.ChapterMarkers[0]);
             Assert.AreEqual("b", _options.ChapterMarkers[1]);
             Assert.AreEqual("c", _options.ChapterMarkers[2]);
+        }
+
+        [Test]
+        public void SimulationShouldParse()
+        {
+            Assert.AreEqual(true, _options.Simulation);
         }
     }
 }
