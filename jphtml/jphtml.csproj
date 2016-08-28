@@ -47,6 +47,7 @@
     <Compile Include="Core\Html\HtmlSimplePrinter.cs" />
     <Compile Include="Core\Html\Dom.cs" />
     <Compile Include="Core\Dic\IMultiDictionary.cs" />
+    <Compile Include="Core\IO\FilePipeLine.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\" />
@@ -54,6 +55,7 @@
     <Folder Include="Core\Format\" />
     <Folder Include="Core\Html\" />
     <Folder Include="Core\Dic\" />
+    <Folder Include="Core\IO\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

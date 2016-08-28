@@ -7,6 +7,8 @@ using jphtml.Core.Html;
 using System.Collections.Generic;
 using jphtml.Core.Format;
 using jphtml.Core.Dic;
+using System.Threading;
+using jphtml.Core.IO;
 
 namespace jphtml
 {
@@ -21,19 +23,32 @@ namespace jphtml
             var parser = new MecabParser();
             var printer = new HtmlSimplePrinter();
             var dicReader = new JmdicFastReader("../../../data/dic/JMdict_e", new Jmdictionary());
+            var filePipeLine = new FilePipeLine("1Q84_BOOK01_1.txt", "jp.html");
 
             runner.RunMecab(process =>
             {
-                //process.StandardInput.WriteLine("ウィキペディアは誰でも編集できるフリー百科事典です");
+                process.ErrorDataReceived += (sender, e) =>
+                {
+                    Console.WriteLine("ERROR " + process.StandardError.ReadToEnd());
+                };
 
-                process.StandardInput.WriteLine("タクシーのラジオは、FM放送のクラシック音楽番組を流していた。曲はヤナーチェックの『シンフォニエッタ』。渋滞に巻き込まれたタクシーの中で聴くのにうってつけの音楽とは言えないはずだ。運転手もとくに熱心にその音楽に耳を澄ませているようには見えなかった。中年の運転手は、まるで舳先{へさき}に立って不吉な潮目を読む老練な漁師のように、前方に途切れなく並んだ車の列を、ただ口を閉ざして見つめていた。青豆{あおまめ}は後部席のシートに深くもたれ、軽く目をつむって音楽を聴いていた。");
+                process.Exited += (sender, e) =>
+                {
+                    Console.WriteLine($"MeCab EXIT {process.ExitCode}");
+                };
 
-                var lines = reader.ReadResponse(process.StandardOutput);
-                Console.WriteLine(string.Join("\n", lines));
-
-                using (var fileWriter = new StreamWriter("jp.html", false, Encoding.UTF8))
+                filePipeLine.Run((fileReader, fileWriter) =>
                 {
                     printer.PrintDocumentBegin(fileWriter);
+
+                    Console.WriteLine("Send response");
+                    process.StandardInput.WriteLine(fileReader.ReadLine());
+
+                    Console.WriteLine("Get response");
+                    var lines = reader.ReadResponse(process.StandardOutput);
+                    Console.WriteLine(string.Join("\n", lines));
+
+                    Console.WriteLine("Write html");
                     bool isNewParagraph = true;
                     var words = new List<WordInfo>();
                     foreach (var line in lines)
@@ -58,10 +73,13 @@ namespace jphtml
                             isNewParagraph = true;
                             words.Clear();
                         }
-
                     }
-                    printer.PrintDocumentEnd(fileWriter);
-                }
+
+                    if (fileReader.EndOfStream)
+                    {
+                        printer.PrintDocumentEnd(fileWriter);
+                    }
+                });
             });
 
             Console.WriteLine("end");
