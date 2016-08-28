@@ -19,12 +19,8 @@ namespace jphtml.Core.Html
 <body>
 
 <style type='text/css'>
-.jp-text {
+body {
   font-size: 30px;
-}
-
-.jp-part:hover {
-  background: #99C3D1;
 }
 
 .jp-contexthelp {
@@ -65,7 +61,7 @@ namespace jphtml.Core.Html
 
         public void PrintParagraphBegin(TextWriter writer)
         {
-            writer.WriteLine("<p class='jp-text'>");
+            writer.WriteLine("<p>");
         }
 
         public void PrintParagraphEnd(TextWriter writer)
@@ -75,9 +71,9 @@ namespace jphtml.Core.Html
 
         public void PrintWord(TextWriter writer, WordInfo word)
         {
-            var cssClass = Dom.EnumToCssClass(word.PartOfSpeech);
-            var part = Dom.Span(Dom.CssClass($"jp-part {cssClass}"), RubyWord(word));
-            writer.WriteLine(part);
+            writer.WriteLine(Dom.Span(
+                Dom.CssClass(Dom.EnumToCssClass(word.PartOfSpeech)),
+                RubyWord(word)));
         }
 
         public void PrintContextHelp(TextWriter writer, IEnumerable<WordInfo> words)
