@@ -38,6 +38,7 @@
     <Compile Include="Core\Dic\JmdictionaryTest.cs" />
     <Compile Include="Core\Text\KanaTest.cs" />
     <Compile Include="Core\OptionsTest.cs" />
+    <Compile Include="Core\ContentsBreakerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

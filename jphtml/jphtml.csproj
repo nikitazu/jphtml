@@ -19,7 +19,7 @@
     <WarningLevel>4</WarningLevel>
     <ExternalConsole>true</ExternalConsole>
     <PlatformTarget>x86</PlatformTarget>
-    <Commandlineparameters>--inputFile 1Q84_BOOK01_1.txt --outputFile jp.html</Commandlineparameters>
+    <Commandlineparameters>--inputFile 1Q84_BOOK01_1.txt --outputFile jp.html --chapterMarkers 第1章,第2章,第3章,第4章,第5章,第6章,第7章,第8章,第9章,第10章,第11章,第12章,第13章,第14章,第15章,第16章,第17章,第18章,第19章,第20章,第21章,第22章,第23章,第24章</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <Optimize>true</Optimize>
@@ -51,6 +51,8 @@
     <Compile Include="Core\IO\FilePipeLine.cs" />
     <Compile Include="Core\Text\Kana.cs" />
     <Compile Include="Core\Options.cs" />
+    <Compile Include="Core\Format\ContentsInfo.cs" />
+    <Compile Include="Core\ContentsBreaker.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\" />

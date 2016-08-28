@@ -23,6 +23,8 @@ namespace jphtml
             var dicReader = new JmdicFastReader("../../../data/dic/JMdict_e", new Jmdictionary());
             var filePipeLine = new FilePipeLine(options.InputFile, options.OutputFile);
 
+            options.Print();
+
             runner.RunMecab(process =>
             {
                 process.ErrorDataReceived += (sender, e) =>

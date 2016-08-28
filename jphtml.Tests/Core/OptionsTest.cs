@@ -14,6 +14,7 @@ namespace jphtml.Tests
             _options = new Options(new string[] {
                 "--inputFile", "path/to/in",
                 "--outputFile", "path/to/out",
+                "--chapterMarkers", "a,b,c"
             });
         }
 
@@ -27,6 +28,15 @@ namespace jphtml.Tests
         public void OutputFileShouldParse()
         {
             Assert.AreEqual("path/to/out", _options.OutputFile);
+        }
+
+        [Test]
+        public void ChapterMarkersShouldParse()
+        {
+            Assert.AreEqual(3, _options.ChapterMarkers.Count);
+            Assert.AreEqual("a", _options.ChapterMarkers[0]);
+            Assert.AreEqual("b", _options.ChapterMarkers[1]);
+            Assert.AreEqual("c", _options.ChapterMarkers[2]);
         }
     }
 }
