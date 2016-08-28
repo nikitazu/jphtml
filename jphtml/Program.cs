@@ -1,13 +1,10 @@
 ﻿using System;
-using System.IO;
-using System.Text;
+using System.Collections.Generic;
 using jphtml.Core;
 using jphtml.Core.Ipc;
 using jphtml.Core.Html;
-using System.Collections.Generic;
 using jphtml.Core.Format;
 using jphtml.Core.Dic;
-using System.Threading;
 using jphtml.Core.IO;
 
 namespace jphtml
@@ -18,12 +15,13 @@ namespace jphtml
         {
             Console.WriteLine("start");
 
+            var options = new Options(args);
             var runner = new MecabRunner();
             var reader = new MecabReader();
             var parser = new MecabParser();
             var printer = new HtmlSimplePrinter();
             var dicReader = new JmdicFastReader("../../../data/dic/JMdict_e", new Jmdictionary());
-            var filePipeLine = new FilePipeLine("1Q84_BOOK01_1.txt", "jp.html");
+            var filePipeLine = new FilePipeLine(options.InputFile, options.OutputFile);
 
             runner.RunMecab(process =>
             {

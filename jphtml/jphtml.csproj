@@ -19,6 +19,7 @@
     <WarningLevel>4</WarningLevel>
     <ExternalConsole>true</ExternalConsole>
     <PlatformTarget>x86</PlatformTarget>
+    <Commandlineparameters>--inputFile 1Q84_BOOK01_1.txt --outputFile jp.html</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <Optimize>true</Optimize>
@@ -49,6 +50,7 @@
     <Compile Include="Core\Dic\IMultiDictionary.cs" />
     <Compile Include="Core\IO\FilePipeLine.cs" />
     <Compile Include="Core\Text\Kana.cs" />
+    <Compile Include="Core\Options.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\" />

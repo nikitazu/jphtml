@@ -37,6 +37,7 @@
     <Compile Include="Core\MecabParserTest.cs" />
     <Compile Include="Core\Dic\JmdictionaryTest.cs" />
     <Compile Include="Core\Text\KanaTest.cs" />
+    <Compile Include="Core\OptionsTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
