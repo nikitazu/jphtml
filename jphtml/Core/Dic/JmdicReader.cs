@@ -2,6 +2,7 @@
 using System.Xml;
 using System.Diagnostics;
 using jphtml.Logging;
+using System.IO;
 
 namespace jphtml.Core.Dic
 {

@@ -33,7 +33,12 @@ namespace jphtml
             _reader = new MecabReader();
             _parser = new MecabParser();
             _printer = new HtmlSimplePrinter();
-            _dicReader = new JmdicFastReader(_log, _options, "../../../data/dic/JMdict_e", new Jmdictionary());
+            _dicReader = new JmdicFastReader(
+                _log,
+                _options,
+                Path.Combine(FileSystemUtils.AppDir, "data", "dic", "JMdict_e"),
+                new Jmdictionary()
+            );
             _breaker = new ContentsBreaker(_options.ChapterMarkers);
 
             _options.Print();
