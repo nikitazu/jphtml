@@ -9,11 +9,12 @@ namespace jphtml.Core
 {
     public class ContentsBreaker
     {
-        const string _workdir = "tmp";
+        readonly string _outputDir;
         readonly IReadOnlyList<string> _chapterMarkers;
 
-        public ContentsBreaker(IReadOnlyList<string> chapterMarkers)
+        public ContentsBreaker(string outputDir, IReadOnlyList<string> chapterMarkers)
         {
+            _outputDir = outputDir;
             _chapterMarkers = chapterMarkers ?? new List<string>();
         }
 
@@ -32,7 +33,7 @@ namespace jphtml.Core
             {
                 contents.ChapterFiles.Add(new ContentsMapping()
                 {
-                    FilePath = $"{_workdir}/ch{chapterIndex}",
+                    FilePath = $"{_outputDir}/ch{chapterIndex}",
                     StartLine = startLine,
                     LengthInLines = counts[chapterIndex]
                 });
@@ -41,7 +42,7 @@ namespace jphtml.Core
 
             contents.ChapterFiles.Add(new ContentsMapping()
             {
-                FilePath = $"{_workdir}/ch{chapterIndex}",
+                FilePath = $"{_outputDir}/ch{chapterIndex}",
                 StartLine = startLine,
                 LengthInLines = CountLinesUntilEof(reader) + (startLine > 0 ? 1 : 0)
             });
@@ -51,11 +52,11 @@ namespace jphtml.Core
 
         public void Break(string input, ContentsInfo contents)
         {
-            if (Directory.Exists(_workdir))
+            if (Directory.Exists(_outputDir))
             {
-                Directory.Delete(_workdir, true);
+                Directory.Delete(_outputDir, true);
             }
-            Directory.CreateDirectory(_workdir);
+            Directory.CreateDirectory(_outputDir);
 
             using (var reader = new StreamReader(input))
             {

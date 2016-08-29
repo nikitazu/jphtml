@@ -28,7 +28,7 @@ namespace jphtml.Tests
         [Test]
         public void OutputFileShouldParse()
         {
-            Assert.AreEqual("path/to/out", _options.OutputFile);
+            Assert.AreEqual("path/to/out", _options.OutputDir);
         }
 
         [Test]

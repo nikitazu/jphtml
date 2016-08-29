@@ -39,7 +39,10 @@ namespace jphtml
                 Path.Combine(FileSystemUtils.AppDir, "data", "dic", "JMdict_e"),
                 new Jmdictionary()
             );
-            _breaker = new ContentsBreaker(_options.ChapterMarkers);
+            _breaker = new ContentsBreaker(
+                _options.OutputDir,
+                _options.ChapterMarkers
+            );
 
             _options.Print();
 

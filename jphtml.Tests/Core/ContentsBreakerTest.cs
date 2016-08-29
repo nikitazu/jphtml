@@ -15,7 +15,7 @@ namespace jphtml.Tests
         [SetUp]
         public void Setup()
         {
-            _breaker = new ContentsBreaker(new string[] { "第1章", "第2章", "第3章" });
+            _breaker = new ContentsBreaker("tmp", new string[] { "第1章", "第2章", "第3章" });
             using (var reader = new StringReader(_text))
             {
                 _contents = _breaker.Analyze(reader);
@@ -82,7 +82,7 @@ namespace jphtml.Tests
         public void AnalyzeShouldDetectSingleChapter0WhenChapterMarkersAreEmpty()
         {
             ContentsInfo zeroContents;
-            var zeroBreaker = new ContentsBreaker(null);
+            var zeroBreaker = new ContentsBreaker("tmp", null);
             using (var reader = new StringReader(_text))
             {
                 zeroContents = zeroBreaker.Analyze(reader);
