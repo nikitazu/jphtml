@@ -2,25 +2,27 @@
 using System.Xml;
 using System.IO;
 using System.Diagnostics;
+using jphtml.Logging;
 
 namespace jphtml.Core.Dic
 {
     public class JmdicFastReader
     {
+        readonly ILogWriter _log;
         readonly Options _options;
         readonly string _path;
         readonly IMultiDictionary _dictionary;
 
-        public JmdicFastReader(Options options, string path, IMultiDictionary dictionary)
+        public JmdicFastReader(ILogWriter log, Options options, string path, IMultiDictionary dictionary)
         {
+            _log = log;
             _options = options;
             _path = path;
             _dictionary = dictionary;
 
-
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            Console.WriteLine($"Indexing {path}");
+            _log.Debug($"Indexing {path}");
 
             if (!_options.Simulation)
             {
@@ -28,7 +30,7 @@ namespace jphtml.Core.Dic
             }
 
             sw.Stop();
-            Console.WriteLine($"done in {sw.ElapsedMilliseconds}ms");
+            _log.Debug($"done in {sw.ElapsedMilliseconds}ms");
         }
 
         void ReadDictionary()

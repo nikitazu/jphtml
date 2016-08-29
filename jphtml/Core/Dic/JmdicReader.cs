@@ -1,26 +1,29 @@
 ﻿using System;
 using System.Xml;
 using System.Diagnostics;
+using jphtml.Logging;
 
 namespace jphtml.Core.Dic
 {
     public class JmdicReader
     {
+        readonly ILogWriter _log;
         readonly XmlDocument _document;
         readonly IMultiDictionary _dictionary;
 
-        public JmdicReader(string path, IMultiDictionary dictionary)
+        public JmdicReader(ILogWriter log, string path, IMultiDictionary dictionary)
         {
+            _log = log;
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            Console.WriteLine($"Loading {path}");
+            _log.Debug($"Loading {path}");
             _dictionary = dictionary;
             _document = new XmlDocument();
             _document.Load(path);
-            Console.WriteLine($"Indexing {path}");
+            _log.Debug($"Indexing {path}");
             CreateDictionary();
             sw.Stop();
-            Console.WriteLine($"done in {sw.ElapsedMilliseconds}ms");
+            _log.Debug($"done in {sw.ElapsedMilliseconds}ms");
         }
 
         public string Lookup(string kanji)

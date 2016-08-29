@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using jphtml.Core;
-using jphtml.Core.Ipc;
-using jphtml.Core.Html;
-using jphtml.Core.Format;
-using jphtml.Core.Dic;
-using jphtml.Core.IO;
 using System.IO;
 using System.Text;
+using jphtml.Core;
+using jphtml.Core.Dic;
+using jphtml.Core.Format;
+using jphtml.Core.Html;
+using jphtml.Core.IO;
+using jphtml.Core.Ipc;
+using jphtml.Logging;
 
 namespace jphtml
 {
     class MainClass
     {
+        static ILogWriter _log;
         static Options _options;
         static MecabRunner _runner;
         static MecabParser _parser;
@@ -23,14 +25,15 @@ namespace jphtml
 
         public static void Main(string[] args)
         {
-            Console.WriteLine("start");
+            _log = LoggingConfig.CreateRootLogWriter();
+            _log.Debug("start");
 
             _options = new Options(args);
             _runner = new MecabRunner();
             _reader = new MecabReader();
             _parser = new MecabParser();
             _printer = new HtmlSimplePrinter();
-            _dicReader = new JmdicFastReader(_options, "../../../data/dic/JMdict_e", new Jmdictionary());
+            _dicReader = new JmdicFastReader(_log, _options, "../../../data/dic/JMdict_e", new Jmdictionary());
             _breaker = new ContentsBreaker(_options.ChapterMarkers);
 
             _options.Print();
@@ -42,22 +45,25 @@ namespace jphtml
                 _breaker.Break(_options.InputFile, contents);
             }
 
-            Console.WriteLine("Chapter mapping");
-            foreach (var chapter in contents.ChapterFiles)
+            if (_log.IsDebug)
             {
-                Console.WriteLine($"Chapter {chapter.FilePath} [{chapter.StartLine}, {chapter.LengthInLines}]");
+                _log.Debug("Chapter mapping");
+                foreach (var chapter in contents.ChapterFiles)
+                {
+                    _log.Debug($"Chapter {chapter.FilePath} [{chapter.StartLine}, {chapter.LengthInLines}]");
+                }
             }
 
             if (!_options.Simulation)
             {
                 foreach (var chapter in contents.ChapterFiles)
                 {
-                    var pipeline = new FilePipeLine(chapter.FilePath, chapter.FilePath + ".html");
+                    var pipeline = new FilePipeLine(_log, chapter.FilePath, chapter.FilePath + ".html");
                     ConvertFileToHtml(pipeline);
                 }
             }
 
-            Console.WriteLine("end");
+            _log.Debug("end");
         }
 
         static void ConvertFileToHtml(FilePipeLine pipeline)
@@ -66,12 +72,12 @@ namespace jphtml
             {
                 process.ErrorDataReceived += (sender, e) =>
                 {
-                    Console.WriteLine("ERROR " + process.StandardError.ReadToEnd());
+                    _log.Error("ERROR " + process.StandardError.ReadToEnd());
                 };
 
                 process.Exited += (sender, e) =>
                 {
-                    Console.WriteLine($"MeCab EXIT {process.ExitCode}");
+                    _log.Error($"MeCab EXIT {process.ExitCode}");
                 };
 
                 int iteration = 0;
@@ -85,7 +91,7 @@ namespace jphtml
                     process.StandardInput.WriteLine(fileReader.ReadLine());
                     var lines = _reader.ReadResponse(process.StandardOutput);
 
-                    Console.WriteLine($"Write html paragraph {iteration}");
+                    _log.Debug($"Write html paragraph {iteration}");
                     bool isNewParagraph = true;
                     var words = new List<WordInfo>();
                     foreach (var line in lines)
