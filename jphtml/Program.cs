@@ -156,6 +156,8 @@ namespace jphtml
             epub.Publisher = "wtfpub";
             epub.Subject = "erotics";
 
+            epub.AddResourceFile(new ResourceFile("style.css", Path.Combine(FileSystemUtils.AppDir, "data", "epub", "style.css"), "text/css"));
+
             var buildDir = Path.Combine(_options.OutputDir, "buildepub");
             var builder = new EPubBuilder(new Epub4NetFileSystemManager(buildDir), buildDir);
             var path = builder.Build(epub);

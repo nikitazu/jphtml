@@ -73,6 +73,7 @@
     <Folder Include="Utils\" />
     <Folder Include="Core\BuildEpub\" />
     <Folder Include="Core\BuildEpub\Epub4Net\" />
+    <Folder Include="data\epub\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="paket.references" />
@@ -87,6 +88,9 @@
     <None Include="data\dic\ELECTRONIC DICTIONARY RESEARCH AND DEVELOPMENT GROUP_files\edrdg.jpg" />
     <None Include="data\dic\ELECTRONIC DICTIONARY RESEARCH AND DEVELOPMENT GROUP_files\somerights20.gif" />
     <None Include="data\dic\ELECTRONIC DICTIONARY RESEARCH AND DEVELOPMENT GROUP_files\x-click-but21.gif" />
+    <None Include="data\epub\style.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Choose>

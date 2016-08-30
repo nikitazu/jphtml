@@ -1,0 +1,40 @@
+﻿.jp-text {
+  font-size: 30px;
+}
+
+.jp-part:hover {
+  background: #99C3D1;
+}
+
+.jp-part > .jp-contexthelp {
+  display: none;
+}
+
+.jp-part:hover > .jp-contexthelp {
+  display: block;
+  position: absolute;
+  left: 72%;
+  top: 10px;
+  font-size: 35px;
+  font-family: monospace;
+}
+
+.jp-part:hover > .jp-contexthelp > span {
+  display: block;
+}
+
+.jp-part:hover > .jp-contexthelp .jp-contextlable {
+  font-size: 10px;
+}
+
+.jp-particle {
+  color: red;
+}
+
+.jp-noun {
+  color: darkblue;
+}
+
+.jp-auxillaryverb {
+  color: orange;
+}
