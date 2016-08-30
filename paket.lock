@@ -1,3 +1,6 @@
 NUGET
   remote: https://www.nuget.org/api/v2
+    DotNetZip (1.9.1.8)
+    Epub4Net (1.2)
+      DotNetZip (>= 1.9.1.8)
     log4net (2.0.5)

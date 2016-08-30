@@ -22,3 +22,8 @@ Japanese text analyzer with html output
 * https://sourceforge.net/projects/mecab/
 * http://taku910.github.io/mecab/
 * https://github.com/taku910/mecab
+
+### Epub4Net
+* License is unknown
+* https://bitbucket.org/dalager/epub4net/wiki/Home
+* https://www.nuget.org/packages/Epub4Net/

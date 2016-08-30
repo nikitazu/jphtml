@@ -9,6 +9,9 @@ using jphtml.Core.Html;
 using jphtml.Core.IO;
 using jphtml.Core.Ipc;
 using jphtml.Logging;
+using Epub4Net;
+using System.Linq;
+using jphtml.Core.BuildEpub.Epub4Net;
 
 namespace jphtml
 {
@@ -69,6 +72,8 @@ namespace jphtml
                     var pipeline = new FilePipeLine(_log, chapter.FilePath, chapter.FilePath + ".html");
                     ConvertFileToHtml(pipeline);
                 }
+
+                ConvertChaptersToEpub(contents);
             }
 
             _log.Debug("end");
@@ -134,6 +139,27 @@ namespace jphtml
                     iteration++;
                 });
             });
+        }
+
+        static void ConvertChaptersToEpub(ContentsInfo contents)
+        {
+            var epub = new Epub(
+                "Book1",
+                "Author1",
+                contents.ChapterFiles.Select(c => new Chapter(
+                    c.FilePath,
+                    Path.GetFileName(c.FilePath),
+                    Path.GetFileNameWithoutExtension(c.FilePath))).ToList()
+            );
+            epub.BookId = "12345";
+            epub.Language = "jp";
+            epub.Publisher = "wtfpub";
+            epub.Subject = "erotics";
+
+            var buildDir = Path.Combine(_options.OutputDir, "buildepub");
+            var builder = new EPubBuilder(new Epub4NetFileSystemManager(buildDir), buildDir);
+            var path = builder.Build(epub);
+            Console.WriteLine($"Epub is saved to: {path}");
         }
     }
 }
