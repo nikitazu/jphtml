@@ -18,6 +18,9 @@ namespace jphtml.Core.Html
             public static readonly XName Meta = _xhtml + "meta";
             public static readonly XName Link = _xhtml + "link";
             public static readonly XName Title = _xhtml + "title";
+            public static readonly XName Paragraph = _xhtml + "p";
+            public static readonly XName Ruby = _xhtml + "ruby";
+            public static readonly XName RubyText = _xhtml + "rt";
         }
 
         static class Attr
@@ -69,13 +72,18 @@ namespace jphtml.Core.Html
 
         public XElement MakeParagraph(IEnumerable<XNode> subnodes)
         {
-            return Dom.P(subnodes);
+            return new XElement(Tag.Paragraph, subnodes);
+        }
+
+        public XElement MakeRuby(string text, string reading)
+        {
+            return new XElement(Tag.Ruby, text, new XElement(Tag.RubyText, reading));
         }
 
         public XNode MakeWord(WordInfo word)
         {
             var furigana = word.Furigana;
-            return NoFurigana(word.Text, furigana) ? (XNode)new XText(word.Text) : Dom.Ruby(word.Text, Dom.Rt(furigana));
+            return NoFurigana(word.Text, furigana) ? (XNode)new XText(word.Text) : MakeRuby(word.Text, furigana);
         }
 
         bool NoFurigana(string text, string furigana) =>

@@ -72,18 +72,28 @@ namespace jphtml.Tests.Core.Html
         [Test]
         public void MakeParagraphShouldReturnParagraph()
         {
-            AssertEqualNodes(new XElement("p", "foo"), _maker.MakeParagraph(new List<XText> { new XText("foo") }));
+            AssertEqualNodes(
+                "<p xmlns=\"http://www.w3.org/1999/xhtml\">foo</p>",
+                _maker.MakeParagraph(new List<XText> { new XText("foo") })
+            );
+        }
+
+        [Test]
+        public void MakeRubyShouldReturnRuby()
+        {
+            AssertEqualNodes(
+                "<ruby xmlns=\"http://www.w3.org/1999/xhtml\">foo<rt>bar</rt></ruby>",
+                _maker.MakeRuby("foo", "bar")
+            );
         }
 
         [Test]
         public void MakeWordShouldContainFuriganaWhenKanjiAndReading()
         {
-            var expected = new XElement(
-                "ruby",
-                "見世物",
-                new XElement("rt", "ミセモノ"));
-
-            AssertEqualNodes(expected, _maker.MakeWord(_kanjiWithReading));
+            AssertEqualNodes(
+                "<ruby xmlns=\"http://www.w3.org/1999/xhtml\">見世物<rt>ミセモノ</rt></ruby>",
+                _maker.MakeWord(_kanjiWithReading)
+            );
         }
 
         [Test]
