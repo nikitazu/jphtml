@@ -22,3 +22,8 @@ Japanese text analyzer with html output
 * https://sourceforge.net/projects/mecab/
 * http://taku910.github.io/mecab/
 * https://github.com/taku910/mecab
+
+### ePub Factory PCL (via nuget)
+* Ms-PL
+* https://epubfactory.codeplex.com/
+* https://www.nuget.org/packages/EPubFactory/

@@ -9,6 +9,8 @@ using jphtml.Core.Html;
 using jphtml.Core.IO;
 using jphtml.Core.Ipc;
 using jphtml.Logging;
+using EPubFactory;
+using System.Threading.Tasks;
 
 namespace jphtml
 {
@@ -70,6 +72,8 @@ namespace jphtml
                     ConvertFileToHtml(pipeline);
                 }
             }
+
+            ConvertHtmlToEpub(contents).Wait();
 
             _log.Debug("end");
         }
@@ -142,6 +146,33 @@ namespace jphtml
                     iteration++;
                 });
             });
+        }
+
+        static async Task ConvertHtmlToEpub(ContentsInfo contents)
+        {
+            _log.Debug("epub start");
+            var epub = File.Create("Book1.epub");
+            using (var writer = await EPubWriter.CreateWriterAsync(
+                epub,
+                "Megabook",
+                "Megaman",
+                "123123"))
+            {
+                writer.Publisher = "Zuich";
+                foreach (var chapter in contents.ChapterFiles)
+                {
+                    await writer.AddChapterAsync(
+                        Path.GetFileName(chapter.FilePath + ".html"),
+                        Path.GetFileNameWithoutExtension(chapter.FilePath),
+                        File.ReadAllText(chapter.FilePath + ".html"));
+                }
+                await writer.AddResourceAsync(
+                    "style.css",
+                    "text/css",
+                    File.ReadAllBytes(Path.Combine(FileSystemUtils.AppDir, "data", "epub", "style.css")));
+                await writer.WriteEndOfPackageAsync();
+            }
+            _log.Debug("epub done");
         }
     }
 }

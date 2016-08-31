@@ -1,3 +1,4 @@
 NUGET
   remote: https://www.nuget.org/api/v2
+    EPubFactory (1.1)
     log4net (2.0.5)
