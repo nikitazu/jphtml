@@ -13,7 +13,7 @@ namespace jphtml.Tests
         {
             _options = new Options(new string[] {
                 "--inputFile", "path/to/in",
-                "--outputFile", "path/to/out",
+                "--outputDir", "path/to/out",
                 "--chapterMarkers", "a,b,c",
                 "--simulation", "true"
             });
