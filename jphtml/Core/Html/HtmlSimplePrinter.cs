@@ -21,40 +21,10 @@ namespace jphtml.Core.Html
       xmlns=""http://www.w3.org/1999/xhtml"">
 <head>
   <meta http-equiv=""Content-Type"" content=""application/xhtml+xml; charset=utf-8""/>
+  <link href=""style.css"" rel=""stylesheet"" type=""text/css""></link>
   <title>JpHtml</title>
 </head>
 <body>
-
-<style type='text/css'>
-body {
-  font-size: 30px;
-}
-
-.jp-contexthelp {
-  display: block;
-  font-size: 25px;
-}
-
-.jp-contexthelp > span {
-  display: block;
-}
-
-.jp-contexthelp .jp-translation {
-  font-size: 16px;
-}
-
-.jp-particle {
-  color: red;
-}
-
-.jp-noun {
-  color: darkblue;
-}
-
-.jp-auxillaryverb {
-  color: orange;
-}
-</style>
 ");
         }
 

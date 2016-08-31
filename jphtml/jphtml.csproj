@@ -70,6 +70,7 @@
     <Folder Include="data\" />
     <Folder Include="data\dic\" />
     <Folder Include="Utils\" />
+    <Folder Include="data\epub\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="paket.references" />
@@ -84,6 +85,9 @@
     <None Include="data\dic\ELECTRONIC DICTIONARY RESEARCH AND DEVELOPMENT GROUP_files\edrdg.jpg" />
     <None Include="data\dic\ELECTRONIC DICTIONARY RESEARCH AND DEVELOPMENT GROUP_files\somerights20.gif" />
     <None Include="data\dic\ELECTRONIC DICTIONARY RESEARCH AND DEVELOPMENT GROUP_files\x-click-but21.gif" />
+    <None Include="data\epub\style.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Choose>
