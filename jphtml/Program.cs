@@ -100,17 +100,17 @@ namespace jphtml
                     var lines = _reader.ReadResponse(process.StandardOutput);
 
                     _log.Debug($"Write html paragraph {iteration}");
-                    bool isNewParagraph = true;
+                    bool isInParagraph = false;
                     var words = new List<WordInfo>();
                     foreach (var line in lines)
                     {
                         var word = _parser.ParseWord(line);
                         words.Add(word);
 
-                        if (isNewParagraph)
+                        if (!isInParagraph)
                         {
                             _printer.PrintParagraphBegin(fileWriter);
-                            isNewParagraph = false;
+                            isInParagraph = true;
                         }
 
                         word.Translation = _dicReader.Lookup(word.RootForm);
@@ -121,9 +121,17 @@ namespace jphtml
                         {
                             _printer.PrintParagraphEnd(fileWriter);
                             _printer.PrintContextHelp(fileWriter, words);
-                            isNewParagraph = true;
+                            isInParagraph = false;
                             words.Clear();
                         }
+                    }
+
+                    if (isInParagraph)
+                    {
+                        _printer.PrintParagraphEnd(fileWriter);
+                        _printer.PrintContextHelp(fileWriter, words);
+                        isInParagraph = false;
+                        words.Clear();
                     }
 
                     if (fileReader.EndOfStream)
