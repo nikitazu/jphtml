@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Xml;
+using System.Xml.Linq;
 using jphtml.Core;
 using jphtml.Core.Dic;
 using jphtml.Core.Format;
@@ -19,7 +20,7 @@ namespace jphtml
         static MecabRunner _runner;
         static MecabParser _parser;
         static MecabReader _reader;
-        static HtmlSimplePrinter _printer;
+        static XHtmlMaker _xhtmlMaker;
         static JmdicFastReader _dicReader;
         static ContentsBreaker _breaker;
 
@@ -32,7 +33,7 @@ namespace jphtml
             _runner = new MecabRunner();
             _reader = new MecabReader();
             _parser = new MecabParser();
-            _printer = new HtmlSimplePrinter();
+            _xhtmlMaker = new XHtmlMaker();
             _dicReader = new JmdicFastReader(
                 _log,
                 _options,
@@ -88,55 +89,34 @@ namespace jphtml
                     _log.Error($"MeCab EXIT {process.ExitCode}");
                 };
 
+                var xhtmlParagraphs = new List<XElement>();
+
                 int iteration = 0;
                 pipeline.Run((fileReader, fileWriter) =>
                 {
-                    if (iteration == 0)
-                    {
-                        _printer.PrintDocumentBegin(fileWriter);
-                    }
-
                     process.StandardInput.WriteLine(fileReader.ReadLine());
                     var lines = _reader.ReadResponse(process.StandardOutput);
 
                     _log.Debug($"Write html paragraph {iteration}");
-                    bool isInParagraph = false;
-                    var words = new List<WordInfo>();
+                    var xhtmlWordNodes = new List<XNode>();
                     foreach (var line in lines)
                     {
                         var word = _parser.ParseWord(line);
-                        words.Add(word);
-
-                        if (!isInParagraph)
-                        {
-                            _printer.PrintParagraphBegin(fileWriter);
-                            isInParagraph = true;
-                        }
-
                         word.Translation = _dicReader.Lookup(word.RootForm);
 
-                        _printer.PrintWord(fileWriter, word);
-
-                        if (word.Text.Equals("。"))
-                        {
-                            _printer.PrintParagraphEnd(fileWriter);
-                            _printer.PrintContextHelp(fileWriter, words);
-                            isInParagraph = false;
-                            words.Clear();
-                        }
+                        xhtmlWordNodes.Add(_xhtmlMaker.MakeWord(word));
                     }
 
-                    if (isInParagraph)
-                    {
-                        _printer.PrintParagraphEnd(fileWriter);
-                        _printer.PrintContextHelp(fileWriter, words);
-                        isInParagraph = false;
-                        words.Clear();
-                    }
+                    xhtmlParagraphs.Add(_xhtmlMaker.MakeParagraph(xhtmlWordNodes.ToArray()));
+                    xhtmlWordNodes.Clear();
 
                     if (fileReader.EndOfStream)
                     {
-                        _printer.PrintDocumentEnd(fileWriter);
+                        var doc = _xhtmlMaker.MakeRootNode(xhtmlParagraphs);
+                        using (var xwr = new XmlTextWriter(fileWriter))
+                        {
+                            doc.WriteTo(xwr);
+                        }
                     }
 
                     iteration++;
