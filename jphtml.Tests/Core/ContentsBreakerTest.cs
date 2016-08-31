@@ -3,7 +3,7 @@ using NUnit.Framework;
 using jphtml.Core;
 using jphtml.Core.Format;
 
-namespace jphtml.Tests
+namespace jphtml.Tests.Core
 {
     [TestFixture]
     public class ContentsBreakerTest

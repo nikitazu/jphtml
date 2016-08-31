@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using jphtml.Core;
 
-namespace jphtml.Tests
+namespace jphtml.Tests.Core
 {
     [TestFixture]
     public class OptionsTest
