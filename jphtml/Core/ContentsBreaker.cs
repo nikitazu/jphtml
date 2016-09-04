@@ -50,28 +50,21 @@ namespace jphtml.Core
             return contents;
         }
 
-        public void Break(string input, ContentsInfo contents)
+        public void BreakInMemory(string input, ContentsInfo contents)
         {
-            if (Directory.Exists(_outputDir))
-            {
-                Directory.Delete(_outputDir, true);
-            }
-            Directory.CreateDirectory(_outputDir);
-
             using (var reader = new StreamReader(input))
             {
                 foreach (var chapter in contents.ChapterFiles)
                 {
+                    var builder = new StringBuilder();
                     int linesToCopy = chapter.LengthInLines;
-                    using (var writer = new StreamWriter(chapter.FilePath, false, Encoding.UTF8))
+                    while (linesToCopy > 0 && !reader.EndOfStream)
                     {
-                        while (linesToCopy > 0 && !reader.EndOfStream)
-                        {
-                            var line = reader.ReadLine();
-                            writer.WriteLine(line);
-                            linesToCopy--;
-                        }
+                        var line = reader.ReadLine();
+                        builder.AppendLine(line);
+                        linesToCopy--;
                     }
+                    chapter.PlainTextContent = builder.ToString();
                 }
             }
         }

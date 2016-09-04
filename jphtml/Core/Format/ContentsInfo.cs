@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Xml.Linq;
 
 namespace jphtml.Core.Format
 {
@@ -12,6 +13,8 @@ namespace jphtml.Core.Format
         public string FilePath { get; set; }
         public int StartLine { get; set; }
         public int LengthInLines { get; set; }
+        public string PlainTextContent { get; set; }
+        public XElement XhtmlContent { get; set; }
     }
 }
 

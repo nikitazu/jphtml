@@ -50,7 +50,6 @@
     <Compile Include="Core\Html\HtmlSimplePrinter.cs" />
     <Compile Include="Core\Html\Dom.cs" />
     <Compile Include="Core\Dic\IMultiDictionary.cs" />
-    <Compile Include="Core\IO\FilePipeLine.cs" />
     <Compile Include="Core\Text\Kana.cs" />
     <Compile Include="Core\Options.cs" />
     <Compile Include="Core\Format\ContentsInfo.cs" />
@@ -68,7 +67,6 @@
     <Folder Include="Core\Format\" />
     <Folder Include="Core\Html\" />
     <Folder Include="Core\Dic\" />
-    <Folder Include="Core\IO\" />
     <Folder Include="Core\Text\" />
     <Folder Include="Logging\" />
     <Folder Include="data\" />

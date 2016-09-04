@@ -61,21 +61,14 @@ namespace jphtml.Tests.Core
         }
 
         [Test]
-        public void BreakShouldCreateFiles()
+        public void BreakInMemoryShouldAssignPlainTextContent()
         {
             File.WriteAllText("tmp_input.txt", _text);
-
-            _breaker.Break("tmp_input.txt", _contents);
-
-            Assert.IsTrue(File.Exists("tmp/ch0"), "ch0 file exists");
-            Assert.IsTrue(File.Exists("tmp/ch1"), "ch1 file exists");
-            Assert.IsTrue(File.Exists("tmp/ch2"), "ch2 file exists");
-            Assert.IsTrue(File.Exists("tmp/ch3"), "ch3 file exists");
-
-            Assert.AreEqual("Heading\n第1章 a\n第2章 b\n第3章 c\n\n", File.ReadAllText("tmp/ch0"), "ch0 file content");
-            Assert.AreEqual("第1章 aa\nfoo\n\n", File.ReadAllText("tmp/ch1"), "ch1 file content");
-            Assert.AreEqual("第2章 bb\nbar\n\n", File.ReadAllText("tmp/ch2"), "ch2 file content");
-            Assert.AreEqual("第3章 cc\ncux\n", File.ReadAllText("tmp/ch3"), "ch3 file content");
+            _breaker.BreakInMemory("tmp_input.txt", _contents);
+            Assert.AreEqual("Heading\n第1章 a\n第2章 b\n第3章 c\n\n", _contents.ChapterFiles[0].PlainTextContent);
+            Assert.AreEqual("第1章 aa\nfoo\n\n", _contents.ChapterFiles[1].PlainTextContent);
+            Assert.AreEqual("第2章 bb\nbar\n\n", _contents.ChapterFiles[2].PlainTextContent);
+            Assert.AreEqual("第3章 cc\ncux\n", _contents.ChapterFiles[3].PlainTextContent);
         }
 
         [Test]
