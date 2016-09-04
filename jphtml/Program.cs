@@ -11,7 +11,6 @@ using jphtml.Core.Dic;
 using jphtml.Core.Format;
 using jphtml.Core.Html;
 using jphtml.Core.IO;
-using jphtml.Core.Ipc;
 using jphtml.Logging;
 using jphtml.Utils;
 using NMeCab;
