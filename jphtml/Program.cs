@@ -15,6 +15,7 @@ namespace jphtml
 {
     class MainClass
     {
+        static Counter _counter;
         static ILogWriter _log;
         static Options _options;
         static MecabRunner _runner;
@@ -44,8 +45,11 @@ namespace jphtml
                 _options.OutputDir,
                 _options.ChapterMarkers
             );
+            _counter = new Counter(_log);
 
             _options.Print();
+
+            _counter.Start();
 
             ContentsInfo contents;
             using (var inputReader = new StreamReader(_options.InputFile, Encoding.UTF8))
@@ -72,6 +76,7 @@ namespace jphtml
                 }
             }
 
+            _counter.Stop();
             _log.Debug("end");
         }
 
@@ -97,7 +102,7 @@ namespace jphtml
                     process.StandardInput.WriteLine(fileReader.ReadLine());
                     var lines = _reader.ReadResponse(process.StandardOutput);
 
-                    _log.Debug($"Write html paragraph {iteration}");
+                    //_log.Debug($"Write html paragraph {iteration}");
                     var xhtmlWordNodes = new List<XNode>();
                     foreach (var line in lines)
                     {
@@ -107,7 +112,7 @@ namespace jphtml
                         xhtmlWordNodes.Add(_xhtmlMaker.MakeWord(word));
                     }
 
-                    xhtmlParagraphs.Add(_xhtmlMaker.MakeParagraph(xhtmlWordNodes.ToArray()));
+                    xhtmlParagraphs.Add(_xhtmlMaker.MakeParagraph(xhtmlWordNodes));
                     xhtmlWordNodes.Clear();
 
                     if (fileReader.EndOfStream)
