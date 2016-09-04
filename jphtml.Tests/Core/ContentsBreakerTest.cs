@@ -65,10 +65,10 @@ namespace jphtml.Tests.Core
         {
             File.WriteAllText("tmp_input.txt", _text);
             _breaker.BreakInMemory("tmp_input.txt", _contents);
-            Assert.AreEqual("Heading\n第1章 a\n第2章 b\n第3章 c\n\n", _contents.ChapterFiles[0].PlainTextContent);
-            Assert.AreEqual("第1章 aa\nfoo\n\n", _contents.ChapterFiles[1].PlainTextContent);
-            Assert.AreEqual("第2章 bb\nbar\n\n", _contents.ChapterFiles[2].PlainTextContent);
-            Assert.AreEqual("第3章 cc\ncux\n", _contents.ChapterFiles[3].PlainTextContent);
+            Assert.AreEqual("Heading\n第1章 a\n第2章 b\n第3章 c\n", string.Join("\n", _contents.ChapterFiles[0].PlainTextContent));
+            Assert.AreEqual("第1章 aa\nfoo\n", string.Join("\n", _contents.ChapterFiles[1].PlainTextContent));
+            Assert.AreEqual("第2章 bb\nbar\n", string.Join("\n", _contents.ChapterFiles[2].PlainTextContent));
+            Assert.AreEqual("第3章 cc\ncux", string.Join("\n", _contents.ChapterFiles[3].PlainTextContent));
         }
 
         [Test]

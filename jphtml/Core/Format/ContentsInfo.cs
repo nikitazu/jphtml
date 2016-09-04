@@ -13,7 +13,7 @@ namespace jphtml.Core.Format
         public string FilePath { get; set; }
         public int StartLine { get; set; }
         public int LengthInLines { get; set; }
-        public string PlainTextContent { get; set; }
+        public List<string> PlainTextContent { get; set; }
         public XElement XhtmlContent { get; set; }
     }
 }

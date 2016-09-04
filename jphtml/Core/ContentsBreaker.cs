@@ -56,15 +56,14 @@ namespace jphtml.Core
             {
                 foreach (var chapter in contents.ChapterFiles)
                 {
-                    var builder = new StringBuilder();
+                    chapter.PlainTextContent = new List<string>();
                     int linesToCopy = chapter.LengthInLines;
                     while (linesToCopy > 0 && !reader.EndOfStream)
                     {
                         var line = reader.ReadLine();
-                        builder.AppendLine(line);
+                        chapter.PlainTextContent.Add(line);
                         linesToCopy--;
                     }
-                    chapter.PlainTextContent = builder.ToString();
                 }
             }
         }

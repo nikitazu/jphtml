@@ -97,8 +97,7 @@ namespace jphtml
         static void ConvertFileToHtml(ContentsMapping chapterMapping)
         {
             var xhtmlParagraphs = new List<XElement>();
-            var plainTextLines = chapterMapping.PlainTextContent.Split('\n');
-            foreach (var plainTextLine in plainTextLines)
+            foreach (var plainTextLine in chapterMapping.PlainTextContent)
             {
                 var lines = _reader.ReadResponse(new StringReader(_mecabTagger.Parse(plainTextLine)));
                 var words = new List<WordInfo>();
@@ -107,7 +106,6 @@ namespace jphtml
                 {
                     var word = _parser.ParseWord(line);
                     word.Translation = _dicReader.Lookup(word.RootForm);
-
                     words.Add(word);
                 }
 
