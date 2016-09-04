@@ -15,7 +15,10 @@ namespace jphtml.Tests.Core
                 "--inputFile", "path/to/in",
                 "--outputDir", "path/to/out",
                 "--chapterMarkers", "a,b,c",
-                "--simulation", "true"
+                "--simulation", "true",
+                "--author", "murakami",
+                "--bookId", "666",
+                "--publisher", "ZStudios"
             });
         }
 
@@ -44,6 +47,24 @@ namespace jphtml.Tests.Core
         public void SimulationShouldParse()
         {
             Assert.AreEqual(true, _options.Simulation);
+        }
+
+        [Test]
+        public void AuthorShouldParse()
+        {
+            Assert.AreEqual("murakami", _options.Author);
+        }
+
+        [Test]
+        public void BookIdShouldParse()
+        {
+            Assert.AreEqual("666", _options.BookId);
+        }
+
+        [Test]
+        public void PublisherShouldParse()
+        {
+            Assert.AreEqual("ZStudios", _options.Publisher);
         }
     }
 }

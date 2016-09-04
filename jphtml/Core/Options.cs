@@ -10,6 +10,9 @@ namespace jphtml.Core
         public string OutputDir { get; } = string.Empty;
         public IReadOnlyList<string> ChapterMarkers { get; } = new List<string>();
         public bool Simulation { get; } = false;
+        public string Author { get; } = "Unknown";
+        public string BookId { get; } = Guid.NewGuid().ToString();
+        public string Publisher { get; } = "Unknown";
 
         public Options(string[] args)
         {
@@ -24,6 +27,9 @@ namespace jphtml.Core
                     case "--outputDir": OutputDir = value; break;
                     case "--chapterMarkers": ChapterMarkers = value.Split(',').ToArray(); break;
                     case "--simulation": Simulation = value == "true"; break;
+                    case "--author": Author = value; break;
+                    case "--bookId": BookId = value; break;
+                    case "--publisher": Publisher = value; break;
                 }
             }
         }
@@ -34,6 +40,9 @@ namespace jphtml.Core
             Console.WriteLine($"Output dir: {OutputDir}");
             Console.WriteLine($"Chapter markers: {string.Join(",", ChapterMarkers)}");
             Console.WriteLine($"Simulation: {Simulation}");
+            Console.WriteLine($"Author: {Author}");
+            Console.WriteLine($"Book id: {BookId}");
+            Console.WriteLine($"Publisher: {Publisher}");
         }
     }
 }

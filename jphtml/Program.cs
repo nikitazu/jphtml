@@ -128,10 +128,10 @@ namespace jphtml
             using (var writer = await EPubWriter.CreateWriterAsync(
                 epub,
                 fileName,
-                "Megaman",
-                "123123"))
+                _options.Author,
+                _options.BookId))
             {
-                writer.Publisher = "Zuich";
+                writer.Publisher = _options.Publisher;
                 foreach (var chapter in contents.ChapterFiles)
                 {
                     await writer.AddChapterAsync(
