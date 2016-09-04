@@ -22,6 +22,11 @@ Japanese text analyzer with html output
 * http://taku910.github.io/mecab/
 * https://github.com/taku910/mecab
 
+### NMeCab (via manual copying)
+# GPLv2
+# Original project https://osdn.jp/projects/nmecab/
+# Fork with crossplatform build https://github.com/nikitazu/NMeCab.Crossplatform
+
 ### ePub Factory PCL (via nuget)
 * Ms-PL
 * https://epubfactory.codeplex.com/

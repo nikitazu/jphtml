@@ -33,6 +33,9 @@
     <Reference Include="System" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
+    <Reference Include="LibNMeCab45Mono">
+      <HintPath>..\lib\NMeCab\LibNMeCab45Mono\LibNMeCab45Mono.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -95,6 +98,12 @@
     <None Include="data\epub\style.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="data\ipadic\char.bin" />
+    <None Include="data\ipadic\dicrc" />
+    <None Include="data\ipadic\matrix.bin" />
+    <None Include="data\ipadic\sys.dic" />
+    <None Include="data\ipadic\unk.dic" />
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

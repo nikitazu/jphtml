@@ -14,6 +14,7 @@ using jphtml.Core.IO;
 using jphtml.Core.Ipc;
 using jphtml.Logging;
 using jphtml.Utils;
+using NMeCab;
 
 namespace jphtml
 {
@@ -22,9 +23,9 @@ namespace jphtml
         static Counter _counter;
         static ILogWriter _log;
         static Options _options;
-        static MecabRunner _runner;
         static MecabParser _parser;
         static MecabReader _reader;
+        static MeCabTagger _mecabTagger;
         static XHtmlMaker _xhtmlMaker;
         static JmdicFastReader _dicReader;
         static ContentsBreaker _breaker;
@@ -35,9 +36,9 @@ namespace jphtml
             _log.Debug("start");
 
             _options = new Options(args);
-            _runner = new MecabRunner();
             _reader = new MecabReader();
             _parser = new MecabParser();
+            _mecabTagger = MeCabTagger.Create();
             _xhtmlMaker = new XHtmlMaker();
             _dicReader = new JmdicFastReader(
                 _log,
@@ -91,50 +92,32 @@ namespace jphtml
 
         static void ConvertFileToHtml(FilePipeLine pipeline)
         {
-            _runner.RunMecab(process =>
+            var xhtmlParagraphs = new List<XElement>();
+            pipeline.Run((fileReader, fileWriter) =>
             {
-                process.ErrorDataReceived += (sender, e) =>
+                var lines = _reader.ReadResponse(new StringReader(_mecabTagger.Parse(fileReader.ReadLine())));
+                var words = new List<WordInfo>();
+
+                foreach (var line in lines)
                 {
-                    _log.Error("ERROR " + process.StandardError.ReadToEnd());
-                };
+                    var word = _parser.ParseWord(line);
+                    word.Translation = _dicReader.Lookup(word.RootForm);
 
-                process.Exited += (sender, e) =>
+                    words.Add(word);
+                }
+
+                xhtmlParagraphs.Add(_xhtmlMaker.MakeParagraph(words.Select(w => _xhtmlMaker.MakeWord(w))));
+                xhtmlParagraphs.Add(_xhtmlMaker.MakeContextHelpParagraph(words.DistinctBy(w => w.Text)));
+                words.Clear();
+
+                if (fileReader.EndOfStream)
                 {
-                    _log.Error($"MeCab EXIT {process.ExitCode}");
-                };
-
-                var xhtmlParagraphs = new List<XElement>();
-
-                int iteration = 0;
-                pipeline.Run((fileReader, fileWriter) =>
-                {
-                    process.StandardInput.WriteLine(fileReader.ReadLine());
-                    var lines = _reader.ReadResponse(process.StandardOutput);
-                    var words = new List<WordInfo>();
-
-                    foreach (var line in lines)
+                    var doc = _xhtmlMaker.MakeRootNode(xhtmlParagraphs);
+                    using (var xwr = new XmlTextWriter(fileWriter))
                     {
-                        var word = _parser.ParseWord(line);
-                        word.Translation = _dicReader.Lookup(word.RootForm);
-
-                        words.Add(word);
+                        doc.WriteTo(xwr);
                     }
-
-                    xhtmlParagraphs.Add(_xhtmlMaker.MakeParagraph(words.Select(w => _xhtmlMaker.MakeWord(w))));
-                    xhtmlParagraphs.Add(_xhtmlMaker.MakeContextHelpParagraph(words.DistinctBy(w => w.Text)));
-                    words.Clear();
-
-                    if (fileReader.EndOfStream)
-                    {
-                        var doc = _xhtmlMaker.MakeRootNode(xhtmlParagraphs);
-                        using (var xwr = new XmlTextWriter(fileWriter))
-                        {
-                            doc.WriteTo(xwr);
-                        }
-                    }
-
-                    iteration++;
-                });
+                }
             });
         }
 
