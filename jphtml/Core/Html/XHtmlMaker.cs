@@ -74,7 +74,7 @@ namespace jphtml.Core.Html
             return new XElement(Tag.Title, title);
         }
 
-        public XElement MakeParagraph(IEnumerable<XNode> subnodes)
+        public XElement MakeParagraph(IEnumerable<XObject> subnodes)
         {
             return new XElement(Tag.Paragraph, JoinTextNodes(subnodes));
         }
@@ -107,7 +107,8 @@ namespace jphtml.Core.Html
 
         public XElement MakeContextHelpParagraph(IEnumerable<WordInfo> words)
         {
-            List<XNode> nodes = new List<XNode>();
+            List<XObject> nodes = new List<XObject>();
+            nodes.Add(new XAttribute("class", "jp-contexthelp"));
             var br = MakeLineBreak();
             foreach (var word in words)
             {
@@ -120,7 +121,7 @@ namespace jphtml.Core.Html
             return MakeParagraph(nodes);
         }
 
-        IEnumerable<XNode> JoinTextNodes(IEnumerable<XNode> nodes)
+        IEnumerable<XObject> JoinTextNodes(IEnumerable<XObject> nodes)
         {
             StringBuilder builder = null;
             foreach (var node in nodes)

@@ -76,6 +76,9 @@ namespace jphtml
                     var pipeline = new FilePipeLine(_log, chapter.FilePath, chapter.FilePath + ".html");
                     ConvertFileToHtml(pipeline);
                 }
+                File.Copy(
+                    Path.Combine(FileSystemUtils.AppDir, "data", "html", "style.css"),
+                    Path.Combine(_options.OutputDir, "style.css"));
             }
 
             _counter.Stop();

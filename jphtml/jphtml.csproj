@@ -73,7 +73,7 @@
     <Folder Include="data\" />
     <Folder Include="data\dic\" />
     <Folder Include="Utils\" />
-    <Folder Include="data\epub\" />
+    <Folder Include="data\html\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="paket.references" />
@@ -88,7 +88,7 @@
     <None Include="data\dic\ELECTRONIC DICTIONARY RESEARCH AND DEVELOPMENT GROUP_files\edrdg.jpg" />
     <None Include="data\dic\ELECTRONIC DICTIONARY RESEARCH AND DEVELOPMENT GROUP_files\somerights20.gif" />
     <None Include="data\dic\ELECTRONIC DICTIONARY RESEARCH AND DEVELOPMENT GROUP_files\x-click-but21.gif" />
-    <None Include="data\epub\style.css">
+    <None Include="data\html\style.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

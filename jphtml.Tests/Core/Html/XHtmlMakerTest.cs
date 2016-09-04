@@ -178,7 +178,7 @@ namespace jphtml.Tests.Core.Html
         public void MakeContextHelpParagraphShouldHasTextWithTranslationOnly()
         {
             AssertEqualNodes(
-                "<p xmlns=\"http://www.w3.org/1999/xhtml\">見世物 [ミセモノ] - Unreal<br />見世物 [ミセモノ] - Unreal<br /></p>",
+                "<p class=\"jp-contexthelp\" xmlns=\"http://www.w3.org/1999/xhtml\">見世物 [ミセモノ] - Unreal<br />見世物 [ミセモノ] - Unreal<br /></p>",
                 _maker.MakeContextHelpParagraph(new List<WordInfo> { _kanjiWithReading, _kanjiWithReading, _kanjiWithoutReading }));
         }
 
