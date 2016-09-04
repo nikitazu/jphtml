@@ -16,12 +16,6 @@ Japanese text analyzer with html output
 * Creative Commons Attribution-ShareAlike Licence (V3.0)
 * http://www.edrdg.org/edrdg/licence.html
 
-### MeCab (not included)
-* GPLv2
-* https://sourceforge.net/projects/mecab/
-* http://taku910.github.io/mecab/
-* https://github.com/taku910/mecab
-
 ### NMeCab (via manual copying)
 # GPLv2
 # Original project https://osdn.jp/projects/nmecab/
