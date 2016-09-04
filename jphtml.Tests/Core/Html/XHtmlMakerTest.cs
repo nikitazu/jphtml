@@ -20,7 +20,7 @@ namespace jphtml.Tests.Core.Html
         public void Setup()
         {
             _maker = new XHtmlMaker();
-            _kanjiWithReading = new WordInfo { Text = "見世物", Reading = "ミセモノ" };
+            _kanjiWithReading = new WordInfo { Text = "見世物", Reading = "ミセモノ", Translation = "Unreal" };
             _kanjiWithoutReading = new WordInfo { Text = "見世物" };
             _hiraganaWord = new WordInfo { Text = "すべて", Reading = "スベテ" };
             _katakanaWord = new WordInfo { Text = "スベテ", Reading = "スベテ" };
@@ -121,6 +121,12 @@ namespace jphtml.Tests.Core.Html
         }
 
         [Test]
+        public void MakeLineBreakShouldBeValid()
+        {
+            AssertEqualNodes("<br xmlns=\"http://www.w3.org/1999/xhtml\" />", _maker.MakeLineBreak());
+        }
+
+        [Test]
         public void MakeRubyShouldReturnRuby()
         {
             AssertEqualNodes(
@@ -160,6 +166,20 @@ namespace jphtml.Tests.Core.Html
         public void MakeWordShouldNotContainFuriganaWhenTextIsHiraganaWithDifferentPronunciation()
         {
             AssertEqualNodes("は", _maker.MakeWord(_hiraganaWordWithDifferentPronunciation));
+        }
+
+        [Test]
+        public void MakeContextHelpShouldAddTranslationIfPresent()
+        {
+            AssertEqualNodes("見世物 [ミセモノ] - Unreal", _maker.MakeContextHelp(_kanjiWithReading));
+        }
+
+        [Test]
+        public void MakeContextHelpParagraphShouldHasTextWithTranslationOnly()
+        {
+            AssertEqualNodes(
+                "<p xmlns=\"http://www.w3.org/1999/xhtml\">見世物 [ミセモノ] - Unreal<br />見世物 [ミセモノ] - Unreal<br /></p>",
+                _maker.MakeContextHelpParagraph(new List<WordInfo> { _kanjiWithReading, _kanjiWithReading, _kanjiWithoutReading }));
         }
 
         void AssertEqualNodes(XNode expected, XNode actual) =>

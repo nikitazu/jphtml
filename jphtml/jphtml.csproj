@@ -59,6 +59,7 @@
     <Compile Include="Utils\FileSystemUtils.cs" />
     <Compile Include="Core\Html\XHtmlMaker.cs" />
     <Compile Include="Core\Counter.cs" />
+    <Compile Include="Utils\EnumerableUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\" />

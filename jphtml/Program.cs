@@ -10,6 +10,8 @@ using jphtml.Core.Html;
 using jphtml.Core.IO;
 using jphtml.Core.Ipc;
 using jphtml.Logging;
+using System.Linq;
+using jphtml.Utils;
 
 namespace jphtml
 {
@@ -101,19 +103,19 @@ namespace jphtml
                 {
                     process.StandardInput.WriteLine(fileReader.ReadLine());
                     var lines = _reader.ReadResponse(process.StandardOutput);
+                    var words = new List<WordInfo>();
 
-                    //_log.Debug($"Write html paragraph {iteration}");
-                    var xhtmlWordNodes = new List<XNode>();
                     foreach (var line in lines)
                     {
                         var word = _parser.ParseWord(line);
                         word.Translation = _dicReader.Lookup(word.RootForm);
 
-                        xhtmlWordNodes.Add(_xhtmlMaker.MakeWord(word));
+                        words.Add(word);
                     }
 
-                    xhtmlParagraphs.Add(_xhtmlMaker.MakeParagraph(xhtmlWordNodes));
-                    xhtmlWordNodes.Clear();
+                    xhtmlParagraphs.Add(_xhtmlMaker.MakeParagraph(words.Select(w => _xhtmlMaker.MakeWord(w))));
+                    xhtmlParagraphs.Add(_xhtmlMaker.MakeContextHelpParagraph(words.DistinctBy(w => w.Text)));
+                    words.Clear();
 
                     if (fileReader.EndOfStream)
                     {

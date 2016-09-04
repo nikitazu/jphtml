@@ -43,6 +43,7 @@
     <Compile Include="Core\ContentsBreakerTest.cs" />
     <Compile Include="Core\Html\XHtmlMakerTest.cs" />
     <Compile Include="Core\Format\WordInfoTest.cs" />
+    <Compile Include="Core\Utils\EnumerableUtilsTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -59,6 +60,7 @@
     <Folder Include="Core\Text\" />
     <Folder Include="Core\Html\" />
     <Folder Include="Core\Format\" />
+    <Folder Include="Core\Utils\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

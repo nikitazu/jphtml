@@ -22,6 +22,7 @@ namespace jphtml.Core.Html
             public static readonly XName Title = _xhtml + "title";
             public static readonly XName Paragraph = _xhtml + "p";
             public static readonly XName Span = _xhtml + "span";
+            public static readonly XName LineBreak = _xhtml + "br";
             public static readonly XName Ruby = _xhtml + "ruby";
             public static readonly XName RubyText = _xhtml + "rt";
         }
@@ -83,6 +84,11 @@ namespace jphtml.Core.Html
             return new XElement(Tag.Span, JoinTextNodes(subnodes));
         }
 
+        public XElement MakeLineBreak()
+        {
+            return new XElement(Tag.LineBreak);
+        }
+
         public XElement MakeRuby(string text, string reading)
         {
             return new XElement(Tag.Ruby, text, new XElement(Tag.RubyText, reading));
@@ -92,6 +98,26 @@ namespace jphtml.Core.Html
         {
             var furigana = word.Furigana;
             return NoFurigana(word.Text, furigana) ? (XNode)new XText(word.Text) : MakeRuby(word.Text, furigana);
+        }
+
+        public XText MakeContextHelp(WordInfo word)
+        {
+            return new XText($"{word.TextMaybeRootForm} [{word.Furigana}] - {word.Translation}");
+        }
+
+        public XElement MakeContextHelpParagraph(IEnumerable<WordInfo> words)
+        {
+            List<XNode> nodes = new List<XNode>();
+            var br = MakeLineBreak();
+            foreach (var word in words)
+            {
+                if (!string.IsNullOrEmpty(word.Translation))
+                {
+                    nodes.Add(MakeContextHelp(word));
+                    nodes.Add(br);
+                }
+            }
+            return MakeParagraph(nodes);
         }
 
         IEnumerable<XNode> JoinTextNodes(IEnumerable<XNode> nodes)
