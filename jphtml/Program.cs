@@ -124,10 +124,11 @@ namespace jphtml
         static async Task ConvertHtmlToEpub(ContentsInfo contents)
         {
             _log.Debug("epub start");
-            var epub = File.Create(Path.Combine(_options.OutputDir, "Book1.epub"));
+            var fileName = Path.GetFileNameWithoutExtension(_options.InputFile);
+            var epub = File.Create(Path.Combine(_options.OutputDir, fileName + ".epub"));
             using (var writer = await EPubWriter.CreateWriterAsync(
                 epub,
-                "Megabook",
+                fileName,
                 "Megaman",
                 "123123"))
             {
