@@ -159,7 +159,7 @@ namespace jphtml
                 await writer.AddResourceAsync(
                     "style.css",
                     "text/css",
-                    File.ReadAllBytes(Path.Combine(FileSystemUtils.AppDir, "data", "html", "style.css")));
+                    File.ReadAllBytes(Path.Combine(FileSystemUtils.AppDir, "data", "epub", "style.css")));
                 await writer.WriteEndOfPackageAsync();
             }
             _log.Debug("epub done");

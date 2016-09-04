@@ -74,6 +74,7 @@
     <Folder Include="data\dic\" />
     <Folder Include="Utils\" />
     <Folder Include="data\html\" />
+    <Folder Include="data\epub\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="paket.references" />
@@ -89,6 +90,9 @@
     <None Include="data\dic\ELECTRONIC DICTIONARY RESEARCH AND DEVELOPMENT GROUP_files\somerights20.gif" />
     <None Include="data\dic\ELECTRONIC DICTIONARY RESEARCH AND DEVELOPMENT GROUP_files\x-click-but21.gif" />
     <None Include="data\html\style.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="data\epub\style.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
