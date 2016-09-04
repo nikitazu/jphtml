@@ -6,10 +6,10 @@ namespace jphtml.Core
 {
     public class Options
     {
-        public string InputFile { get; }
-        public string OutputDir { get; }
-        public IReadOnlyList<string> ChapterMarkers { get; }
-        public bool Simulation { get; }
+        public string InputFile { get; } = string.Empty;
+        public string OutputDir { get; } = string.Empty;
+        public IReadOnlyList<string> ChapterMarkers { get; } = new List<string>();
+        public bool Simulation { get; } = false;
 
         public Options(string[] args)
         {
