@@ -31,6 +31,8 @@
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\MecabReaderTest.cs" />
@@ -39,6 +41,9 @@
     <Compile Include="Core\Text\KanaTest.cs" />
     <Compile Include="Core\OptionsTest.cs" />
     <Compile Include="Core\ContentsBreakerTest.cs" />
+    <Compile Include="Core\Html\XHtmlMakerTest.cs" />
+    <Compile Include="Core\Format\WordInfoTest.cs" />
+    <Compile Include="Core\Utils\EnumerableUtilsTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -53,6 +58,9 @@
     <Folder Include="Core\" />
     <Folder Include="Core\Dic\" />
     <Folder Include="Core\Text\" />
+    <Folder Include="Core\Html\" />
+    <Folder Include="Core\Format\" />
+    <Folder Include="Core\Utils\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
