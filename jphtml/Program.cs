@@ -1,9 +1,11 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
+using EPubFactory;
 using jphtml.Core;
 using jphtml.Core.Dic;
 using jphtml.Core.Format;
@@ -11,9 +13,6 @@ using jphtml.Core.Html;
 using jphtml.Core.IO;
 using jphtml.Core.Ipc;
 using jphtml.Logging;
-using EPubFactory;
-using System.Threading.Tasks;
-using System.Linq;
 using jphtml.Utils;
 
 namespace jphtml
@@ -142,7 +141,7 @@ namespace jphtml
         static async Task ConvertHtmlToEpub(ContentsInfo contents)
         {
             _log.Debug("epub start");
-            var epub = File.Create("Book1.epub");
+            var epub = File.Create(Path.Combine(_options.OutputDir, "Book1.epub"));
             using (var writer = await EPubWriter.CreateWriterAsync(
                 epub,
                 "Megabook",
@@ -160,7 +159,7 @@ namespace jphtml
                 await writer.AddResourceAsync(
                     "style.css",
                     "text/css",
-                    File.ReadAllBytes(Path.Combine(FileSystemUtils.AppDir, "data", "epub", "style.css")));
+                    File.ReadAllBytes(Path.Combine(FileSystemUtils.AppDir, "data", "html", "style.css")));
                 await writer.WriteEndOfPackageAsync();
             }
             _log.Debug("epub done");
