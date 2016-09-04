@@ -3,9 +3,6 @@ using System.Xml.Linq;
 using jphtml.Core.Format;
 using jphtml.Core.Html;
 using NUnit.Framework;
-using System.IO;
-using System.Text;
-using System.Xml;
 
 namespace jphtml.Tests.Core.Html
 {
@@ -75,6 +72,51 @@ namespace jphtml.Tests.Core.Html
             AssertEqualNodes(
                 "<p xmlns=\"http://www.w3.org/1999/xhtml\">foo</p>",
                 _maker.MakeParagraph(new List<XText> { new XText("foo") })
+            );
+        }
+
+        [Test]
+        public void MakeParagraphWithManyWordsShouldNotLooseSpacebars()
+        {
+            AssertEqualNodes(
+                "<p xmlns=\"http://www.w3.org/1999/xhtml\">foo bar</p>",
+                _maker.MakeParagraph(new List<XText> { new XText("foo"), new XText("bar") })
+            );
+        }
+
+        [Test]
+        public void MakeParagraphWithManyWordsShouldNotLooseSpacebarsWhenMixedWithHtml()
+        {
+            AssertEqualNodes(
+                "<p xmlns=\"http://www.w3.org/1999/xhtml\">foo bar<p>yo</p></p>",
+                _maker.MakeParagraph(new List<XNode> { new XText("foo"), new XText("bar"), _maker.MakeParagraph(new List<XText> { new XText("yo") }) })
+            );
+        }
+
+        [Test]
+        public void MakeSpanShouldReturnSpan()
+        {
+            AssertEqualNodes(
+                "<span xmlns=\"http://www.w3.org/1999/xhtml\">foo</span>",
+                _maker.MakeSpan(new List<XText> { new XText("foo") })
+            );
+        }
+
+        [Test]
+        public void MakeSpanWithManyWordsShouldNotLooseSpacebars()
+        {
+            AssertEqualNodes(
+                "<span xmlns=\"http://www.w3.org/1999/xhtml\">foo bar</span>",
+                _maker.MakeSpan(new List<XText> { new XText("foo"), new XText("bar") })
+            );
+        }
+
+        [Test]
+        public void MakeSpanWithManyWordsShouldNotLooseSpacebarsWhenMixedWithHtml()
+        {
+            AssertEqualNodes(
+                "<span xmlns=\"http://www.w3.org/1999/xhtml\">foo bar<span>yo</span></span>",
+                _maker.MakeSpan(new List<XNode> { new XText("foo"), new XText("bar"), _maker.MakeSpan(new List<XText> { new XText("yo") }) })
             );
         }
 

@@ -3,6 +3,8 @@ using jphtml.Core.Format;
 using jphtml.Core.Text;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace jphtml.Core.Html
 {
@@ -19,6 +21,7 @@ namespace jphtml.Core.Html
             public static readonly XName Link = _xhtml + "link";
             public static readonly XName Title = _xhtml + "title";
             public static readonly XName Paragraph = _xhtml + "p";
+            public static readonly XName Span = _xhtml + "span";
             public static readonly XName Ruby = _xhtml + "ruby";
             public static readonly XName RubyText = _xhtml + "rt";
         }
@@ -72,7 +75,12 @@ namespace jphtml.Core.Html
 
         public XElement MakeParagraph(IEnumerable<XNode> subnodes)
         {
-            return new XElement(Tag.Paragraph, subnodes);
+            return new XElement(Tag.Paragraph, JoinTextNodes(subnodes));
+        }
+
+        public XElement MakeSpan(IEnumerable<XNode> subnodes)
+        {
+            return new XElement(Tag.Span, JoinTextNodes(subnodes));
         }
 
         public XElement MakeRuby(string text, string reading)
@@ -84,6 +92,37 @@ namespace jphtml.Core.Html
         {
             var furigana = word.Furigana;
             return NoFurigana(word.Text, furigana) ? (XNode)new XText(word.Text) : MakeRuby(word.Text, furigana);
+        }
+
+        IEnumerable<XNode> JoinTextNodes(IEnumerable<XNode> nodes)
+        {
+            StringBuilder builder = null;
+            foreach (var node in nodes)
+            {
+                var textNode = node as XText;
+                if (textNode != null && builder == null)
+                {
+                    builder = new StringBuilder(textNode.Value);
+                }
+                else if (textNode != null && builder != null)
+                {
+                    builder.Append($" {textNode.Value}");
+                }
+                else if (textNode == null && builder == null)
+                {
+                    yield return node;
+                }
+                else if (textNode == null && builder != null)
+                {
+                    yield return new XText(builder.ToString());
+                    builder = null;
+                    yield return node;
+                }
+            }
+            if (builder != null)
+            {
+                yield return new XText(builder.ToString());
+            }
         }
 
         bool NoFurigana(string text, string furigana) =>
