@@ -52,6 +52,8 @@
     <Compile Include="Options.cs" />
     <Compile Include="Make\Html\XHtmlMaker.cs" />
     <Compile Include="Make\Epub\EpubMaker.cs" />
+    <Compile Include="MecabBackend.cs" />
+    <Compile Include="HtmlToEpubConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="paket.references" />
