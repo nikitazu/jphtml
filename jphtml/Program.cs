@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using JpAnnotator.Core.Make.Epub;
 using JpAnnotator.Core.Make.Html;
+using JpAnnotator.Logging;
 using jphtml.Core;
 using jphtml.Core.Dic;
 using jphtml.Core.Format;
-using jphtml.Logging;
 using jphtml.Utils;
 using NMeCab;
+using JpAnnotator.Common.Windows;
 
 namespace jphtml
 {
@@ -29,7 +30,7 @@ namespace jphtml
 
         public static void Main(string[] args)
         {
-            _log = LoggingConfig.CreateRootLogWriter();
+            _log = new LoggingConfig(new WindowsResourceLocator()).CreateRootLogWriter();
             _log.Debug("start");
 
             _options = new Options(args);

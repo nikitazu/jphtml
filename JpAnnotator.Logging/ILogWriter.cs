@@ -1,4 +1,4 @@
-﻿namespace jphtml.Logging
+﻿namespace JpAnnotator.Logging
 {
     public interface ILogWriter
     {

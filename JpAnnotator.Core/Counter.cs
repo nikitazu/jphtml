@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-using jphtml.Logging;
+using JpAnnotator.Logging;
 
 namespace jphtml.Core
 {

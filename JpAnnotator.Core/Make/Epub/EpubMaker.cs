@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using jphtml.Logging;
+using JpAnnotator.Logging;
 using jphtml.Core.Format;
 using System.IO;
 using EPubFactory;

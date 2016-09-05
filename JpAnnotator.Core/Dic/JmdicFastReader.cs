@@ -2,7 +2,7 @@
 using System.Xml;
 using System.IO;
 using System.Diagnostics;
-using jphtml.Logging;
+using JpAnnotator.Logging;
 
 namespace jphtml.Core.Dic
 {

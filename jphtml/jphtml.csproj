@@ -79,6 +79,18 @@
       <Project>{7873AA65-1CA0-4276-B3DC-565AF66ABB7B}</Project>
       <Name>JpAnnotator.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\JpAnnotator.Common.Portable\JpAnnotator.Common.Portable.csproj">
+      <Project>{92C5BA8E-2187-43A4-8606-5CC8472C06F3}</Project>
+      <Name>JpAnnotator.Common.Portable</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JpAnnotator.Logging\JpAnnotator.Logging.csproj">
+      <Project>{69287217-3531-4756-9E39-B87C019AFBA1}</Project>
+      <Name>JpAnnotator.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JpAnnotator.Common.Windows\JpAnnotator.Common.Windows.csproj">
+      <Project>{0444E8ED-3C47-49EF-821A-FCCCD6CB035D}</Project>
+      <Name>JpAnnotator.Common.Windows</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="EPubFactory">

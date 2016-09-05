@@ -1,14 +1,19 @@
 ﻿using System;
-
 using AppKit;
 using Foundation;
+using JpAnnotator.Logging;
+using JpAnnotator.Common.Mac;
 
 namespace JpAnnotator
 {
     public partial class ViewController : NSViewController
     {
+        ILogWriter _log;
+
         public ViewController(IntPtr handle) : base(handle)
         {
+            _log = new LoggingConfig(new MacResourceLocator()).CreateRootLogWriter();
+            _log.Debug("start");
         }
 
         public override void ViewDidLoad()
@@ -16,6 +21,7 @@ namespace JpAnnotator
             base.ViewDidLoad();
 
             // Do any additional setup after loading the view.
+            _log.Debug("view did load");
         }
 
         public override NSObject RepresentedObject
@@ -33,7 +39,8 @@ namespace JpAnnotator
 
         partial void ConvertButtonClicked(NSObject sender)
         {
-            Console.WriteLine($"Convert {FileToConvert.StringValue}");
+            _log.Error($"Convert {FileToConvert.StringValue}");
+            Console.WriteLine("console writes a line");
         }
     }
 }

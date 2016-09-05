@@ -9,6 +9,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JpAnnotator", "JpAnnotator\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JpAnnotator.Core", "JpAnnotator.Core\JpAnnotator.Core.csproj", "{7873AA65-1CA0-4276-B3DC-565AF66ABB7B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JpAnnotator.Logging", "JpAnnotator.Logging\JpAnnotator.Logging.csproj", "{69287217-3531-4756-9E39-B87C019AFBA1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JpAnnotator.Common.Portable", "JpAnnotator.Common.Portable\JpAnnotator.Common.Portable.csproj", "{92C5BA8E-2187-43A4-8606-5CC8472C06F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JpAnnotator.Common.Windows", "JpAnnotator.Common.Windows\JpAnnotator.Common.Windows.csproj", "{0444E8ED-3C47-49EF-821A-FCCCD6CB035D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JpAnnotator.Common.Mac", "JpAnnotator.Common.Mac\JpAnnotator.Common.Mac.csproj", "{BD7802C7-C035-4318-9069-780B7295A748}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -31,5 +39,21 @@ Global
 		{7873AA65-1CA0-4276-B3DC-565AF66ABB7B}.Debug|x86.Build.0 = Debug|Any CPU
 		{7873AA65-1CA0-4276-B3DC-565AF66ABB7B}.Release|x86.ActiveCfg = Release|Any CPU
 		{7873AA65-1CA0-4276-B3DC-565AF66ABB7B}.Release|x86.Build.0 = Release|Any CPU
+		{69287217-3531-4756-9E39-B87C019AFBA1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{69287217-3531-4756-9E39-B87C019AFBA1}.Debug|x86.Build.0 = Debug|Any CPU
+		{69287217-3531-4756-9E39-B87C019AFBA1}.Release|x86.ActiveCfg = Release|Any CPU
+		{69287217-3531-4756-9E39-B87C019AFBA1}.Release|x86.Build.0 = Release|Any CPU
+		{92C5BA8E-2187-43A4-8606-5CC8472C06F3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{92C5BA8E-2187-43A4-8606-5CC8472C06F3}.Debug|x86.Build.0 = Debug|Any CPU
+		{92C5BA8E-2187-43A4-8606-5CC8472C06F3}.Release|x86.ActiveCfg = Release|Any CPU
+		{92C5BA8E-2187-43A4-8606-5CC8472C06F3}.Release|x86.Build.0 = Release|Any CPU
+		{0444E8ED-3C47-49EF-821A-FCCCD6CB035D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0444E8ED-3C47-49EF-821A-FCCCD6CB035D}.Debug|x86.Build.0 = Debug|Any CPU
+		{0444E8ED-3C47-49EF-821A-FCCCD6CB035D}.Release|x86.ActiveCfg = Release|Any CPU
+		{0444E8ED-3C47-49EF-821A-FCCCD6CB035D}.Release|x86.Build.0 = Release|Any CPU
+		{BD7802C7-C035-4318-9069-780B7295A748}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BD7802C7-C035-4318-9069-780B7295A748}.Debug|x86.Build.0 = Debug|Any CPU
+		{BD7802C7-C035-4318-9069-780B7295A748}.Release|x86.ActiveCfg = Release|Any CPU
+		{BD7802C7-C035-4318-9069-780B7295A748}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

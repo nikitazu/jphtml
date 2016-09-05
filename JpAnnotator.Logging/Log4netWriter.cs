@@ -1,6 +1,6 @@
 ﻿using log4net;
 
-namespace jphtml.Logging
+namespace JpAnnotator.Logging
 {
     public class Log4netWriter : ILogWriter
     {
