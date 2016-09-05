@@ -33,7 +33,7 @@ namespace JpAnnotator
 
         partial void ConvertButtonClicked(NSObject sender)
         {
-            Console.WriteLine($"Convert {FileToConvert}");
+            Console.WriteLine($"Convert {FileToConvert.StringValue}");
         }
     }
 }
