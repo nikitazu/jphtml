@@ -3,6 +3,7 @@ using System.Xml;
 using System.IO;
 using System.Diagnostics;
 using JpAnnotator.Logging;
+using JpAnnotator.Common.Portable.Bundling;
 
 namespace JpAnnotator.Core.Dic
 {
@@ -13,16 +14,16 @@ namespace JpAnnotator.Core.Dic
         readonly string _path;
         readonly IMultiDictionary _dictionary;
 
-        public JmdicFastReader(ILogWriter log, Options options, string path, IMultiDictionary dictionary)
+        public JmdicFastReader(ILogWriter log, Options options, IResourceLocator resourceLocator, IMultiDictionary dictionary)
         {
             _log = log;
             _options = options;
-            _path = path;
+            _path = Path.Combine(resourceLocator.ResourcesPath, "data", "dic", "JMdict_e");
             _dictionary = dictionary;
 
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            _log.Debug($"Indexing {path}");
+            _log.Debug($"Indexing {_path}");
 
             if (!_options.Simulation)
             {

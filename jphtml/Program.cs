@@ -4,6 +4,7 @@ using JpAnnotator.Core;
 using JpAnnotator.Core.Dic;
 using JpAnnotator.Core.Make.Html;
 using JpAnnotator.Logging;
+using JpAnnotator.Core.Make.Epub;
 
 namespace JpAnnotator
 {
@@ -11,7 +12,8 @@ namespace JpAnnotator
     {
         public static void Main(string[] args)
         {
-            var log = new LoggingConfig(new WindowsResourceLocator()).CreateRootLogWriter();
+            var resourceLocator = new WindowsResourceLocator();
+            var log = new LoggingConfig(resourceLocator).CreateRootLogWriter();
             log.Debug("start");
 
             var options = new Options(args);
@@ -20,6 +22,7 @@ namespace JpAnnotator
                 new Counter(log),
                 log,
                 options,
+                resourceLocator,
                 new MecabParser(),
                 new MecabReader(),
                 new MecabBackend(),
@@ -27,19 +30,22 @@ namespace JpAnnotator
                 new JmdicFastReader(
                     log,
                     options,
-                    Path.Combine(FileSystemUtils.AppDir, "data", "dic", "JMdict_e"),
+                    resourceLocator,
                     new Jmdictionary()
                 ),
                 new ContentsBreaker(
                     options.OutputDir,
                     options.ChapterMarkers
-                )
+                ),
+                new EpubMaker(log, options, resourceLocator)
             );
 
             options.Print();
 
-            _htmlToEpub.Convert();
-            log.Debug("end");
+            _htmlToEpub.Convert().ContinueWith(_ =>
+            {
+                log.Debug("end");
+            }).Wait();
         }
     }
 }

@@ -37,7 +37,6 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\EnumerableUtils.cs" />
-    <Compile Include="Utils\FileSystemUtils.cs" />
     <Compile Include="Dic\IMultiDictionary.cs" />
     <Compile Include="Dic\JmdicFastReader.cs" />
     <Compile Include="Dic\JmdicReader.cs" />

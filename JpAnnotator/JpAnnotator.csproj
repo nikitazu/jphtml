@@ -62,6 +62,9 @@
     <Reference Include="Xamarin.Mac" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="LibNMeCab45Mono">
+      <HintPath>..\lib\NMeCab\LibNMeCab45Mono\LibNMeCab45Mono.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcons.appiconset\Contents.json" />
@@ -79,12 +82,18 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
+    <Folder Include="data\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
     <None Include="Entitlements.plist" />
     <None Include="app.config" />
     <None Include="paket.references" />
+    <None Include="data\dic\ELECTRONIC DICTIONARY RESEARCH AND DEVELOPMENT GROUP.html" />
+    <None Include="data\dic\ELECTRONIC DICTIONARY RESEARCH AND DEVELOPMENT GROUP_files\edrdg.jpg" />
+    <None Include="data\dic\ELECTRONIC DICTIONARY RESEARCH AND DEVELOPMENT GROUP_files\somerights20.gif" />
+    <None Include="data\dic\ELECTRONIC DICTIONARY RESEARCH AND DEVELOPMENT GROUP_files\x-click-but21.gif" />
+    <None Include="data\dic\JMdict_EDICT Project.html" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -118,6 +127,30 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
   <ItemGroup>
     <BundleResource Include="log4net.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="data\ipadic\char.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="data\ipadic\dicrc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="data\ipadic\matrix.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="data\ipadic\sys.dic">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="data\ipadic\unk.dic">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="data\html\style.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="data\epub\style.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="data\dic\JMdict_e">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </BundleResource>
   </ItemGroup>

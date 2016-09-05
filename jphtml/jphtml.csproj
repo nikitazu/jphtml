@@ -42,36 +42,40 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="data\" />
-    <Folder Include="data\dic\" />
-    <Folder Include="data\html\" />
-    <Folder Include="data\epub\" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="paket.references" />
     <None Include="log4net.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="app.config" />
     <None Include="data\dic\ELECTRONIC DICTIONARY RESEARCH AND DEVELOPMENT GROUP.html" />
-    <None Include="data\dic\JMdict_EDICT Project.html" />
-    <None Include="data\dic\JMdict_e">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="data\dic\ELECTRONIC DICTIONARY RESEARCH AND DEVELOPMENT GROUP_files\edrdg.jpg" />
     <None Include="data\dic\ELECTRONIC DICTIONARY RESEARCH AND DEVELOPMENT GROUP_files\somerights20.gif" />
     <None Include="data\dic\ELECTRONIC DICTIONARY RESEARCH AND DEVELOPMENT GROUP_files\x-click-but21.gif" />
-    <None Include="data\html\style.css">
+    <None Include="data\dic\JMdict_e">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="data\dic\JMdict_EDICT Project.html" />
     <None Include="data\epub\style.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="data\ipadic\char.bin" />
-    <None Include="data\ipadic\dicrc" />
-    <None Include="data\ipadic\matrix.bin" />
-    <None Include="data\ipadic\sys.dic" />
-    <None Include="data\ipadic\unk.dic" />
-    <None Include="app.config" />
+    <None Include="data\html\style.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="data\ipadic\char.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="data\ipadic\dicrc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="data\ipadic\matrix.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="data\ipadic\sys.dic">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="data\ipadic\unk.dic">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -98,6 +102,9 @@
       <Private>True</Private>
       <Paket>True</Paket>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="data\" />
   </ItemGroup>
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v3.0')">

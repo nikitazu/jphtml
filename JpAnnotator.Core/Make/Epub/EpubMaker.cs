@@ -1,11 +1,9 @@
-﻿using System;
+﻿using System.IO;
 using System.Threading.Tasks;
-using JpAnnotator.Logging;
-using JpAnnotator.Core.Format;
-using System.IO;
 using EPubFactory;
-using JpAnnotator.Core;
-using JpAnnotator;
+using JpAnnotator.Common.Portable.Bundling;
+using JpAnnotator.Core.Format;
+using JpAnnotator.Logging;
 
 namespace JpAnnotator.Core.Make.Epub
 {
@@ -13,11 +11,16 @@ namespace JpAnnotator.Core.Make.Epub
     {
         readonly ILogWriter _log;
         readonly Options _options;
+        readonly IResourceLocator _resourceLocator;
 
-        public EpubMaker(ILogWriter log, Options options)
+        public EpubMaker(
+            ILogWriter log,
+            Options options,
+            IResourceLocator resourceLocator)
         {
             _log = log;
             _options = options;
+            _resourceLocator = resourceLocator;
         }
 
         public async Task ConvertHtmlToEpub(ContentsInfo contents)
@@ -42,7 +45,7 @@ namespace JpAnnotator.Core.Make.Epub
                 await writer.AddResourceAsync(
                     "style.css",
                     "text/css",
-                    File.ReadAllBytes(Path.Combine(FileSystemUtils.AppDir, "data", "epub", "style.css")));
+                    File.ReadAllBytes(Path.Combine(_resourceLocator.ResourcesPath, "data", "epub", "style.css")));
                 await writer.WriteEndOfPackageAsync();
             }
             _log.Debug("epub done");
