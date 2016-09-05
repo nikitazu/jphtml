@@ -11,6 +11,7 @@ namespace JpAnnotator
     {
         Counter _counter;
         ILogWriter _log;
+        Options _options;
 
         public ViewController(IntPtr handle) : base(handle)
         {
@@ -43,6 +44,7 @@ namespace JpAnnotator
         partial void ConvertButtonClicked(NSObject sender)
         {
             _log.Debug($"Convert {FileToConvert.StringValue}");
+            _options = new Options(new string[] { "--inputFile", FileToConvert.StringValue, "--outputDir", "tmp" });
             _counter.Start();
             _counter.Stop();
         }
