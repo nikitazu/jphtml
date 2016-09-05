@@ -2,14 +2,14 @@
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{17DF7A04-B0CE-4829-BDB4-616AB7E33FC1}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>jphtml</RootNamespace>
-    <AssemblyName>jphtml</AssemblyName>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7873AA65-1CA0-4276-B3DC-565AF66ABB7B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>JpAnnotator.Core</RootNamespace>
+    <AssemblyName>JpAnnotator.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -17,68 +17,62 @@
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ExternalConsole>true</ExternalConsole>
-    <PlatformTarget>x86</PlatformTarget>
-    <Commandlineparameters>--inputFile 1Q84_BOOK01.txt --outputDir tmp --chapterMarkers 第1章,第2章,第3章,第4章,第5章,第6章,第7章,第8章,第9章,第10章,第11章,第12章,第13章,第14章,第15章,第16章,第17章,第18章,第19章,第20章,第21章,第22章,第23章,第24章 --simulation false</Commandlineparameters>
+    <ConsolePause>false</ConsolePause>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ExternalConsole>true</ExternalConsole>
-    <PlatformTarget>x86</PlatformTarget>
+    <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Xml" />
     <Reference Include="LibNMeCab45Mono">
       <HintPath>..\lib\NMeCab\LibNMeCab45Mono\LibNMeCab45Mono.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="MyClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="data\" />
-    <Folder Include="data\dic\" />
-    <Folder Include="data\html\" />
-    <Folder Include="data\epub\" />
+    <Compile Include="Utils\EnumerableUtils.cs" />
+    <Compile Include="Utils\FileSystemUtils.cs" />
+    <Compile Include="Logging\ILogWriter.cs" />
+    <Compile Include="Logging\Log4netWriter.cs" />
+    <Compile Include="Logging\LoggingConfig.cs" />
+    <Compile Include="Dic\IMultiDictionary.cs" />
+    <Compile Include="Dic\JmdicFastReader.cs" />
+    <Compile Include="Dic\JmdicReader.cs" />
+    <Compile Include="Dic\Jmdictionary.cs" />
+    <Compile Include="Format\ContentsInfo.cs" />
+    <Compile Include="Format\WordInfo.cs" />
+    <Compile Include="Text\Kana.cs" />
+    <Compile Include="ContentsBreaker.cs" />
+    <Compile Include="Counter.cs" />
+    <Compile Include="MecabParser.cs" />
+    <Compile Include="MecabReader.cs" />
+    <Compile Include="Options.cs" />
+    <Compile Include="Make\Html\Dom.cs" />
+    <Compile Include="Make\Html\HtmlPrinter.cs" />
+    <Compile Include="Make\Html\HtmlSimplePrinter.cs" />
+    <Compile Include="Make\Html\XHtmlMaker.cs" />
+    <Compile Include="Make\Epub\EpubMaker.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="paket.references" />
-    <None Include="log4net.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="data\dic\ELECTRONIC DICTIONARY RESEARCH AND DEVELOPMENT GROUP.html" />
-    <None Include="data\dic\JMdict_EDICT Project.html" />
-    <None Include="data\dic\JMdict_e">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="data\dic\ELECTRONIC DICTIONARY RESEARCH AND DEVELOPMENT GROUP_files\edrdg.jpg" />
-    <None Include="data\dic\ELECTRONIC DICTIONARY RESEARCH AND DEVELOPMENT GROUP_files\somerights20.gif" />
-    <None Include="data\dic\ELECTRONIC DICTIONARY RESEARCH AND DEVELOPMENT GROUP_files\x-click-but21.gif" />
-    <None Include="data\html\style.css">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="data\epub\style.css">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="data\ipadic\char.bin" />
-    <None Include="data\ipadic\dicrc" />
-    <None Include="data\ipadic\matrix.bin" />
-    <None Include="data\ipadic\sys.dic" />
-    <None Include="data\ipadic\unk.dic" />
-    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\JpAnnotator.Core\JpAnnotator.Core.csproj">
-      <Project>{7873AA65-1CA0-4276-B3DC-565AF66ABB7B}</Project>
-      <Name>JpAnnotator.Core</Name>
-    </ProjectReference>
+    <Folder Include="Utils\" />
+    <Folder Include="Logging\" />
+    <Folder Include="Dic\" />
+    <Folder Include="Format\" />
+    <Folder Include="Text\" />
+    <Folder Include="Make\" />
+    <Folder Include="Make\Html\" />
+    <Folder Include="Make\Epub\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="EPubFactory">

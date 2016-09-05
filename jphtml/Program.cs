@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using EPubFactory;
+using JpAnnotator.Core.Make.Epub;
+using JpAnnotator.Core.Make.Html;
 using jphtml.Core;
 using jphtml.Core.Dic;
 using jphtml.Core.Format;
-using jphtml.Core.Html;
 using jphtml.Logging;
 using jphtml.Utils;
 using NMeCab;
@@ -119,30 +119,7 @@ namespace jphtml
 
         static async Task ConvertHtmlToEpub(ContentsInfo contents)
         {
-            _log.Debug("epub start");
-            var fileName = Path.GetFileNameWithoutExtension(_options.InputFile);
-            var epub = File.Create(Path.Combine(_options.OutputDir, fileName + ".epub"));
-            using (var writer = await EPubWriter.CreateWriterAsync(
-                epub,
-                fileName,
-                _options.Author,
-                _options.BookId))
-            {
-                writer.Publisher = _options.Publisher;
-                foreach (var chapter in contents.ChapterFiles)
-                {
-                    await writer.AddChapterAsync(
-                        Path.GetFileName(chapter.FilePath + ".html"),
-                        Path.GetFileNameWithoutExtension(chapter.FilePath),
-                        chapter.XhtmlContent.ToString());
-                }
-                await writer.AddResourceAsync(
-                    "style.css",
-                    "text/css",
-                    File.ReadAllBytes(Path.Combine(FileSystemUtils.AppDir, "data", "epub", "style.css")));
-                await writer.WriteEndOfPackageAsync();
-            }
-            _log.Debug("epub done");
+            await new EpubMaker(_log, _options).ConvertHtmlToEpub(contents);
         }
     }
 }
