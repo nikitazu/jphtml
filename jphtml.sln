@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jphtml.Tests", "jphtml.Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JpAnnotator", "JpAnnotator\JpAnnotator.csproj", "{431A7C53-F938-4A4F-A071-CF448CD63ECB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JpAnnotator.Core", "JpAnnotator.Core\JpAnnotator.Core.csproj", "{7873AA65-1CA0-4276-B3DC-565AF66ABB7B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -25,5 +27,9 @@ Global
 		{431A7C53-F938-4A4F-A071-CF448CD63ECB}.Debug|x86.Build.0 = Debug|x86
 		{431A7C53-F938-4A4F-A071-CF448CD63ECB}.Release|x86.ActiveCfg = Release|x86
 		{431A7C53-F938-4A4F-A071-CF448CD63ECB}.Release|x86.Build.0 = Release|x86
+		{7873AA65-1CA0-4276-B3DC-565AF66ABB7B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7873AA65-1CA0-4276-B3DC-565AF66ABB7B}.Debug|x86.Build.0 = Debug|Any CPU
+		{7873AA65-1CA0-4276-B3DC-565AF66ABB7B}.Release|x86.ActiveCfg = Release|Any CPU
+		{7873AA65-1CA0-4276-B3DC-565AF66ABB7B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

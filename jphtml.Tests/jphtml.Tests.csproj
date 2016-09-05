@@ -41,9 +41,9 @@
     <Compile Include="Core\Text\KanaTest.cs" />
     <Compile Include="Core\OptionsTest.cs" />
     <Compile Include="Core\ContentsBreakerTest.cs" />
-    <Compile Include="Core\Html\XHtmlMakerTest.cs" />
     <Compile Include="Core\Format\WordInfoTest.cs" />
     <Compile Include="Core\Utils\EnumerableUtilsTest.cs" />
+    <Compile Include="Core\Make\Html\XHtmlMakerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -53,14 +53,19 @@
       <Project>{17DF7A04-B0CE-4829-BDB4-616AB7E33FC1}</Project>
       <Name>jphtml</Name>
     </ProjectReference>
+    <ProjectReference Include="..\JpAnnotator.Core\JpAnnotator.Core.csproj">
+      <Project>{7873AA65-1CA0-4276-B3DC-565AF66ABB7B}</Project>
+      <Name>JpAnnotator.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\" />
     <Folder Include="Core\Dic\" />
     <Folder Include="Core\Text\" />
-    <Folder Include="Core\Html\" />
     <Folder Include="Core\Format\" />
     <Folder Include="Core\Utils\" />
+    <Folder Include="Core\Make\" />
+    <Folder Include="Core\Make\Html\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

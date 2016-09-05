@@ -4,9 +4,8 @@ using jphtml.Core.Text;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 
-namespace jphtml.Core.Html
+namespace JpAnnotator.Core.Make.Html
 {
     public class XHtmlMaker
     {
