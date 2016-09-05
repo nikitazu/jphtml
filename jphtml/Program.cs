@@ -7,14 +7,14 @@ using System.Xml.Linq;
 using JpAnnotator.Core.Make.Epub;
 using JpAnnotator.Core.Make.Html;
 using JpAnnotator.Logging;
-using jphtml.Core;
-using jphtml.Core.Dic;
-using jphtml.Core.Format;
-using jphtml.Utils;
+using JpAnnotator.Core;
+using JpAnnotator.Core.Dic;
+using JpAnnotator.Core.Format;
+using JpAnnotator.Utils;
 using NMeCab;
 using JpAnnotator.Common.Windows;
 
-namespace jphtml
+namespace JpAnnotator
 {
     class MainClass
     {

@@ -1,9 +1,9 @@
 ﻿using NUnit.Framework;
 using System.Text;
-using jphtml.Core;
-using jphtml.Core.Format;
+using JpAnnotator.Core;
+using JpAnnotator.Core.Format;
 
-namespace jphtml.Tests.Core
+namespace JpAnnotator.Tests.Core
 {
 	[TestFixture]
 	public class MecabParserTest

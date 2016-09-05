@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace jphtml.Core.Format
+namespace JpAnnotator.Core.Format
 {
     public class WordInfo
     {

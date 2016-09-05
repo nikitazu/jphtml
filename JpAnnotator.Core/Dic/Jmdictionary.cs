@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace jphtml.Core.Dic
+namespace JpAnnotator.Core.Dic
 {
     public class Jmdictionary : IMultiDictionary
     {

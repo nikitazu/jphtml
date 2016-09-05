@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Reflection;
 
-namespace jphtml
+namespace JpAnnotator
 {
     public static class FileSystemUtils
     {

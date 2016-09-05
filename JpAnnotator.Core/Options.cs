@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace jphtml.Core
+namespace JpAnnotator.Core
 {
     public class Options
     {

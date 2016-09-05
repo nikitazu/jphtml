@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using JpAnnotator.Logging;
 
-namespace jphtml.Core
+namespace JpAnnotator.Core
 {
     public class Counter
     {

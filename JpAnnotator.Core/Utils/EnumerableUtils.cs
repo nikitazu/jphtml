@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace jphtml.Utils
+namespace JpAnnotator.Utils
 {
     public static class EnumerableUtils
     {

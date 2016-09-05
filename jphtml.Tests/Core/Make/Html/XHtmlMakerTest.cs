@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Linq;
 using JpAnnotator.Core.Make.Html;
-using jphtml.Core.Format;
+using JpAnnotator.Core.Format;
 using NUnit.Framework;
 
-namespace jphtml.Tests.Core.Make.Html
+namespace JpAnnotator.Tests.Core.Make.Html
 {
     [TestFixture]
     public class XHtmlMakerTest

@@ -1,4 +1,4 @@
-﻿namespace jphtml.Core.Dic
+﻿namespace JpAnnotator.Core.Dic
 {
     public interface IMultiDictionary
     {

@@ -2,7 +2,7 @@
 using System;
 using System.Text.RegularExpressions;
 
-namespace jphtml.Core.Text
+namespace JpAnnotator.Core.Text
 {
     public static class Kana
     {

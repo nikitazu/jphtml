@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
-using jphtml.Core.Dic;
+using JpAnnotator.Core.Dic;
 
-namespace jphtml.Tests.Core.Dic
+namespace JpAnnotator.Tests.Core.Dic
 {
     [TestFixture]
     public class JmdictionaryTest

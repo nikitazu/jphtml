@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
 using JpAnnotator.Logging;
-using jphtml.Core.Format;
+using JpAnnotator.Core.Format;
 using System.IO;
 using EPubFactory;
-using jphtml.Core;
-using jphtml;
+using JpAnnotator.Core;
+using JpAnnotator;
 
 namespace JpAnnotator.Core.Make.Epub
 {

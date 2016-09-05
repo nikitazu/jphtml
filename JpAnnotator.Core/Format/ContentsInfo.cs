@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Linq;
 
-namespace jphtml.Core.Format
+namespace JpAnnotator.Core.Format
 {
     public class ContentsInfo
     {

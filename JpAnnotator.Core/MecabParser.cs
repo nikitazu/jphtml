@@ -1,7 +1,7 @@
 ﻿using System.Text;
-using jphtml.Core.Format;
+using JpAnnotator.Core.Format;
 
-namespace jphtml.Core
+namespace JpAnnotator.Core
 {
 	public class MecabParser
 	{

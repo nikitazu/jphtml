@@ -1,8 +1,8 @@
 ﻿using NUnit.Framework;
 using System.IO;
-using jphtml.Core;
+using JpAnnotator.Core;
 
-namespace jphtml.Tests.Core
+namespace JpAnnotator.Tests.Core
 {
 	[TestFixture]
 	public class MecabReaderTest

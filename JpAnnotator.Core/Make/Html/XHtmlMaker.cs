@@ -1,6 +1,6 @@
 ﻿using System.Xml.Linq;
-using jphtml.Core.Format;
-using jphtml.Core.Text;
+using JpAnnotator.Core.Format;
+using JpAnnotator.Core.Text;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

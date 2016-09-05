@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using NUnit.Framework;
-using jphtml.Utils;
+using JpAnnotator.Utils;
 
-namespace jphtml.Tests.Utils
+namespace JpAnnotator.Tests.Utils
 {
     [TestFixture]
     public class EnumerableUtilsTest

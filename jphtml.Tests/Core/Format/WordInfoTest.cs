@@ -1,7 +1,7 @@
-﻿using jphtml.Core.Format;
+﻿using JpAnnotator.Core.Format;
 using NUnit.Framework;
 
-namespace jphtml.Tests.Core.Format
+namespace JpAnnotator.Tests.Core.Format
 {
     [TestFixture]
     public class WordInfoTest

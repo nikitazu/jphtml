@@ -4,7 +4,7 @@ using System.IO;
 using System.Diagnostics;
 using JpAnnotator.Logging;
 
-namespace jphtml.Core.Dic
+namespace JpAnnotator.Core.Dic
 {
     public class JmdicFastReader
     {

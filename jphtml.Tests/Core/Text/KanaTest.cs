@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
-using jphtml.Core.Text;
+using JpAnnotator.Core.Text;
 
-namespace jphtml.Tests
+namespace JpAnnotator.Tests
 {
     [TestFixture]
     public class KanaTest

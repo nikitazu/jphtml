@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
-using jphtml.Core;
+using JpAnnotator.Core;
 
-namespace jphtml.Tests.Core
+namespace JpAnnotator.Tests.Core
 {
     [TestFixture]
     public class OptionsTest
