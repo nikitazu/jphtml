@@ -54,45 +54,16 @@ namespace JpAnnotator
 
         partial void OpenButtonClicked(NSObject sender)
         {
-            _log.Debug("open file");
-
-            var dlg = NSOpenPanel.OpenPanel;
-            dlg.CanChooseFiles = true;
-            dlg.CanChooseDirectories = false;
-            dlg.AllowedFileTypes = new string[] { "txt", "md" };
-
-            if (dlg.RunModal() == 1)
+            string inputFile;
+            if (OpenFileDialog("Choose source file", out inputFile))
             {
-                // Nab the first file
-                var url = dlg.Urls[0];
-
-                if (url != null)
-                {
-                    FileToConvert.StringValue = url.Path;
-                }
+                FileToConvert.StringValue = inputFile;
             }
-
-            _log.Debug("open file end");
         }
 
         async partial void ConvertButtonClicked(NSObject sender)
         {
             _log.Debug($"Convert {FileToConvert.StringValue}");
-
-            var dlg = new NSSavePanel();
-            dlg.Title = "Save epub target file";
-            dlg.AllowedFileTypes = new string[] { "epub" };
-            dlg.NameFieldStringValue = string.IsNullOrWhiteSpace(FileToConvert.StringValue) ? "Unknown" : Path.GetFileNameWithoutExtension(FileToConvert.StringValue);
-
-            if (dlg.RunModal() == 1)
-            {
-
-            }
-            else
-            {
-                InfoDialog("Target file wasn't chosen", "Conversion is cancelled because the target file wasn't chosen");
-                return;
-            }
 
             if (string.IsNullOrWhiteSpace(FileToConvert.StringValue))
             {
@@ -106,7 +77,13 @@ namespace JpAnnotator
                 return;
             }
 
-            var outputFile = dlg.Url.Path;
+            string outputFile;
+            string filename = string.IsNullOrWhiteSpace(FileToConvert.StringValue) ? string.Empty : Path.GetFileNameWithoutExtension(FileToConvert.StringValue);
+            if (!SaveFileDialog("Save epub as file", filename, out outputFile))
+            {
+                InfoDialog("Target file wasn't chosen", "Conversion is cancelled because the target file wasn't chosen");
+                return;
+            }
 
             var options = new Options(new string[]
             {
@@ -155,6 +132,50 @@ namespace JpAnnotator
             }
 
             _log.Debug("end");
+        }
+
+        bool OpenFileDialog(string title, out string path)
+        {
+            path = null;
+
+            var dlg = NSOpenPanel.OpenPanel;
+            dlg.Title = title;
+            dlg.CanChooseFiles = true;
+            dlg.CanChooseDirectories = false;
+            dlg.AllowedFileTypes = new string[] { "txt", "md" };
+
+            if (dlg.RunModal() == 1)
+            {
+                var url = dlg.Urls[0];
+
+                if (url != null)
+                {
+                    path = url.Path;
+                }
+            }
+
+            return path != null;
+        }
+
+        bool SaveFileDialog(string title, string filename, out string path)
+        {
+            path = null;
+
+            var dlg = new NSSavePanel();
+            dlg.Title = title;
+            dlg.AllowedFileTypes = new string[] { "epub" };
+
+            if (!string.IsNullOrWhiteSpace(filename))
+            {
+                dlg.NameFieldStringValue = filename;
+            }
+
+            if (dlg.RunModal() == 1 && dlg.Url != null)
+            {
+                path = dlg.Url.Path;
+            }
+
+            return path != null;
         }
 
         void InfoDialog(string title, string message)
