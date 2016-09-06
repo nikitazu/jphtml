@@ -108,6 +108,12 @@ namespace JpAnnotator
                 "--chapterMarkers", "第1章,第2章,第3章,第4章,第5章,第6章,第7章,第8章,第9章,第10章,第11章,第12章,第13章,第14章,第15章,第16章,第17章,第18章,第19章,第20章,第21章,第22章,第23章,第24"
             });
 
+            OpenButton.Enabled = false;
+            ConvertButton.Enabled = false;
+            FileToConvert.Enabled = false;
+            ConversionStatus.StringValue = "Conversion started...";
+            ConversionProgress.StartAnimation(null);
+
             var _htmlToEpub = new HtmlToEpubConverter(
                 new Counter(_log),
                 _log,
@@ -130,8 +136,15 @@ namespace JpAnnotator
             options.Print();
 
             await _htmlToEpub.Convert();
+
+
+            OpenButton.Enabled = true;
+            ConvertButton.Enabled = true;
+            FileToConvert.Enabled = true;
+            ConversionStatus.StringValue = "Conversion done";
+            ConversionProgress.StopAnimation(null);
+
             _log.Debug("end");
-            InfoDialog("Done", $"Your epub file is ready: {outputFile}");
         }
 
         void InfoDialog(string title, string message)
