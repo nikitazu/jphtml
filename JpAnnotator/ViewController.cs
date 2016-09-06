@@ -9,6 +9,7 @@ using JpAnnotator.Core.Dic;
 using JpAnnotator.Core.Make.Epub;
 using JpAnnotator.Core.Make.Html;
 using JpAnnotator.Logging;
+using System.Threading.Tasks;
 
 namespace JpAnnotator
 {
@@ -16,12 +17,18 @@ namespace JpAnnotator
     {
         readonly IResourceLocator _resourceLocator;
         readonly ILogWriter _log;
+        readonly Task<JmdicFastReader> _jmdicReaderTask;
 
         public ViewController(IntPtr handle) : base(handle)
         {
             _resourceLocator = new MacResourceLocator();
             _log = new LoggingConfig(_resourceLocator).CreateRootLogWriter();
             _log.Debug("start");
+            _jmdicReaderTask = Task.Factory.StartNew(() => new JmdicFastReader(
+                _log,
+                _resourceLocator,
+                new Jmdictionary()
+            ));
         }
 
         public override void ViewDidLoad()
@@ -125,11 +132,7 @@ namespace JpAnnotator
                     new MecabReader(),
                     new MecabBackend(),
                     new XHtmlMaker(),
-                    new JmdicFastReader(
-                        _log,
-                        _resourceLocator,
-                        new Jmdictionary()
-                    ),
+                    await _jmdicReaderTask,
                     new ContentsBreaker(options),
                     new EpubMaker(_log, options, _resourceLocator)
                 );
