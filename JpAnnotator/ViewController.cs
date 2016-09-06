@@ -1,23 +1,25 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using AppKit;
 using Foundation;
 using JpAnnotator.Common.Mac;
+using JpAnnotator.Common.Mac.OperatingSystem;
 using JpAnnotator.Common.Portable.Bundling;
+using JpAnnotator.Common.Portable.Gui;
+using JpAnnotator.Common.Portable.OperatingSystem;
 using JpAnnotator.Core;
 using JpAnnotator.Core.Dic;
 using JpAnnotator.Core.Make.Epub;
 using JpAnnotator.Core.Make.Html;
 using JpAnnotator.Logging;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using JpAnnotator.Common.Portable.OperatingSystem;
-using JpAnnotator.Common.Mac.OperatingSystem;
+using JpAnnotator.Common.Mac.Gui;
 
 namespace JpAnnotator
 {
     public partial class ViewController : NSViewController
     {
+        readonly IDialogCreator _dialog;
         readonly INativeFileManager _finder;
         readonly IResourceLocator _resourceLocator;
         readonly ILogWriter _log;
@@ -25,6 +27,7 @@ namespace JpAnnotator
 
         public ViewController(IntPtr handle) : base(handle)
         {
+            _dialog = new CocoaDialogCreator();
             _finder = new FinderFileManager();
             _resourceLocator = new MacResourceLocator();
             _log = new LoggingConfig(_resourceLocator).CreateRootLogWriter();
@@ -60,7 +63,7 @@ namespace JpAnnotator
         partial void OpenButtonClicked(NSObject sender)
         {
             string inputFile;
-            if (OpenFileDialog("Choose source file", out inputFile))
+            if (_dialog.OpenFile("Choose source file", "txt,md", out inputFile))
             {
                 FileToConvert.StringValue = inputFile;
             }
@@ -72,21 +75,21 @@ namespace JpAnnotator
 
             if (string.IsNullOrWhiteSpace(FileToConvert.StringValue))
             {
-                InfoDialog("Source file wasn't chosen", "Conversion is cancelled because the source file wasn't chosen");
+                _dialog.Info("Source file wasn't chosen", "Conversion is cancelled because the source file wasn't chosen");
                 return;
             }
 
             if (!File.Exists(FileToConvert.StringValue))
             {
-                InfoDialog("Source file doesn't exist", "Conversion is cancelled because the source file doesn't exist");
+                _dialog.Info("Source file doesn't exist", "Conversion is cancelled because the source file doesn't exist");
                 return;
             }
 
             string outputFile;
             string filename = string.IsNullOrWhiteSpace(FileToConvert.StringValue) ? string.Empty : Path.GetFileNameWithoutExtension(FileToConvert.StringValue);
-            if (!SaveFileDialog("Save epub as file", filename, out outputFile))
+            if (!_dialog.SaveFile("Save epub as file", "epub", filename, out outputFile))
             {
-                InfoDialog("Target file wasn't chosen", "Conversion is cancelled because the target file wasn't chosen");
+                _dialog.Info("Target file wasn't chosen", "Conversion is cancelled because the target file wasn't chosen");
                 return;
             }
 
@@ -125,7 +128,7 @@ namespace JpAnnotator
             }
             catch (Exception ex)
             {
-                UnexpectedError(ex);
+                _dialog.UnexpectedError(ex);
             }
             finally
             {
@@ -139,70 +142,6 @@ namespace JpAnnotator
             }
 
             _log.Debug("end");
-        }
-
-        bool OpenFileDialog(string title, out string path)
-        {
-            path = null;
-
-            var dlg = NSOpenPanel.OpenPanel;
-            dlg.Title = title;
-            dlg.CanChooseFiles = true;
-            dlg.CanChooseDirectories = false;
-            dlg.AllowedFileTypes = new string[] { "txt", "md" };
-
-            if (dlg.RunModal() == 1)
-            {
-                var url = dlg.Urls[0];
-
-                if (url != null)
-                {
-                    path = url.Path;
-                }
-            }
-
-            return path != null;
-        }
-
-        bool SaveFileDialog(string title, string filename, out string path)
-        {
-            path = null;
-
-            var dlg = new NSSavePanel();
-            dlg.Title = title;
-            dlg.AllowedFileTypes = new string[] { "epub" };
-
-            if (!string.IsNullOrWhiteSpace(filename))
-            {
-                dlg.NameFieldStringValue = filename;
-            }
-
-            if (dlg.RunModal() == 1 && dlg.Url != null)
-            {
-                path = dlg.Url.Path;
-            }
-
-            return path != null;
-        }
-
-        void InfoDialog(string title, string message)
-        {
-            new NSAlert
-            {
-                AlertStyle = NSAlertStyle.Informational,
-                InformativeText = message,
-                MessageText = title,
-            }.RunModal();
-        }
-
-        void UnexpectedError(Exception ex)
-        {
-            new NSAlert
-            {
-                AlertStyle = NSAlertStyle.Critical,
-                InformativeText = ex.ToString(),
-                MessageText = "Unexpected error",
-            }.RunModal();
         }
     }
 }

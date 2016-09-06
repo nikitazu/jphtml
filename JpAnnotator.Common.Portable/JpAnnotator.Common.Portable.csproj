@@ -35,10 +35,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Bundling\IResourceLocator.cs" />
     <Compile Include="OperatingSystem\INativeFileManager.cs" />
+    <Compile Include="Gui\IDialogCreator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Bundling\" />
     <Folder Include="OperatingSystem\" />
+    <Folder Include="Gui\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>

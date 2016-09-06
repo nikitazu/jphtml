@@ -83,6 +83,8 @@
   <ItemGroup>
     <Folder Include="Resources\" />
     <Folder Include="data\" />
+    <Folder Include="Common.Mac\" />
+    <Folder Include="Common.Mac\Gui\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -102,6 +104,7 @@
     <Compile Include="ViewController.designer.cs">
       <DependentUpon>ViewController.cs</DependentUpon>
     </Compile>
+    <Compile Include="Common.Mac\Gui\CocoaDialogCreator.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Main.storyboard" />
