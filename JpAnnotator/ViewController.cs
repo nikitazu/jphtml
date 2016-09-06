@@ -125,7 +125,6 @@ namespace JpAnnotator
                 new XHtmlMaker(),
                 new JmdicFastReader(
                     _log,
-                    options,
                     _resourceLocator,
                     new Jmdictionary()
                 ),

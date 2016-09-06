@@ -10,14 +10,15 @@ namespace JpAnnotator.Core.Dic
     public class JmdicFastReader
     {
         readonly ILogWriter _log;
-        readonly Options _options;
         readonly string _path;
         readonly IMultiDictionary _dictionary;
 
-        public JmdicFastReader(ILogWriter log, Options options, IResourceLocator resourceLocator, IMultiDictionary dictionary)
+        public JmdicFastReader(
+            ILogWriter log,
+            IResourceLocator resourceLocator,
+            IMultiDictionary dictionary)
         {
             _log = log;
-            _options = options;
             _path = Path.Combine(resourceLocator.ResourcesPath, "data", "dic", "JMdict_e");
             _dictionary = dictionary;
 
@@ -25,10 +26,7 @@ namespace JpAnnotator.Core.Dic
             sw.Start();
             _log.Debug($"Indexing {_path}");
 
-            if (!_options.Simulation)
-            {
-                ReadDictionary();
-            }
+            ReadDictionary();
 
             sw.Stop();
             _log.Debug($"done in {sw.ElapsedMilliseconds}ms");

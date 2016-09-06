@@ -77,13 +77,10 @@ namespace JpAnnotator.Core
                 _breaker.BreakInMemory(_options.InputFile, contents);
             }
 
-            if (!_options.Simulation)
+            foreach (var chapter in contents.ChapterFiles)
             {
-                foreach (var chapter in contents.ChapterFiles)
-                {
-                    _log.Debug($"Html for chapter {chapter.Name}");
-                    AnnotateMappingAndConvertToXhtml(chapter);
-                }
+                _log.Debug($"Html for chapter {chapter.Name}");
+                AnnotateMappingAndConvertToXhtml(chapter);
             }
             return contents;
         }

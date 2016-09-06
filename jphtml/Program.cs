@@ -29,7 +29,6 @@ namespace JpAnnotator
                 new XHtmlMaker(),
                 new JmdicFastReader(
                     log,
-                    options,
                     resourceLocator,
                     new Jmdictionary()
                 ),
