@@ -73,8 +73,9 @@ namespace JpAnnotator
             _log.Debug($"Convert {FileToConvert.StringValue}");
 
             var dlg = new NSSavePanel();
-            dlg.Title = "Save Text File";
+            dlg.Title = "Save epub target file";
             dlg.AllowedFileTypes = new string[] { "epub" };
+            dlg.NameFieldStringValue = string.IsNullOrWhiteSpace(FileToConvert.StringValue) ? "Unknown" : Path.GetFileNameWithoutExtension(FileToConvert.StringValue);
             if (dlg.RunModal() == 1)
             {
 
