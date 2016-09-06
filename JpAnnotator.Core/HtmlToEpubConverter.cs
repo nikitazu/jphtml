@@ -59,22 +59,16 @@ namespace JpAnnotator.Core
             _log.Debug("Convert start");
             _counter.Start();
 
-            if (Directory.Exists(_options.OutputDir))
-            {
-                Directory.Delete(_options.OutputDir, recursive: true);
-            }
-            Directory.CreateDirectory(_options.OutputDir);
+            ContentsInfo contents = await Task.Factory.StartNew(CreateAnnotatedXhtmlContents);
 
-            ContentsInfo contents = await Task.Factory.StartNew(CreateXhtml);
-
-            await ConvertHtmlToEpub(contents).ContinueWith(_ =>
+            await ConvertXhtmlToEpub(contents).ContinueWith(_ =>
             {
                 _counter.Stop();
                 _log.Debug("Convert end");
             });
         }
 
-        ContentsInfo CreateXhtml()
+        ContentsInfo CreateAnnotatedXhtmlContents()
         {
             ContentsInfo contents;
             using (var inputReader = new StreamReader(_options.InputFile, Encoding.UTF8))
@@ -83,31 +77,18 @@ namespace JpAnnotator.Core
                 _breaker.BreakInMemory(_options.InputFile, contents);
             }
 
-            if (_log.IsDebug)
-            {
-                _log.Debug("Chapter mapping");
-                foreach (var chapter in contents.ChapterFiles)
-                {
-                    _log.Debug($"Chapter {chapter.FilePath} [{chapter.StartLine}, {chapter.LengthInLines}]");
-                }
-            }
-
             if (!_options.Simulation)
             {
                 foreach (var chapter in contents.ChapterFiles)
                 {
-                    _log.Debug($"Html for chapter {chapter.FilePath}");
-                    ConvertFileToHtml(chapter);
+                    _log.Debug($"Html for chapter {chapter.Name}");
+                    AnnotateMappingAndConvertToXhtml(chapter);
                 }
-                File.Copy(
-                    Path.Combine(_resourceLocator.ResourcesPath, "data", "html", "style.css"),
-                    Path.Combine(_options.OutputDir, "style.css"),
-                    overwrite: true);
             }
             return contents;
         }
 
-        void ConvertFileToHtml(ContentsMapping chapterMapping)
+        void AnnotateMappingAndConvertToXhtml(ContentsMapping chapterMapping)
         {
             var xhtmlParagraphs = new List<XElement>();
             foreach (var plainTextLine in chapterMapping.PlainTextContent)
@@ -130,7 +111,7 @@ namespace JpAnnotator.Core
             chapterMapping.XhtmlContent = _xhtmlMaker.MakeRootNode(xhtmlParagraphs);
         }
 
-        async Task ConvertHtmlToEpub(ContentsInfo contents)
+        async Task ConvertXhtmlToEpub(ContentsInfo contents)
         {
             await _epubMaker.ConvertHtmlToEpub(contents);
         }

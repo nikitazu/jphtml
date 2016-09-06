@@ -26,29 +26,31 @@ namespace JpAnnotator.Core.Make.Epub
         public async Task ConvertHtmlToEpub(ContentsInfo contents)
         {
             _log.Debug("epub start");
-            var fileName = Path.GetFileNameWithoutExtension(_options.InputFile);
-            var epub = File.Create(Path.Combine(_options.OutputDir, fileName + ".epub"));
-            using (var writer = await EPubWriter.CreateWriterAsync(
-                epub,
-                fileName,
+            using (var epubStream = File.Create(_options.OutputFile))
+            using (var epubWriter = await EPubWriter.CreateWriterAsync(
+                epubStream,
+                Path.GetFileNameWithoutExtension(_options.OutputFile),
                 _options.Author,
                 _options.BookId))
             {
-                writer.Publisher = _options.Publisher;
+                epubWriter.Publisher = _options.Publisher;
                 foreach (var chapter in contents.ChapterFiles)
                 {
-                    await writer.AddChapterAsync(
-                        Path.GetFileName(chapter.FilePath + ".html"),
-                        Path.GetFileNameWithoutExtension(chapter.FilePath),
+                    await epubWriter.AddChapterAsync(
+                        chapter.Name + ".html",
+                        Path.GetFileNameWithoutExtension(chapter.Name),
                         chapter.XhtmlContent.ToString());
                 }
-                await writer.AddResourceAsync(
+                await epubWriter.AddResourceAsync(
                     "style.css",
                     "text/css",
                     File.ReadAllBytes(Path.Combine(_resourceLocator.ResourcesPath, "data", "epub", "style.css")));
-                await writer.WriteEndOfPackageAsync();
+
+                await epubWriter.WriteEndOfPackageAsync().ContinueWith(_ =>
+                {
+                    _log.Debug("epub done");
+                });
             }
-            _log.Debug("epub done");
         }
     }
 }

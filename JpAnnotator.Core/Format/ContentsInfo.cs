@@ -10,7 +10,7 @@ namespace JpAnnotator.Core.Format
 
     public class ContentsMapping
     {
-        public string FilePath { get; set; }
+        public string Name { get; set; }
         public int StartLine { get; set; }
         public int LengthInLines { get; set; }
         public List<string> PlainTextContent { get; set; }

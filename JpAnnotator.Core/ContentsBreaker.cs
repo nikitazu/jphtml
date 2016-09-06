@@ -1,31 +1,28 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
 using JpAnnotator.Core.Format;
 
 namespace JpAnnotator.Core
 {
     public class ContentsBreaker
     {
-        readonly string _outputDir;
-        readonly IReadOnlyList<string> _chapterMarkers;
+        readonly Options _options;
 
-        public ContentsBreaker(string outputDir, IReadOnlyList<string> chapterMarkers)
+        public ContentsBreaker(Options options)
         {
-            _outputDir = outputDir;
-            _chapterMarkers = chapterMarkers ?? new List<string>();
+            _options = options;
         }
 
         public ContentsInfo Analyze(TextReader reader)
         {
             var contents = new ContentsInfo
             {
-                ChapterFiles = new List<ContentsMapping>(_chapterMarkers.Count + 1)
+                ChapterFiles = new List<ContentsMapping>(_options.ChapterMarkers.Count + 1)
             };
 
-            var counts = _chapterMarkers.Select((marker, i) => CountLinesUntilMarker(reader, marker, i)).ToArray();
+            var counts = _options.ChapterMarkers.Select((marker, i) => CountLinesUntilMarker(reader, marker, i)).ToArray();
 
             int startLine = 0;
             int chapterIndex = 0;
@@ -33,7 +30,7 @@ namespace JpAnnotator.Core
             {
                 contents.ChapterFiles.Add(new ContentsMapping()
                 {
-                    FilePath = $"{_outputDir}/ch{chapterIndex}",
+                    Name = $"ch{chapterIndex}",
                     StartLine = startLine,
                     LengthInLines = counts[chapterIndex]
                 });
@@ -42,7 +39,7 @@ namespace JpAnnotator.Core
 
             contents.ChapterFiles.Add(new ContentsMapping()
             {
-                FilePath = $"{_outputDir}/ch{chapterIndex}",
+                Name = $"ch{chapterIndex}",
                 StartLine = startLine,
                 LengthInLines = CountLinesUntilEof(reader) + (startLine > 0 ? 1 : 0)
             });

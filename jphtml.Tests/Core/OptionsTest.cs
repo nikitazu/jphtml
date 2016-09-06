@@ -13,7 +13,7 @@ namespace JpAnnotator.Tests.Core
         {
             _options = new Options(new string[] {
                 "--inputFile", "path/to/in",
-                "--outputDir", "path/to/out",
+                "--outputFile", "path/to/out",
                 "--chapterMarkers", "a,b,c",
                 "--simulation", "true",
                 "--author", "murakami",
@@ -31,7 +31,7 @@ namespace JpAnnotator.Tests.Core
         [Test]
         public void OutputFileShouldParse()
         {
-            Assert.AreEqual("path/to/out", _options.OutputDir);
+            Assert.AreEqual("path/to/out", _options.OutputFile);
         }
 
         [Test]

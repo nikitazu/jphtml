@@ -7,7 +7,7 @@ namespace JpAnnotator.Core
     public class Options
     {
         public string InputFile { get; } = string.Empty;
-        public string OutputDir { get; } = string.Empty;
+        public string OutputFile { get; } = string.Empty;
         public IReadOnlyList<string> ChapterMarkers { get; } = new List<string>();
         public bool Simulation { get; } = false;
         public string Author { get; } = "Unknown";
@@ -24,7 +24,7 @@ namespace JpAnnotator.Core
                 switch (key)
                 {
                     case "--inputFile": InputFile = value; break;
-                    case "--outputDir": OutputDir = value; break;
+                    case "--outputFile": OutputFile = value; break;
                     case "--chapterMarkers": ChapterMarkers = value.Split(',').ToArray(); break;
                     case "--simulation": Simulation = value == "true"; break;
                     case "--author": Author = value; break;
@@ -37,7 +37,7 @@ namespace JpAnnotator.Core
         public void Print()
         {
             Console.WriteLine($"Input file: {InputFile}");
-            Console.WriteLine($"Output dir: {OutputDir}");
+            Console.WriteLine($"Output file: {OutputFile}");
             Console.WriteLine($"Chapter markers: {string.Join(",", ChapterMarkers)}");
             Console.WriteLine($"Simulation: {Simulation}");
             Console.WriteLine($"Author: {Author}");

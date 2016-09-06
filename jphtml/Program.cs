@@ -33,10 +33,7 @@ namespace JpAnnotator
                     resourceLocator,
                     new Jmdictionary()
                 ),
-                new ContentsBreaker(
-                    options.OutputDir,
-                    options.ChapterMarkers
-                ),
+                new ContentsBreaker(options),
                 new EpubMaker(log, options, resourceLocator)
             );
 

@@ -115,12 +115,12 @@ namespace JpAnnotator
                 return;
             }
 
-            var outputDir = Path.GetDirectoryName(dlg.Url.Path);
+            var outputFile = dlg.Url.Path;
 
             var options = new Options(new string[]
             {
                 "--inputFile",  FileToConvert.StringValue,
-                "--outputDir", Path.Combine(outputDir, Path.GetFileNameWithoutExtension(FileToConvert.StringValue)),
+                "--outputFile", outputFile,
                 "--chapterMarkers", "第1章,第2章,第3章,第4章,第5章,第6章,第7章,第8章,第9章,第10章,第11章,第12章,第13章,第14章,第15章,第16章,第17章,第18章,第19章,第20章,第21章,第22章,第23章,第24"
             });
 
@@ -139,10 +139,7 @@ namespace JpAnnotator
                     _resourceLocator,
                     new Jmdictionary()
                 ),
-                new ContentsBreaker(
-                    options.OutputDir,
-                    options.ChapterMarkers
-                ),
+                new ContentsBreaker(options),
                 new EpubMaker(_log, options, _resourceLocator)
             );
 
