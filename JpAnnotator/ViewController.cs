@@ -68,7 +68,7 @@ namespace JpAnnotator
             _log.Debug("open file end");
         }
 
-        partial void ConvertButtonClicked(NSObject sender)
+        async partial void ConvertButtonClicked(NSObject sender)
         {
             _log.Debug($"Convert {FileToConvert.StringValue}");
 
@@ -129,10 +129,9 @@ namespace JpAnnotator
 
             options.Print();
 
-            _htmlToEpub.Convert().ContinueWith(_ =>
-            {
-                _log.Debug("end");
-            });
+            await _htmlToEpub.Convert();
+            _log.Debug("end");
+            InfoDialog("Done", $"Your epub file is ready: {outputFile}");
         }
 
         void InfoDialog(string title, string message)
