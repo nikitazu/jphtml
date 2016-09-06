@@ -114,34 +114,42 @@ namespace JpAnnotator
             ConversionStatus.StringValue = "Conversion started...";
             ConversionProgress.StartAnimation(null);
 
-            var _htmlToEpub = new HtmlToEpubConverter(
-                new Counter(_log),
-                _log,
-                options,
-                _resourceLocator,
-                new MecabParser(),
-                new MecabReader(),
-                new MecabBackend(),
-                new XHtmlMaker(),
-                new JmdicFastReader(
+            try
+            {
+                var _htmlToEpub = new HtmlToEpubConverter(
+                    new Counter(_log),
                     _log,
+                    options,
                     _resourceLocator,
-                    new Jmdictionary()
-                ),
-                new ContentsBreaker(options),
-                new EpubMaker(_log, options, _resourceLocator)
-            );
+                    new MecabParser(),
+                    new MecabReader(),
+                    new MecabBackend(),
+                    new XHtmlMaker(),
+                    new JmdicFastReader(
+                        _log,
+                        _resourceLocator,
+                        new Jmdictionary()
+                    ),
+                    new ContentsBreaker(options),
+                    new EpubMaker(_log, options, _resourceLocator)
+                );
 
-            options.Print();
+                options.Print();
 
-            await _htmlToEpub.Convert();
-
-
-            OpenButton.Enabled = true;
-            ConvertButton.Enabled = true;
-            FileToConvert.Enabled = true;
-            ConversionStatus.StringValue = "Conversion done";
-            ConversionProgress.StopAnimation(null);
+                await _htmlToEpub.Convert();
+            }
+            catch (Exception ex)
+            {
+                UnexpectedError(ex);
+            }
+            finally
+            {
+                OpenButton.Enabled = true;
+                ConvertButton.Enabled = true;
+                FileToConvert.Enabled = true;
+                ConversionStatus.StringValue = "Conversion done";
+                ConversionProgress.StopAnimation(null);
+            }
 
             _log.Debug("end");
         }
@@ -153,6 +161,16 @@ namespace JpAnnotator
                 AlertStyle = NSAlertStyle.Informational,
                 InformativeText = message,
                 MessageText = title,
+            }.RunModal();
+        }
+
+        void UnexpectedError(Exception ex)
+        {
+            new NSAlert
+            {
+                AlertStyle = NSAlertStyle.Critical,
+                InformativeText = ex.ToString(),
+                MessageText = "Unexpected error",
             }.RunModal();
         }
     }
