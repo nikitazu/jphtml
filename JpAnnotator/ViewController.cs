@@ -45,6 +45,29 @@ namespace JpAnnotator
             }
         }
 
+        partial void OpenButtonClicked(NSObject sender)
+        {
+            _log.Debug("open file");
+
+            var dlg = NSOpenPanel.OpenPanel;
+            dlg.CanChooseFiles = true;
+            dlg.CanChooseDirectories = false;
+            dlg.AllowedFileTypes = new string[] { "txt", "html", "md", "css" };
+
+            if (dlg.RunModal() == 1)
+            {
+                // Nab the first file
+                var url = dlg.Urls[0];
+
+                if (url != null)
+                {
+                    FileToConvert.StringValue = url.Path;
+                }
+            }
+
+            _log.Debug("open file end");
+        }
+
         partial void ConvertButtonClicked(NSObject sender)
         {
             _log.Debug($"Convert {FileToConvert.StringValue}");

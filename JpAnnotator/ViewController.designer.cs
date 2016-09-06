@@ -17,6 +17,9 @@ namespace JpAnnotator
 
 		[Action ("ConvertButtonClicked:")]
 		partial void ConvertButtonClicked (Foundation.NSObject sender);
+
+		[Action ("OpenButtonClicked:")]
+		partial void OpenButtonClicked (Foundation.NSObject sender);
 		
 		void ReleaseDesignerOutlets ()
 		{
