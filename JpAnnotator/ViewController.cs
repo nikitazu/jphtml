@@ -76,43 +76,26 @@ namespace JpAnnotator
             dlg.Title = "Save epub target file";
             dlg.AllowedFileTypes = new string[] { "epub" };
             dlg.NameFieldStringValue = string.IsNullOrWhiteSpace(FileToConvert.StringValue) ? "Unknown" : Path.GetFileNameWithoutExtension(FileToConvert.StringValue);
+
             if (dlg.RunModal() == 1)
             {
 
             }
             else
             {
-                var alert = new NSAlert()
-                {
-                    AlertStyle = NSAlertStyle.Informational,
-                    InformativeText = "Conversion is cancelled because the target file wasn't chosen",
-                    MessageText = "Target file wasn't chosen",
-                };
-                alert.RunModal();
+                InfoDialog("Target file wasn't chosen", "Conversion is cancelled because the target file wasn't chosen");
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(FileToConvert.StringValue))
             {
-                var alert = new NSAlert()
-                {
-                    AlertStyle = NSAlertStyle.Informational,
-                    InformativeText = "Conversion is cancelled because the source file wasn't chosen",
-                    MessageText = "Source file wasn't chosen",
-                };
-                alert.RunModal();
+                InfoDialog("Source file wasn't chosen", "Conversion is cancelled because the source file wasn't chosen");
                 return;
             }
 
             if (!File.Exists(FileToConvert.StringValue))
             {
-                var alert = new NSAlert()
-                {
-                    AlertStyle = NSAlertStyle.Informational,
-                    InformativeText = "Conversion is cancelled because the source file doesn't exist",
-                    MessageText = "Source file doesn't exist",
-                };
-                alert.RunModal();
+                InfoDialog("Source file doesn't exist", "Conversion is cancelled because the source file doesn't exist");
                 return;
             }
 
@@ -150,6 +133,16 @@ namespace JpAnnotator
             {
                 _log.Debug("end");
             });
+        }
+
+        void InfoDialog(string title, string message)
+        {
+            new NSAlert
+            {
+                AlertStyle = NSAlertStyle.Informational,
+                InformativeText = message,
+                MessageText = title,
+            }.RunModal();
         }
     }
 }
