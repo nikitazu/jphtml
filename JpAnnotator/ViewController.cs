@@ -52,7 +52,7 @@ namespace JpAnnotator
             var dlg = NSOpenPanel.OpenPanel;
             dlg.CanChooseFiles = true;
             dlg.CanChooseDirectories = false;
-            dlg.AllowedFileTypes = new string[] { "txt", "html", "md", "css" };
+            dlg.AllowedFileTypes = new string[] { "txt", "md" };
 
             if (dlg.RunModal() == 1)
             {
