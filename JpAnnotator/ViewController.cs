@@ -10,17 +10,22 @@ using JpAnnotator.Core.Make.Epub;
 using JpAnnotator.Core.Make.Html;
 using JpAnnotator.Logging;
 using System.Threading.Tasks;
+using System.Diagnostics;
+using JpAnnotator.Common.Portable.OperatingSystem;
+using JpAnnotator.Common.Mac.OperatingSystem;
 
 namespace JpAnnotator
 {
     public partial class ViewController : NSViewController
     {
+        readonly INativeFileManager _finder;
         readonly IResourceLocator _resourceLocator;
         readonly ILogWriter _log;
         readonly Task<JmdicFastReader> _jmdicReaderTask;
 
         public ViewController(IntPtr handle) : base(handle)
         {
+            _finder = new FinderFileManager();
             _resourceLocator = new MacResourceLocator();
             _log = new LoggingConfig(_resourceLocator).CreateRootLogWriter();
             _log.Debug("start");
@@ -129,6 +134,8 @@ namespace JpAnnotator
                 FileToConvert.Enabled = true;
                 ConversionStatus.StringValue = "Conversion done";
                 ConversionProgress.StopAnimation(null);
+
+                _finder.OpenFileManagerAndShowFile(outputFile);
             }
 
             _log.Debug("end");
