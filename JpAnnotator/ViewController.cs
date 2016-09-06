@@ -1,15 +1,14 @@
 ﻿using System;
+using System.IO;
 using AppKit;
 using Foundation;
-using JpAnnotator.Logging;
 using JpAnnotator.Common.Mac;
-using JpAnnotator.Core;
-using JpAnnotator.Core.Make.Html;
-using JpAnnotator.Core.Dic;
-using System.IO;
-using System.Resources;
 using JpAnnotator.Common.Portable.Bundling;
+using JpAnnotator.Core;
+using JpAnnotator.Core.Dic;
 using JpAnnotator.Core.Make.Epub;
+using JpAnnotator.Core.Make.Html;
+using JpAnnotator.Logging;
 
 namespace JpAnnotator
 {

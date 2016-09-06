@@ -65,6 +65,17 @@ namespace JpAnnotator.Core
             }
             Directory.CreateDirectory(_options.OutputDir);
 
+            ContentsInfo contents = await Task.Factory.StartNew(CreateXhtml);
+
+            await ConvertHtmlToEpub(contents).ContinueWith(_ =>
+            {
+                _counter.Stop();
+                _log.Debug("Convert end");
+            });
+        }
+
+        ContentsInfo CreateXhtml()
+        {
             ContentsInfo contents;
             using (var inputReader = new StreamReader(_options.InputFile, Encoding.UTF8))
             {
@@ -93,12 +104,7 @@ namespace JpAnnotator.Core
                     Path.Combine(_options.OutputDir, "style.css"),
                     overwrite: true);
             }
-
-            await ConvertHtmlToEpub(contents).ContinueWith(_ =>
-            {
-                _counter.Stop();
-                _log.Debug("Convert end");
-            });
+            return contents;
         }
 
         void ConvertFileToHtml(ContentsMapping chapterMapping)
