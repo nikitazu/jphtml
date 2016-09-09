@@ -17,9 +17,9 @@ Japanese text analyzer with html output
 * http://www.edrdg.org/edrdg/licence.html
 
 ### NMeCab (via manual copying)
-# GPLv2
-# Original project https://osdn.jp/projects/nmecab/
-# Fork with crossplatform build https://github.com/nikitazu/NMeCab.Crossplatform
+* GPLv2
+* Original project https://osdn.jp/projects/nmecab/
+* Fork with crossplatform build https://github.com/nikitazu/NMeCab.Crossplatform
 
 ### ePub Factory PCL (via nuget)
 * Ms-PL
