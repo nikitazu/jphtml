@@ -112,7 +112,6 @@ namespace JpAnnotator
                     new Counter(_log),
                     _log,
                     options,
-                    _resourceLocator,
                     new MecabParser(),
                     new MecabReader(),
                     new MecabBackend(),
@@ -122,7 +121,7 @@ namespace JpAnnotator
                     new EpubMaker(_log, options, _resourceLocator)
                 );
 
-                options.Print();
+                options.Print(Console.Out);
 
                 await _htmlToEpub.Convert();
             }

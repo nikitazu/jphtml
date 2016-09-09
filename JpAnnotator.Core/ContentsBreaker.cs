@@ -6,23 +6,28 @@ using JpAnnotator.Core.Format;
 
 namespace JpAnnotator.Core
 {
-    public class ContentsBreaker
+    public class ContentsBreaker : IOptionConsumerChapterMarkers
     {
-        readonly Options _options;
+        IReadOnlyList<string> _chapterMarkers;
 
-        public ContentsBreaker(Options options)
+        public ContentsBreaker(IOptionProvider<IOptionConsumerChapterMarkers> options)
         {
-            _options = options;
+            options.Provide(this);
+        }
+
+        void IOptionConsumerChapterMarkers.Consume(IReadOnlyList<string> chapterMarkers)
+        {
+            _chapterMarkers = chapterMarkers;
         }
 
         public ContentsInfo Analyze(TextReader reader)
         {
             var contents = new ContentsInfo
             {
-                ChapterFiles = new List<ContentsMapping>(_options.ChapterMarkers.Count + 1)
+                ChapterFiles = new List<ContentsMapping>(_chapterMarkers.Count + 1)
             };
 
-            var counts = _options.ChapterMarkers.Select((marker, i) => CountLinesUntilMarker(reader, marker, i)).ToArray();
+            var counts = _chapterMarkers.Select((marker, i) => CountLinesUntilMarker(reader, marker, i)).ToArray();
 
             int startLine = 0;
             int chapterIndex = 0;

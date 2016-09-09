@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 
 namespace JpAnnotator.Core
 {
-    public class Options
+    public class Options :
+        IOptionProvider<IOptionConsumerInputFile>,
+        IOptionProvider<IOptionConsumerEpub>,
+        IOptionProvider<IOptionConsumerChapterMarkers>
     {
-        public string InputFile { get; } = string.Empty;
-        public string OutputFile { get; } = string.Empty;
-        public IReadOnlyList<string> ChapterMarkers { get; } = new List<string>();
-        public string Author { get; } = "Unknown";
-        public string BookId { get; } = Guid.NewGuid().ToString();
-        public string Publisher { get; } = "Unknown";
+        readonly string _inputFile = string.Empty;
+        readonly string _outputFile = string.Empty;
+        readonly IReadOnlyList<string> _chapterMarkers = new List<string>();
+        readonly string _author = "Unknown";
+        readonly string _bookId = Guid.NewGuid().ToString();
+        readonly string _publisher = "Unknown";
 
         public Options(string[] args)
         {
@@ -22,24 +26,59 @@ namespace JpAnnotator.Core
 
                 switch (key)
                 {
-                    case "--inputFile": InputFile = value; break;
-                    case "--outputFile": OutputFile = value; break;
-                    case "--chapterMarkers": ChapterMarkers = value.Split(',').ToArray(); break;
-                    case "--author": Author = value; break;
-                    case "--bookId": BookId = value; break;
-                    case "--publisher": Publisher = value; break;
+                    case "--inputFile": _inputFile = value; break;
+                    case "--outputFile": _outputFile = value; break;
+                    case "--chapterMarkers": _chapterMarkers = value.Split(',').ToArray(); break;
+                    case "--author": _author = value; break;
+                    case "--bookId": _bookId = value; break;
+                    case "--publisher": _publisher = value; break;
                 }
             }
         }
 
-        public void Print()
+        public void Print(TextWriter writer)
         {
-            Console.WriteLine($"Input file: {InputFile}");
-            Console.WriteLine($"Output file: {OutputFile}");
-            Console.WriteLine($"Chapter markers: {string.Join(",", ChapterMarkers)}");
-            Console.WriteLine($"Author: {Author}");
-            Console.WriteLine($"Book id: {BookId}");
-            Console.WriteLine($"Publisher: {Publisher}");
+            writer.WriteLine($"Input file: {_inputFile}");
+            writer.WriteLine($"Output file: {_outputFile}");
+            writer.WriteLine($"Chapter markers: {string.Join(",", _chapterMarkers)}");
+            writer.WriteLine($"Author: {_author}");
+            writer.WriteLine($"Book id: {_bookId}");
+            writer.WriteLine($"Publisher: {_publisher}");
         }
+
+        void IOptionProvider<IOptionConsumerInputFile>.Provide(IOptionConsumerInputFile consumer)
+        {
+            consumer.Consume(_inputFile);
+        }
+
+        void IOptionProvider<IOptionConsumerEpub>.Provide(IOptionConsumerEpub consumer)
+        {
+            consumer.Consume(_author, _bookId, _publisher, _outputFile);
+        }
+
+        void IOptionProvider<IOptionConsumerChapterMarkers>.Provide(IOptionConsumerChapterMarkers consumer)
+        {
+            consumer.Consume(_chapterMarkers);
+        }
+    }
+
+    public interface IOptionProvider<T>
+    {
+        void Provide(T consumer);
+    }
+
+    public interface IOptionConsumerInputFile
+    {
+        void Consume(string inputFile);
+    }
+
+    public interface IOptionConsumerEpub
+    {
+        void Consume(string author, string bookId, string publisher, string outputFile);
+    }
+
+    public interface IOptionConsumerChapterMarkers
+    {
+        void Consume(IReadOnlyList<string> chapterMarkers);
     }
 }

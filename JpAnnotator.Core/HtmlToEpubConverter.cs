@@ -10,16 +10,14 @@ using JpAnnotator.Core.Make.Epub;
 using JpAnnotator.Core.Make.Html;
 using JpAnnotator.Logging;
 using JpAnnotator.Utils;
-using JpAnnotator.Common.Portable.Bundling;
 
 namespace JpAnnotator.Core
 {
-    public class HtmlToEpubConverter
+    public class HtmlToEpubConverter : IOptionConsumerInputFile
     {
+        string _inputFile;
         readonly Counter _counter;
         readonly ILogWriter _log;
-        readonly Options _options;
-        readonly IResourceLocator _resourceLocator;
         readonly MecabParser _parser;
         readonly MecabReader _reader;
         readonly MecabBackend _mecabBackend;
@@ -31,8 +29,7 @@ namespace JpAnnotator.Core
         public HtmlToEpubConverter(
             Counter counter,
             ILogWriter log,
-            Options options,
-            IResourceLocator resourceLocator,
+            IOptionProvider<IOptionConsumerInputFile> options,
             MecabParser parser,
             MecabReader reader,
             MecabBackend backend,
@@ -43,8 +40,6 @@ namespace JpAnnotator.Core
         {
             _counter = counter;
             _log = log;
-            _options = options;
-            _resourceLocator = resourceLocator;
             _parser = parser;
             _reader = reader;
             _mecabBackend = backend;
@@ -52,6 +47,12 @@ namespace JpAnnotator.Core
             _dicReader = dicReader;
             _breaker = breaker;
             _epubMaker = epubMaker;
+            options.Provide(this);
+        }
+
+        void IOptionConsumerInputFile.Consume(string inputFile)
+        {
+            _inputFile = inputFile;
         }
 
         public async Task Convert()
@@ -71,10 +72,10 @@ namespace JpAnnotator.Core
         ContentsInfo CreateAnnotatedXhtmlContents()
         {
             ContentsInfo contents;
-            using (var inputReader = new StreamReader(_options.InputFile, Encoding.UTF8))
+            using (var inputReader = new StreamReader(_inputFile, Encoding.UTF8))
             {
                 contents = _breaker.Analyze(inputReader);
-                _breaker.BreakInMemory(_options.InputFile, contents);
+                _breaker.BreakInMemory(_inputFile, contents);
             }
 
             foreach (var chapter in contents.ChapterFiles)

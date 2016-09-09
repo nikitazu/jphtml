@@ -1,5 +1,6 @@
-﻿using NUnit.Framework;
+﻿using System.Collections.Generic;
 using JpAnnotator.Core;
+using NUnit.Framework;
 
 namespace JpAnnotator.Tests.Core
 {
@@ -22,43 +23,51 @@ namespace JpAnnotator.Tests.Core
         }
 
         [Test]
-        public void InputFileShouldParse()
+        public void ProviderInputFileShouldProvide()
         {
-            Assert.AreEqual("path/to/in", _options.InputFile);
+            ((IOptionProvider<IOptionConsumerInputFile>)_options).Provide(new AssertOptionConsumerInputFile());
         }
 
         [Test]
-        public void OutputFileShouldParse()
+        public void ProviderEpubShouldProvide()
         {
-            Assert.AreEqual("path/to/out", _options.OutputFile);
+            ((IOptionProvider<IOptionConsumerEpub>)_options).Provide(new AssertOptionConsumerEpub());
         }
 
         [Test]
-        public void ChapterMarkersShouldParse()
+        public void ProviderChapterMarkersShouldProvide()
         {
-            Assert.AreEqual(3, _options.ChapterMarkers.Count);
-            Assert.AreEqual("a", _options.ChapterMarkers[0]);
-            Assert.AreEqual("b", _options.ChapterMarkers[1]);
-            Assert.AreEqual("c", _options.ChapterMarkers[2]);
+            ((IOptionProvider<IOptionConsumerChapterMarkers>)_options).Provide(new AssertOptionConsumerChapterMarkers());
         }
+    }
 
-        [Test]
-        public void AuthorShouldParse()
+    class AssertOptionConsumerInputFile : IOptionConsumerInputFile
+    {
+        void IOptionConsumerInputFile.Consume(string inputFile)
         {
-            Assert.AreEqual("murakami", _options.Author);
+            Assert.AreEqual("path/to/in", inputFile);
         }
+    }
 
-        [Test]
-        public void BookIdShouldParse()
+    class AssertOptionConsumerEpub : IOptionConsumerEpub
+    {
+        void IOptionConsumerEpub.Consume(string author, string bookId, string publisher, string outputFile)
         {
-            Assert.AreEqual("666", _options.BookId);
+            Assert.AreEqual("murakami", author, nameof(author));
+            Assert.AreEqual("666", bookId, nameof(bookId));
+            Assert.AreEqual("ZStudios", publisher, nameof(publisher));
+            Assert.AreEqual("path/to/out", outputFile, nameof(outputFile));
         }
+    }
 
-        [Test]
-        public void PublisherShouldParse()
+    class AssertOptionConsumerChapterMarkers : IOptionConsumerChapterMarkers
+    {
+        void IOptionConsumerChapterMarkers.Consume(IReadOnlyList<string> chapterMarkers)
         {
-            Assert.AreEqual("ZStudios", _options.Publisher);
+            Assert.AreEqual(3, chapterMarkers.Count);
+            Assert.AreEqual("a", chapterMarkers[0]);
+            Assert.AreEqual("b", chapterMarkers[1]);
+            Assert.AreEqual("c", chapterMarkers[2]);
         }
     }
 }
-

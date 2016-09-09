@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using EPubFactory;
 using JpAnnotator.Common.Portable.Bundling;
@@ -7,33 +8,45 @@ using JpAnnotator.Logging;
 
 namespace JpAnnotator.Core.Make.Epub
 {
-    public class EpubMaker
+    public class EpubMaker : IOptionConsumerEpub
     {
+        string _author;
+        string _bookId;
+        string _publisher;
+        string _outputFile;
+
         readonly ILogWriter _log;
-        readonly Options _options;
         readonly IResourceLocator _resourceLocator;
 
         public EpubMaker(
             ILogWriter log,
-            Options options,
+            IOptionProvider<IOptionConsumerEpub> options,
             IResourceLocator resourceLocator)
         {
             _log = log;
-            _options = options;
             _resourceLocator = resourceLocator;
+            options.Provide(this);
+        }
+
+        void IOptionConsumerEpub.Consume(string author, string bookId, string publisher, string outputFile)
+        {
+            _author = author;
+            _bookId = bookId;
+            _publisher = publisher;
+            _outputFile = outputFile;
         }
 
         public async Task ConvertHtmlToEpub(ContentsInfo contents)
         {
             _log.Debug("epub start");
-            using (var epubStream = File.Create(_options.OutputFile))
+            using (var epubStream = File.Create(_outputFile))
             using (var epubWriter = await EPubWriter.CreateWriterAsync(
                 epubStream,
-                Path.GetFileNameWithoutExtension(_options.OutputFile),
-                _options.Author,
-                _options.BookId))
+                Path.GetFileNameWithoutExtension(_outputFile),
+                _author,
+                _bookId))
             {
-                epubWriter.Publisher = _options.Publisher;
+                epubWriter.Publisher = _publisher;
                 foreach (var chapter in contents.ChapterFiles)
                 {
                     await epubWriter.AddChapterAsync(

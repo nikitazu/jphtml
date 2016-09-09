@@ -5,6 +5,7 @@ using JpAnnotator.Core.Dic;
 using JpAnnotator.Core.Make.Html;
 using JpAnnotator.Logging;
 using JpAnnotator.Core.Make.Epub;
+using System;
 
 namespace JpAnnotator
 {
@@ -22,7 +23,6 @@ namespace JpAnnotator
                 new Counter(log),
                 log,
                 options,
-                resourceLocator,
                 new MecabParser(),
                 new MecabReader(),
                 new MecabBackend(),
@@ -36,7 +36,7 @@ namespace JpAnnotator
                 new EpubMaker(log, options, resourceLocator)
             );
 
-            options.Print();
+            options.Print(Console.Out);
 
             _htmlToEpub.Convert().ContinueWith(_ =>
             {
