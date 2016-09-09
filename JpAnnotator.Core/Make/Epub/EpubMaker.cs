@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using EPubFactory;
 using JpAnnotator.Common.Portable.Bundling;
+using JpAnnotator.Common.Portable.Configuration;
 using JpAnnotator.Core.Format;
 using JpAnnotator.Logging;
 

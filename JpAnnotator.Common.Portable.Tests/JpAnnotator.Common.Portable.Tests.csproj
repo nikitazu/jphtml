@@ -3,14 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{92C5BA8E-2187-43A4-8606-5CC8472C06F3}</ProjectGuid>
-    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <UseMSBuildEngine>true</UseMSBuildEngine>
+    <ProjectGuid>{2087155F-D958-4D01-9B15-7AED67850DEF}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>JpAnnotator.Common.Portable</RootNamespace>
-    <AssemblyName>JpAnnotator.Common.Portable</AssemblyName>
+    <RootNamespace>JpAnnotator.Common.Portable.Tests</RootNamespace>
+    <AssemblyName>JpAnnotator.Common.Portable.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Profile78</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,7 +18,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <NoStdLib>false</NoStdLib>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
@@ -29,23 +25,27 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <NoStdLib>false</NoStdLib>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Bundling\IResourceLocator.cs" />
-    <Compile Include="OperatingSystem\INativeFileManager.cs" />
-    <Compile Include="Gui\IDialogCreator.cs" />
-    <Compile Include="Configuration\IOptionProviderInputFile.cs" />
-    <Compile Include="Configuration\IOptionProviderEpub.cs" />
-    <Compile Include="Configuration\IOptionProviderChapterMarkers.cs" />
-    <Compile Include="Configuration\Options.cs" />
+    <Reference Include="System" />
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Bundling\" />
-    <Folder Include="OperatingSystem\" />
-    <Folder Include="Gui\" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JpAnnotator.Common.Portable\JpAnnotator.Common.Portable.csproj">
+      <Project>{92C5BA8E-2187-43A4-8606-5CC8472C06F3}</Project>
+      <Name>JpAnnotator.Common.Portable</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Configuration\" />
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <ItemGroup>
+    <Compile Include="Configuration\OptionsTest.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

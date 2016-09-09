@@ -1,13 +1,20 @@
-﻿using System.IO;
-using NUnit.Framework;
+﻿using System.Collections.Generic;
+using System.IO;
+using JpAnnotator.Common.Portable.Configuration;
 using JpAnnotator.Core;
 using JpAnnotator.Core.Format;
+using NUnit.Framework;
 
 namespace JpAnnotator.Tests.Core
 {
     [TestFixture]
     public class ContentsBreakerTest
     {
+        class TestChapterMarkersProvider : IOptionProviderChapterMarkers
+        {
+            public IReadOnlyList<string> ChapterMarkers => new string[] { "第1章", "第2章", "第3章" };
+        }
+
         const string _text = "Heading\n第1章 a\n第2章 b\n第3章 c\n\n第1章 aa\nfoo\n\n第2章 bb\nbar\n\n第3章 cc\ncux\n";
         ContentsBreaker _breaker;
         ContentsInfo _contents;
@@ -15,8 +22,7 @@ namespace JpAnnotator.Tests.Core
         [SetUp]
         public void Setup()
         {
-            var options = new Options(new string[] { "--chapterMarkers", "第1章,第2章,第3章" });
-            _breaker = new ContentsBreaker(options);
+            _breaker = new ContentsBreaker(new TestChapterMarkersProvider());
             using (var reader = new StringReader(_text))
             {
                 _contents = _breaker.Analyze(reader);

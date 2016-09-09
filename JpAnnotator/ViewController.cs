@@ -14,6 +14,7 @@ using JpAnnotator.Core.Make.Epub;
 using JpAnnotator.Core.Make.Html;
 using JpAnnotator.Logging;
 using JpAnnotator.Common.Mac.Gui;
+using JpAnnotator.Common.Portable.Configuration;
 
 namespace JpAnnotator
 {

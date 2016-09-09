@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using JpAnnotator.Common.Portable.Configuration;
 using JpAnnotator.Core.Format;
 
 namespace JpAnnotator.Core

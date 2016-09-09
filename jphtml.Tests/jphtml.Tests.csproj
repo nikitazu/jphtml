@@ -39,7 +39,6 @@
     <Compile Include="Core\MecabParserTest.cs" />
     <Compile Include="Core\Dic\JmdictionaryTest.cs" />
     <Compile Include="Core\Text\KanaTest.cs" />
-    <Compile Include="Core\OptionsTest.cs" />
     <Compile Include="Core\ContentsBreakerTest.cs" />
     <Compile Include="Core\Format\WordInfoTest.cs" />
     <Compile Include="Core\Utils\EnumerableUtilsTest.cs" />
@@ -56,6 +55,10 @@
     <ProjectReference Include="..\JpAnnotator.Core\JpAnnotator.Core.csproj">
       <Project>{7873AA65-1CA0-4276-B3DC-565AF66ABB7B}</Project>
       <Name>JpAnnotator.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JpAnnotator.Common.Portable\JpAnnotator.Common.Portable.csproj">
+      <Project>{92C5BA8E-2187-43A4-8606-5CC8472C06F3}</Project>
+      <Name>JpAnnotator.Common.Portable</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -48,7 +48,6 @@
     <Compile Include="Counter.cs" />
     <Compile Include="MecabParser.cs" />
     <Compile Include="MecabReader.cs" />
-    <Compile Include="Options.cs" />
     <Compile Include="Make\Html\XHtmlMaker.cs" />
     <Compile Include="Make\Epub\EpubMaker.cs" />
     <Compile Include="MecabBackend.cs" />

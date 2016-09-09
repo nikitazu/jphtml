@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JpAnnotator.Common.Windows"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JpAnnotator.Common.Mac", "JpAnnotator.Common.Mac\JpAnnotator.Common.Mac.csproj", "{BD7802C7-C035-4318-9069-780B7295A748}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JpAnnotator.Common.Portable.Tests", "JpAnnotator.Common.Portable.Tests\JpAnnotator.Common.Portable.Tests.csproj", "{2087155F-D958-4D01-9B15-7AED67850DEF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -55,5 +57,9 @@ Global
 		{BD7802C7-C035-4318-9069-780B7295A748}.Debug|x86.Build.0 = Debug|Any CPU
 		{BD7802C7-C035-4318-9069-780B7295A748}.Release|x86.ActiveCfg = Release|Any CPU
 		{BD7802C7-C035-4318-9069-780B7295A748}.Release|x86.Build.0 = Release|Any CPU
+		{2087155F-D958-4D01-9B15-7AED67850DEF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2087155F-D958-4D01-9B15-7AED67850DEF}.Debug|x86.Build.0 = Debug|Any CPU
+		{2087155F-D958-4D01-9B15-7AED67850DEF}.Release|x86.ActiveCfg = Release|Any CPU
+		{2087155F-D958-4D01-9B15-7AED67850DEF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

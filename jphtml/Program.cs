@@ -1,11 +1,11 @@
-using System.IO;
+using System;
+using JpAnnotator.Common.Portable.Configuration;
 using JpAnnotator.Common.Windows;
 using JpAnnotator.Core;
 using JpAnnotator.Core.Dic;
+using JpAnnotator.Core.Make.Epub;
 using JpAnnotator.Core.Make.Html;
 using JpAnnotator.Logging;
-using JpAnnotator.Core.Make.Epub;
-using System;
 
 namespace JpAnnotator
 {

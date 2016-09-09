@@ -1,7 +1,7 @@
-﻿using JpAnnotator.Core;
+﻿using JpAnnotator.Common.Portable.Configuration;
 using NUnit.Framework;
 
-namespace JpAnnotator.Tests.Core
+namespace JpAnnotator.Common.Portable.Tests.Configuration
 {
     [TestFixture]
     public class OptionsTest

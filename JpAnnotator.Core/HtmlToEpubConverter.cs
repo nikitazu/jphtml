@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using JpAnnotator.Common.Portable.Configuration;
 using JpAnnotator.Core.Dic;
 using JpAnnotator.Core.Format;
 using JpAnnotator.Core.Make.Epub;

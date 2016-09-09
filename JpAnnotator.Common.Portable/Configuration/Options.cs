@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.IO;
+using System.Linq;
 
-namespace JpAnnotator.Core
+namespace JpAnnotator.Common.Portable.Configuration
 {
     public class Options :
         IOptionProviderInputFile,
@@ -52,23 +52,5 @@ namespace JpAnnotator.Core
             writer.WriteLine($"Book id: {_bookId}");
             writer.WriteLine($"Publisher: {_publisher}");
         }
-    }
-
-    public interface IOptionProviderInputFile
-    {
-        string InputFile { get; }
-    }
-
-    public interface IOptionProviderEpub
-    {
-        string Author { get; }
-        string BookId { get; }
-        string Publisher { get; }
-        string OutputFile { get; }
-    }
-
-    public interface IOptionProviderChapterMarkers
-    {
-        IReadOnlyList<string> ChapterMarkers { get; }
     }
 }
