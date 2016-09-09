@@ -6,9 +6,9 @@ using System.IO;
 namespace JpAnnotator.Core
 {
     public class Options :
-        IOptionProvider<IOptionConsumerInputFile>,
-        IOptionProvider<IOptionConsumerEpub>,
-        IOptionProvider<IOptionConsumerChapterMarkers>
+        IOptionProviderInputFile,
+        IOptionProviderEpub,
+        IOptionProviderChapterMarkers
     {
         readonly string _inputFile = string.Empty;
         readonly string _outputFile = string.Empty;
@@ -16,6 +16,13 @@ namespace JpAnnotator.Core
         readonly string _author = "Unknown";
         readonly string _bookId = Guid.NewGuid().ToString();
         readonly string _publisher = "Unknown";
+
+        string IOptionProviderInputFile.InputFile => _inputFile;
+        string IOptionProviderEpub.Author => _author;
+        string IOptionProviderEpub.BookId => _bookId;
+        string IOptionProviderEpub.Publisher => _publisher;
+        string IOptionProviderEpub.OutputFile => _outputFile;
+        IReadOnlyList<string> IOptionProviderChapterMarkers.ChapterMarkers => _chapterMarkers;
 
         public Options(string[] args)
         {
@@ -45,40 +52,23 @@ namespace JpAnnotator.Core
             writer.WriteLine($"Book id: {_bookId}");
             writer.WriteLine($"Publisher: {_publisher}");
         }
-
-        void IOptionProvider<IOptionConsumerInputFile>.Provide(IOptionConsumerInputFile consumer)
-        {
-            consumer.Consume(_inputFile);
-        }
-
-        void IOptionProvider<IOptionConsumerEpub>.Provide(IOptionConsumerEpub consumer)
-        {
-            consumer.Consume(_author, _bookId, _publisher, _outputFile);
-        }
-
-        void IOptionProvider<IOptionConsumerChapterMarkers>.Provide(IOptionConsumerChapterMarkers consumer)
-        {
-            consumer.Consume(_chapterMarkers);
-        }
     }
 
-    public interface IOptionProvider<T>
+    public interface IOptionProviderInputFile
     {
-        void Provide(T consumer);
+        string InputFile { get; }
     }
 
-    public interface IOptionConsumerInputFile
+    public interface IOptionProviderEpub
     {
-        void Consume(string inputFile);
+        string Author { get; }
+        string BookId { get; }
+        string Publisher { get; }
+        string OutputFile { get; }
     }
 
-    public interface IOptionConsumerEpub
+    public interface IOptionProviderChapterMarkers
     {
-        void Consume(string author, string bookId, string publisher, string outputFile);
-    }
-
-    public interface IOptionConsumerChapterMarkers
-    {
-        void Consume(IReadOnlyList<string> chapterMarkers);
+        IReadOnlyList<string> ChapterMarkers { get; }
     }
 }

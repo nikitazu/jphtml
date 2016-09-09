@@ -13,9 +13,9 @@ using JpAnnotator.Utils;
 
 namespace JpAnnotator.Core
 {
-    public class HtmlToEpubConverter : IOptionConsumerInputFile
+    public class HtmlToEpubConverter
     {
-        string _inputFile;
+        readonly string _inputFile;
         readonly Counter _counter;
         readonly ILogWriter _log;
         readonly MecabParser _parser;
@@ -29,7 +29,7 @@ namespace JpAnnotator.Core
         public HtmlToEpubConverter(
             Counter counter,
             ILogWriter log,
-            IOptionProvider<IOptionConsumerInputFile> options,
+            IOptionProviderInputFile options,
             MecabParser parser,
             MecabReader reader,
             MecabBackend backend,
@@ -47,12 +47,7 @@ namespace JpAnnotator.Core
             _dicReader = dicReader;
             _breaker = breaker;
             _epubMaker = epubMaker;
-            options.Provide(this);
-        }
-
-        void IOptionConsumerInputFile.Consume(string inputFile)
-        {
-            _inputFile = inputFile;
+            _inputFile = options.InputFile;
         }
 
         public async Task Convert()

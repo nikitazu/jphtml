@@ -6,18 +6,13 @@ using JpAnnotator.Core.Format;
 
 namespace JpAnnotator.Core
 {
-    public class ContentsBreaker : IOptionConsumerChapterMarkers
+    public class ContentsBreaker
     {
-        IReadOnlyList<string> _chapterMarkers;
+        readonly IReadOnlyList<string> _chapterMarkers;
 
-        public ContentsBreaker(IOptionProvider<IOptionConsumerChapterMarkers> options)
+        public ContentsBreaker(IOptionProviderChapterMarkers options)
         {
-            options.Provide(this);
-        }
-
-        void IOptionConsumerChapterMarkers.Consume(IReadOnlyList<string> chapterMarkers)
-        {
-            _chapterMarkers = chapterMarkers;
+            _chapterMarkers = options.ChapterMarkers;
         }
 
         public ContentsInfo Analyze(TextReader reader)

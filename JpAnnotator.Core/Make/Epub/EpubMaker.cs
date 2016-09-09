@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Threading.Tasks;
 using EPubFactory;
 using JpAnnotator.Common.Portable.Bundling;
@@ -8,32 +7,27 @@ using JpAnnotator.Logging;
 
 namespace JpAnnotator.Core.Make.Epub
 {
-    public class EpubMaker : IOptionConsumerEpub
+    public class EpubMaker
     {
-        string _author;
-        string _bookId;
-        string _publisher;
-        string _outputFile;
+        readonly string _author;
+        readonly string _bookId;
+        readonly string _publisher;
+        readonly string _outputFile;
 
         readonly ILogWriter _log;
         readonly IResourceLocator _resourceLocator;
 
         public EpubMaker(
             ILogWriter log,
-            IOptionProvider<IOptionConsumerEpub> options,
+            IOptionProviderEpub options,
             IResourceLocator resourceLocator)
         {
             _log = log;
             _resourceLocator = resourceLocator;
-            options.Provide(this);
-        }
-
-        void IOptionConsumerEpub.Consume(string author, string bookId, string publisher, string outputFile)
-        {
-            _author = author;
-            _bookId = bookId;
-            _publisher = publisher;
-            _outputFile = outputFile;
+            _author = options.Author;
+            _bookId = options.BookId;
+            _publisher = options.Publisher;
+            _outputFile = options.OutputFile;
         }
 
         public async Task ConvertHtmlToEpub(ContentsInfo contents)
