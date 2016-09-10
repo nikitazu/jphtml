@@ -2,3 +2,4 @@ source https://nuget.org/api/v2
 
 nuget log4net = 2.0.5
 nuget EPubFactory = 1.1.0
+nuget NUnit = 3.4.1

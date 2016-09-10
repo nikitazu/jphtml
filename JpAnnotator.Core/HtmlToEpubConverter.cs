@@ -71,7 +71,10 @@ namespace JpAnnotator.Core
             using (var inputReader = new StreamReader(_inputFile, Encoding.UTF8))
             {
                 contents = _breaker.Analyze(inputReader);
-                _breaker.BreakInMemory(_inputFile, contents);
+            }
+            using (var inputReader = new StreamReader(_inputFile, Encoding.UTF8))
+            {
+                _breaker.BreakInMemory(inputReader, contents);
             }
 
             foreach (var chapter in contents.ChapterFiles)
@@ -87,7 +90,11 @@ namespace JpAnnotator.Core
             var xhtmlParagraphs = new List<XElement>();
             foreach (var plainTextLine in chapterMapping.PlainTextContent)
             {
-                var lines = _reader.ReadResponse(_mecabBackend.ParseText(plainTextLine));
+                IList<string> lines;
+                using (var reader = _mecabBackend.ParseText(plainTextLine))
+                {
+                    lines = _reader.ReadResponse(reader);
+                }
                 var words = new List<WordInfo>();
 
                 foreach (var line in lines)

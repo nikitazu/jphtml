@@ -48,21 +48,23 @@ namespace JpAnnotator.Core
             return contents;
         }
 
-        public void BreakInMemory(string input, ContentsInfo contents)
+        public void BreakInMemory(TextReader reader, ContentsInfo contents)
         {
-            using (var reader = new StreamReader(input))
+            foreach (var chapter in contents.ChapterFiles)
             {
-                foreach (var chapter in contents.ChapterFiles)
+                chapter.PlainTextContent = new List<string>();
+                int linesToCopy = chapter.LengthInLines;
+                string line;
+                do
                 {
-                    chapter.PlainTextContent = new List<string>();
-                    int linesToCopy = chapter.LengthInLines;
-                    while (linesToCopy > 0 && !reader.EndOfStream)
+                    line = reader.ReadLine();
+                    if (line != null)
                     {
-                        var line = reader.ReadLine();
                         chapter.PlainTextContent.Add(line);
-                        linesToCopy--;
                     }
+                    linesToCopy--;
                 }
+                while (linesToCopy > 0 && line != null);
             }
         }
 

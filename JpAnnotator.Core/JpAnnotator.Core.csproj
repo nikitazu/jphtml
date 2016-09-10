@@ -67,13 +67,6 @@
     <Folder Include="Make\Epub\" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="EPubFactory">
-      <HintPath>..\packages\EPubFactory\lib\EPubFactory.dll</HintPath>
-      <Private>True</Private>
-      <Paket>True</Paket>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\JpAnnotator.Common.Portable\JpAnnotator.Common.Portable.csproj">
       <Project>{92C5BA8E-2187-43A4-8606-5CC8472C06F3}</Project>
       <Name>JpAnnotator.Common.Portable</Name>
@@ -82,6 +75,13 @@
       <Project>{69287217-3531-4756-9E39-B87C019AFBA1}</Project>
       <Name>JpAnnotator.Logging</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="EPubFactory">
+      <HintPath>..\packages\EPubFactory\lib\EPubFactory.dll</HintPath>
+      <Private>True</Private>
+      <Paket>True</Paket>
+    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v3.0')">
