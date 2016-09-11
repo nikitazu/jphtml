@@ -7,6 +7,9 @@ namespace JpAnnotator.Common.Portable.Tests.Configuration
     public class OptionsTest
     {
         Options _options;
+        IOptionProviderInputFile InputFileProvider => _options;
+        IOptionProviderEpub EpubProvider => _options;
+        IOptionProviderChapterMarkers ChapterMarkersProvider => _options;
 
         [SetUp]
         public void Setup()
@@ -24,49 +27,25 @@ namespace JpAnnotator.Common.Portable.Tests.Configuration
         [Test]
         public void ProviderInputFileShouldProvide()
         {
-            new TestProviderInputFile().AssertProviderInputFile(_options);
+            Assert.AreEqual("path/to/in", InputFileProvider.InputFile);
         }
 
         [Test]
         public void ProviderEpubShouldProvide()
         {
-            new TestProviderEpub().AssertProviderEpub(_options);
+            Assert.AreEqual("murakami", EpubProvider.Author, nameof(EpubProvider.Author));
+            Assert.AreEqual("666", EpubProvider.BookId, nameof(EpubProvider.BookId));
+            Assert.AreEqual("ZStudios", EpubProvider.Publisher, nameof(EpubProvider.Publisher));
+            Assert.AreEqual("path/to/out", EpubProvider.OutputFile, nameof(EpubProvider.OutputFile));
         }
 
         [Test]
         public void ProviderChapterMarkersShouldProvide()
         {
-            new TestProviderChapterMarkers().AssertProviderChapterMarkers(_options);
-        }
-    }
-
-    class TestProviderInputFile
-    {
-        public void AssertProviderInputFile(IOptionProviderInputFile provider)
-        {
-            Assert.AreEqual("path/to/in", provider.InputFile);
-        }
-    }
-
-    class TestProviderEpub
-    {
-        public void AssertProviderEpub(IOptionProviderEpub provider)
-        {
-            Assert.AreEqual("murakami", provider.Author, nameof(provider.Author));
-            Assert.AreEqual("666", provider.BookId, nameof(provider.BookId));
-            Assert.AreEqual("ZStudios", provider.Publisher, nameof(provider.Publisher));
-            Assert.AreEqual("path/to/out", provider.OutputFile, nameof(provider.OutputFile));
-        }
-    }
-
-    class TestProviderChapterMarkers
-    {
-        public void AssertProviderChapterMarkers(IOptionProviderChapterMarkers provider)
-        {
-            Assert.AreEqual(3, provider.ChapterMarkers.Count);
-            Assert.AreEqual("a", provider.ChapterMarkers[0]);
-            Assert.AreEqual("b", provider.ChapterMarkers[1]);
-            Assert.AreEqual("c", provider.ChapterMarkers[2]);
+            Assert.AreEqual(3, ChapterMarkersProvider.ChapterMarkers.Count);
+            Assert.AreEqual("a", ChapterMarkersProvider.ChapterMarkers[0]);
+            Assert.AreEqual("b", ChapterMarkersProvider.ChapterMarkers[1]);
+            Assert.AreEqual("c", ChapterMarkersProvider.ChapterMarkers[2]);
         }
     }
 }
