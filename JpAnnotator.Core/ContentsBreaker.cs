@@ -46,10 +46,12 @@ namespace JpAnnotator.Core
                 LengthInLines = CountLinesUntilEof(reader) + (startLine > 0 ? 1 : 0),
             });
 
+            BreakInMemory(contents);
+
             return contents;
         }
 
-        public void BreakInMemory(ContentsInfo contents)
+        void BreakInMemory(ContentsInfo contents)
         {
             int lineIndex = 0;
             foreach (var chapter in contents.ChapterFiles)

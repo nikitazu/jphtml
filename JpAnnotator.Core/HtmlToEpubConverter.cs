@@ -72,7 +72,6 @@ namespace JpAnnotator.Core
             {
                 contents = _breaker.Analyze(inputReader);
             }
-            _breaker.BreakInMemory(contents);
 
             foreach (var chapter in contents.ChapterFiles)
             {

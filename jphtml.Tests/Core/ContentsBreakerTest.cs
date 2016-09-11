@@ -68,9 +68,8 @@ namespace JpAnnotator.Tests.Core
         }
 
         [Test]
-        public void BreakInMemoryShouldAssignPlainTextContent()
+        public void AnalyzeShouldAssignPlainTextContent()
         {
-            _breaker.BreakInMemory(_contents);
             Assert.AreEqual("Heading\n第1章 a\n第2章 b\n第3章 c\n", string.Join("\n", _contents.ChapterFiles[0].PlainTextContent), "ch0");
             Assert.AreEqual("第1章 aa\nfoo\n", string.Join("\n", _contents.ChapterFiles[1].PlainTextContent), "ch1");
             Assert.AreEqual("第2章 bb\nbar\n", string.Join("\n", _contents.ChapterFiles[2].PlainTextContent), "ch2");
