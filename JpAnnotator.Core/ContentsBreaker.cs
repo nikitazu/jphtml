@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using JpAnnotator.Common.Portable.Configuration;
 using JpAnnotator.Core.Format;
 using JpAnnotator.Common.Portable.PlainText;
@@ -22,19 +21,20 @@ namespace JpAnnotator.Core
                 ChapterFiles = new List<ContentsMapping>(_chapterMarkers.Count + 1)
             };
 
-            var counts = _chapterMarkers.Select((marker, i) => reader.CountLinesUntilMarker(marker, i == 0)).ToArray();
-
             int startLine = 0;
             int chapterIndex = 0;
-            for (chapterIndex = 0; chapterIndex < counts.Length; chapterIndex++)
+            for (chapterIndex = 0; chapterIndex < _chapterMarkers.Count; chapterIndex++)
             {
+                var count = reader.CountLinesUntilMarker(_chapterMarkers[chapterIndex], chapterIndex == 0);
                 contents.ChapterFiles.Add(new ContentsMapping()
                 {
                     Name = $"ch{chapterIndex}",
                     StartLine = startLine,
-                    LengthInLines = counts[chapterIndex],
+                    LengthInLines = count,
+                    PlainTextContent = new List<string>(count),
                 });
-                startLine += counts[chapterIndex];
+                Copy(reader.Lines, contents.ChapterFiles[chapterIndex]);
+                startLine += count;
             }
 
             contents.ChapterFiles.Add(new ContentsMapping()
@@ -42,29 +42,18 @@ namespace JpAnnotator.Core
                 Name = $"ch{chapterIndex}",
                 StartLine = startLine,
                 LengthInLines = reader.CountLinesUntilEnd() + (startLine > 0 ? 1 : 0),
+                PlainTextContent = new List<string>(),
             });
-
-            BreakInMemory(contents, reader);
+            Copy(reader.Lines, contents.ChapterFiles[chapterIndex]);
 
             return contents;
         }
 
-        void BreakInMemory(ContentsInfo contents, MarkingTextReader reader)
+        void Copy(List<string> source, ContentsMapping target)
         {
-            int lineIndex = 0;
-            foreach (var chapter in contents.ChapterFiles)
+            for (int i = 0; i < target.LengthInLines && target.StartLine + i < source.Count; i++)
             {
-                chapter.PlainTextContent = new List<string>();
-                int linesToCopy = chapter.LengthInLines;
-                do
-                {
-                    if (lineIndex < reader.Lines.Count)
-                    {
-                        chapter.PlainTextContent.Add(reader.Lines[lineIndex++]);
-                        linesToCopy--;
-                    }
-                }
-                while (linesToCopy > 0 && lineIndex < reader.Lines.Count);
+                target.PlainTextContent.Add(source[target.StartLine + i]);
             }
         }
     }
