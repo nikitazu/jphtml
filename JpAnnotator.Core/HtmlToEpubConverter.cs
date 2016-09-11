@@ -72,10 +72,7 @@ namespace JpAnnotator.Core
             {
                 contents = _breaker.Analyze(inputReader);
             }
-            using (var inputReader = new StreamReader(_inputFile, Encoding.UTF8))
-            {
-                _breaker.BreakInMemory(inputReader, contents);
-            }
+            _breaker.BreakInMemory(contents);
 
             foreach (var chapter in contents.ChapterFiles)
             {

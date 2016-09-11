@@ -70,14 +70,11 @@ namespace JpAnnotator.Tests.Core
         [Test]
         public void BreakInMemoryShouldAssignPlainTextContent()
         {
-            using (var reader = new StringReader(_text))
-            {
-                _breaker.BreakInMemory(reader, _contents);
-                Assert.AreEqual("Heading\n第1章 a\n第2章 b\n第3章 c\n", string.Join("\n", _contents.ChapterFiles[0].PlainTextContent));
-                Assert.AreEqual("第1章 aa\nfoo\n", string.Join("\n", _contents.ChapterFiles[1].PlainTextContent));
-                Assert.AreEqual("第2章 bb\nbar\n", string.Join("\n", _contents.ChapterFiles[2].PlainTextContent));
-                Assert.AreEqual("第3章 cc\ncux", string.Join("\n", _contents.ChapterFiles[3].PlainTextContent));
-            }
+            _breaker.BreakInMemory(_contents);
+            Assert.AreEqual("Heading\n第1章 a\n第2章 b\n第3章 c\n", string.Join("\n", _contents.ChapterFiles[0].PlainTextContent), "ch0");
+            Assert.AreEqual("第1章 aa\nfoo\n", string.Join("\n", _contents.ChapterFiles[1].PlainTextContent), "ch1");
+            Assert.AreEqual("第2章 bb\nbar\n", string.Join("\n", _contents.ChapterFiles[2].PlainTextContent), "ch2");
+            Assert.AreEqual("第3章 cc\ncux", string.Join("\n", _contents.ChapterFiles[3].PlainTextContent), "ch3");
         }
 
         [Test]

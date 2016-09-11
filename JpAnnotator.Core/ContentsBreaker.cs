@@ -10,6 +10,7 @@ namespace JpAnnotator.Core
     public class ContentsBreaker
     {
         readonly IReadOnlyList<string> _chapterMarkers;
+        readonly List<string> _chaptersData = new List<string>();
 
         public ContentsBreaker(IOptionProviderChapterMarkers options)
         {
@@ -33,7 +34,7 @@ namespace JpAnnotator.Core
                 {
                     Name = $"ch{chapterIndex}",
                     StartLine = startLine,
-                    LengthInLines = counts[chapterIndex]
+                    LengthInLines = counts[chapterIndex],
                 });
                 startLine += counts[chapterIndex];
             }
@@ -42,30 +43,27 @@ namespace JpAnnotator.Core
             {
                 Name = $"ch{chapterIndex}",
                 StartLine = startLine,
-                LengthInLines = CountLinesUntilEof(reader) + (startLine > 0 ? 1 : 0)
+                LengthInLines = CountLinesUntilEof(reader) + (startLine > 0 ? 1 : 0),
             });
 
             return contents;
         }
 
-        public void BreakInMemory(TextReader reader, ContentsInfo contents)
+        public void BreakInMemory(ContentsInfo contents)
         {
+            int lineIndex = 0;
             foreach (var chapter in contents.ChapterFiles)
             {
                 chapter.PlainTextContent = new List<string>();
                 int linesToCopy = chapter.LengthInLines;
-                string line;
                 do
                 {
-                    line = reader.ReadLine();
-                    if (line != null)
-                    {
-                        chapter.PlainTextContent.Add(line);
-                    }
+                    chapter.PlainTextContent.Add(_chaptersData[lineIndex++]);
                     linesToCopy--;
                 }
-                while (linesToCopy > 0 && line != null);
+                while (linesToCopy > 0 && lineIndex < _chaptersData.Count);
             }
+            _chaptersData.Clear();
         }
 
         int CountLinesUntilMarker(TextReader reader, string marker, int i)
@@ -81,6 +79,12 @@ namespace JpAnnotator.Core
                     hasSkipped = true;
                 }
                 line = reader.ReadLine();
+
+                if (line != null)
+                {
+                    _chaptersData.Add(line);
+                }
+
                 count++;
 
                 done = line == null || hasSkipped && isLineMarked(marker, line);
