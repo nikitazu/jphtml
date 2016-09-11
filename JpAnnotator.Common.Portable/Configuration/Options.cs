@@ -24,7 +24,7 @@ namespace JpAnnotator.Common.Portable.Configuration
         string IOptionProviderEpub.OutputFile => _outputFile;
         IReadOnlyList<string> IOptionProviderChapterMarkers.ChapterMarkers => _chapterMarkers;
 
-        public Options(string[] args)
+        public Options(params string[] args)
         {
             for (int i = 0; i < args.Length - 1; i++)
             {

@@ -1,5 +1,6 @@
 ﻿using JpAnnotator.Common.Portable.Configuration;
 using NUnit.Framework;
+using FluentAssertions;
 
 namespace JpAnnotator.Common.Portable.Tests.Configuration
 {
@@ -14,38 +15,35 @@ namespace JpAnnotator.Common.Portable.Tests.Configuration
         [SetUp]
         public void Setup()
         {
-            _options = new Options(new string[] {
+            _options = new Options(
                 "--inputFile", "path/to/in",
                 "--outputFile", "path/to/out",
-                "--chapterMarkers", "a,b,c",
                 "--author", "murakami",
                 "--bookId", "666",
-                "--publisher", "ZStudios"
-            });
+                "--publisher", "ZStudios",
+                "--chapterMarkers", "a,b,c"
+            );
         }
 
         [Test]
         public void ProviderInputFileShouldProvide()
         {
-            Assert.AreEqual("path/to/in", InputFileProvider.InputFile);
+            InputFileProvider.InputFile.Should().Be("path/to/in");
         }
 
         [Test]
         public void ProviderEpubShouldProvide()
         {
-            Assert.AreEqual("murakami", EpubProvider.Author, nameof(EpubProvider.Author));
-            Assert.AreEqual("666", EpubProvider.BookId, nameof(EpubProvider.BookId));
-            Assert.AreEqual("ZStudios", EpubProvider.Publisher, nameof(EpubProvider.Publisher));
-            Assert.AreEqual("path/to/out", EpubProvider.OutputFile, nameof(EpubProvider.OutputFile));
+            EpubProvider.Author.Should().Be("murakami");
+            EpubProvider.BookId.Should().Be("666");
+            EpubProvider.Publisher.Should().Be("ZStudios");
+            EpubProvider.OutputFile.Should().Be("path/to/out");
         }
 
         [Test]
         public void ProviderChapterMarkersShouldProvide()
         {
-            Assert.AreEqual(3, ChapterMarkersProvider.ChapterMarkers.Count);
-            Assert.AreEqual("a", ChapterMarkersProvider.ChapterMarkers[0]);
-            Assert.AreEqual("b", ChapterMarkersProvider.ChapterMarkers[1]);
-            Assert.AreEqual("c", ChapterMarkersProvider.ChapterMarkers[2]);
+            ChapterMarkersProvider.ChapterMarkers.Should().BeEquivalentTo("a", "b", "c");
         }
     }
 }
