@@ -1,31 +1,29 @@
-﻿using NUnit.Framework;
-using System.IO;
+﻿using System.IO;
 using JpAnnotator.Core;
+using NUnit.Framework;
+using FluentAssertions;
 
 namespace JpAnnotator.Tests.Core
 {
-	[TestFixture]
-	public class MecabReaderTest
-	{
-		MecabReader _reader;
+    [TestFixture(Category = "Mecab")]
+    public class MecabReaderTest
+    {
+        MecabReader _reader;
 
-		[SetUp]
-		public void Setup()
-		{
-			_reader = new MecabReader();
-		}
+        [SetUp]
+        public void Setup()
+        {
+            _reader = new MecabReader();
+        }
 
-		[Test]
-		public void ReadResponseShouldReturnResponseUntioEOS()
-		{
-			using (var input = new StringReader("abc\nxyz\nEOS\n"))
-			{
-				var result = _reader.ReadResponse(input);
-				Assert.AreEqual(2, result.Count);
-				Assert.AreEqual("abc", result[0]);
-				Assert.AreEqual("xyz", result[1]);
-			}
-		}
-	}
+        [Test]
+        public void ReadResponseShouldReturnResponseUntioEOS()
+        {
+            using (var input = new StringReader("abc\nxyz\nEOS\n"))
+            {
+                _reader.ReadResponse(input).Should().BeEquivalentTo("abc", "xyz");
+            }
+        }
+    }
 }
 

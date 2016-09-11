@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using JpAnnotator.Core.Text;
+using FluentAssertions;
 
 namespace JpAnnotator.Tests
 {
@@ -17,37 +18,37 @@ namespace JpAnnotator.Tests
         [Test]
         public void HiraganaToKatakanaShouldConvert()
         {
-            Assert.AreEqual(_katakana, _hiragana.HiraganaToKatakana());
+            _hiragana.HiraganaToKatakana().Should().Be(_katakana);
         }
 
         [Test]
         public void KatakanaToHiraganaShouldConvert()
         {
-            Assert.AreEqual(_hiragana, _katakana.KatakanaToHiragana());
+            _katakana.KatakanaToHiragana().Should().Be(_hiragana);
         }
 
         [Test]
         public void IsHiraganaShouldReturnTrueForHiragana()
         {
-            Assert.IsTrue(_hiragana.IsHiragana());
+            _hiragana.IsHiragana().Should().BeTrue();
         }
 
         [Test]
         public void IsHiraganaShouldReturnFalseForNotHiragana()
         {
-            Assert.IsFalse("fooあ".IsHiragana());
+            "fooあ".IsHiragana().Should().BeFalse();
         }
 
         [Test]
         public void IsKatakanaShouldReturnTrueForKatakana()
         {
-            Assert.IsTrue(_katakana.IsKatakana());
+            _katakana.IsKatakana().Should().BeTrue();
         }
 
         [Test]
         public void IsKatakanaShouldReturnFalseForNotKatakana()
         {
-            Assert.IsFalse("fooア".IsKatakana());
+            "fooア".IsKatakana().Should().BeFalse();
         }
     }
 }

@@ -43,7 +43,7 @@ namespace JpAnnotator.Tests.Core.Format
         }
 
         [Test]
-        public void Foo()
+        public void WordSpeechInfoByDefaultShouldConcatenatePartOfSpeechWithSubclasses()
         {
             Assert.AreEqual("Unknown,None,None,None", string.Join(",", new WordInfo().SpeechInfo));
         }

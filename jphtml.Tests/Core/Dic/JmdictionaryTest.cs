@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using JpAnnotator.Core.Dic;
+using FluentAssertions;
 
 namespace JpAnnotator.Tests.Core.Dic
 {
@@ -20,19 +21,19 @@ namespace JpAnnotator.Tests.Core.Dic
         [Test]
         public void LookupTranslationWhenNone()
         {
-            Assert.IsNull(_dictionary.LookupTranslation("x"));
+            _dictionary.LookupTranslation("x").Should().BeNull();
         }
 
         [Test]
         public void LookupTranslationWhenOne()
         {
-            Assert.AreEqual("1", _dictionary.LookupTranslation("a"));
+            _dictionary.LookupTranslation("a").Should().Be("1");
         }
 
         [Test]
         public void LookupTranslationWhenMany()
         {
-            Assert.AreEqual("2,3", _dictionary.LookupTranslation("b"));
+            _dictionary.LookupTranslation("b").Should().Be("2,3");
         }
     }
 }
