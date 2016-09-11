@@ -40,9 +40,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Configuration\" />
+    <Folder Include="PlainText\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\OptionsTest.cs" />
+    <Compile Include="PlainText\MarkingTextReaderTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Choose>

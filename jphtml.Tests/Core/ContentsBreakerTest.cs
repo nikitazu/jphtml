@@ -4,6 +4,9 @@ using JpAnnotator.Common.Portable.Configuration;
 using JpAnnotator.Core;
 using JpAnnotator.Core.Format;
 using NUnit.Framework;
+using JpAnnotator.Common.Portable.PlainText;
+using FluentAssertions;
+using System;
 
 namespace JpAnnotator.Tests.Core
 {
@@ -15,7 +18,7 @@ namespace JpAnnotator.Tests.Core
             public IReadOnlyList<string> ChapterMarkers => new string[] { "第1章", "第2章", "第3章" };
         }
 
-        const string _text = "Heading\n第1章 a\n第2章 b\n第3章 c\n\n第1章 aa\nfoo\n\n第2章 bb\nbar\n\n第3章 cc\ncux\n";
+        const string _text = "Heading\n第1章 a\n第2章 b\n第3章 c\n\n第1章 aa\nfoo\n\n第2章 bb\nbar\n\n第3章 cc\ncux";
         ContentsBreaker _breaker;
         ContentsInfo _contents;
 
@@ -23,7 +26,7 @@ namespace JpAnnotator.Tests.Core
         public void Setup()
         {
             _breaker = new ContentsBreaker(new TestChapterMarkersProvider());
-            using (var reader = new StringReader(_text))
+            using (var reader = new MarkingTextReader(new StringReader(_text)))
             {
                 _contents = _breaker.Analyze(reader);
             }
@@ -81,7 +84,7 @@ namespace JpAnnotator.Tests.Core
         {
             ContentsInfo zeroContents;
             var zeroBreaker = new ContentsBreaker(new Options(new string[] { }));
-            using (var reader = new StringReader(_text))
+            using (var reader = new MarkingTextReader(new StringReader(_text)))
             {
                 zeroContents = zeroBreaker.Analyze(reader);
             }
@@ -89,7 +92,9 @@ namespace JpAnnotator.Tests.Core
             Assert.AreEqual(1, zeroContents.ChapterFiles.Count, "ChapterFiles Count");
             Assert.AreEqual("ch0", zeroContents.ChapterFiles[0].Name, "FilePath");
             Assert.AreEqual(0, zeroContents.ChapterFiles[0].StartLine, "StartLine");
-            Assert.AreEqual(14, zeroContents.ChapterFiles[0].LengthInLines, "LengthInLines");
+            Assert.AreEqual(13, zeroContents.ChapterFiles[0].LengthInLines, "LengthInLines");
+
+            zeroContents.ChapterFiles[0].PlainTextContent.Should().BeEquivalentTo(_text.Split('\n'));
         }
     }
 }

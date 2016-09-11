@@ -11,6 +11,7 @@ using JpAnnotator.Core.Make.Epub;
 using JpAnnotator.Core.Make.Html;
 using JpAnnotator.Logging;
 using JpAnnotator.Utils;
+using JpAnnotator.Common.Portable.PlainText;
 
 namespace JpAnnotator.Core
 {
@@ -68,7 +69,7 @@ namespace JpAnnotator.Core
         ContentsInfo CreateAnnotatedXhtmlContents()
         {
             ContentsInfo contents;
-            using (var inputReader = new StreamReader(_inputFile, Encoding.UTF8))
+            using (var inputReader = new MarkingTextReader(new StreamReader(_inputFile, Encoding.UTF8)))
             {
                 contents = _breaker.Analyze(inputReader);
             }

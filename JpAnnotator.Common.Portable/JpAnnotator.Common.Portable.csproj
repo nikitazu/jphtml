@@ -40,12 +40,14 @@
     <Compile Include="Configuration\IOptionProviderEpub.cs" />
     <Compile Include="Configuration\IOptionProviderChapterMarkers.cs" />
     <Compile Include="Configuration\Options.cs" />
+    <Compile Include="PlainText\MarkingTextReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Bundling\" />
     <Folder Include="OperatingSystem\" />
     <Folder Include="Gui\" />
     <Folder Include="Configuration\" />
+    <Folder Include="PlainText\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>
