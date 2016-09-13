@@ -42,6 +42,9 @@
     <Compile Include="Configuration\Options.cs" />
     <Compile Include="PlainText\MarkingTextReader.cs" />
     <Compile Include="PlainText\SentenceBreaker.cs" />
+    <Compile Include="PlainText\ContentsDetector.cs" />
+    <Compile Include="PlainText\ChapterMarkersProvider.cs" />
+    <Compile Include="PlainText\IContentsDetector.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Bundling\" />

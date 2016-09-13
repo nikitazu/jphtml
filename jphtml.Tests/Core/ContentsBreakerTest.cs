@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using FluentAssertions;
 using JpAnnotator.Common.Portable.Configuration;
+using JpAnnotator.Common.Portable.PlainText;
 using JpAnnotator.Core;
 using JpAnnotator.Core.Format;
 using NUnit.Framework;
-using JpAnnotator.Common.Portable.PlainText;
-using FluentAssertions;
-using System;
 
 namespace JpAnnotator.Tests.Core
 {
@@ -18,6 +18,14 @@ namespace JpAnnotator.Tests.Core
             public IReadOnlyList<string> ChapterMarkers => new string[] { "第1章", "第2章", "第3章" };
         }
 
+        class TestZeroContentsDetector : IContentsDetector
+        {
+            IEnumerable<string> IContentsDetector.DetectContents(List<string> textLines)
+            {
+                return new List<string>();
+            }
+        }
+
         const string _text = "Heading\n第1章 a\n第2章 b\n第3章 c\n\n第1章 aa\nfoo\n\n第2章 bb\nbar\n\n第3章 cc\ncux";
         ContentsBreaker _breaker;
         ContentsInfo _contents;
@@ -25,7 +33,7 @@ namespace JpAnnotator.Tests.Core
         [SetUp]
         public void Setup()
         {
-            _breaker = new ContentsBreaker(new TestChapterMarkersProvider());
+            _breaker = new ContentsBreaker(new ChapterMarkersProvider(new TestChapterMarkersProvider(), null));
             using (var reader = new MarkingTextReader(new StringReader(_text)))
             {
                 _contents = _breaker.Analyze(reader);
@@ -83,7 +91,7 @@ namespace JpAnnotator.Tests.Core
         public void AnalyzeShouldDetectSingleChapter0WhenChapterMarkersAreEmpty()
         {
             ContentsInfo zeroContents;
-            var zeroBreaker = new ContentsBreaker(new Options(new string[] { }));
+            var zeroBreaker = new ContentsBreaker(new ChapterMarkersProvider(new Options(new string[] { }), new TestZeroContentsDetector()));
             using (var reader = new MarkingTextReader(new StringReader(_text)))
             {
                 zeroContents = zeroBreaker.Analyze(reader);

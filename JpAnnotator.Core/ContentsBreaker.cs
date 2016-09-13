@@ -1,31 +1,33 @@
 ﻿using System.Collections.Generic;
-using JpAnnotator.Common.Portable.Configuration;
-using JpAnnotator.Core.Format;
+using System.Linq;
 using JpAnnotator.Common.Portable.PlainText;
+using JpAnnotator.Core.Format;
 
 namespace JpAnnotator.Core
 {
     public class ContentsBreaker
     {
-        readonly IReadOnlyList<string> _chapterMarkers;
+        readonly ChapterMarkersProvider _markersProvider;
 
-        public ContentsBreaker(IOptionProviderChapterMarkers options)
+        public ContentsBreaker(ChapterMarkersProvider markersProvider)
         {
-            _chapterMarkers = options.ChapterMarkers;
+            _markersProvider = markersProvider;
         }
 
         public ContentsInfo Analyze(MarkingTextReader reader)
         {
+            var chapterMarkers = _markersProvider.ProvideChapterMarkers(reader.Lines).ToArray();
+
             var contents = new ContentsInfo
             {
-                ChapterFiles = new List<ContentsMapping>(_chapterMarkers.Count + 1)
+                ChapterFiles = new List<ContentsMapping>(chapterMarkers.Length + 1)
             };
 
             int startLine = 0;
             int chapterIndex = 0;
-            for (chapterIndex = 0; chapterIndex < _chapterMarkers.Count; chapterIndex++)
+            for (chapterIndex = 0; chapterIndex < chapterMarkers.Length; chapterIndex++)
             {
-                var count = reader.CountLinesUntilMarker(_chapterMarkers[chapterIndex], chapterIndex == 0);
+                var count = reader.CountLinesUntilMarker(chapterMarkers[chapterIndex], chapterIndex == 0);
                 contents.ChapterFiles.Add(new ContentsMapping()
                 {
                     Name = $"ch{chapterIndex}",

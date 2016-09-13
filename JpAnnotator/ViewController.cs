@@ -99,7 +99,6 @@ namespace JpAnnotator
             {
                 "--inputFile",  FileToConvert.StringValue,
                 "--outputFile", outputFile,
-                "--chapterMarkers", "第1章,第2章,第3章,第4章,第5章,第6章,第7章,第8章,第9章,第10章,第11章,第12章,第13章,第14章,第15章,第16章,第17章,第18章,第19章,第20章,第21章,第22章,第23章,第24"
             });
 
             OpenButton.Enabled = false;
@@ -119,7 +118,7 @@ namespace JpAnnotator
                     new MecabBackend(),
                     new XHtmlMaker(),
                     await _jmdicReaderTask,
-                    new ContentsBreaker(options),
+                    new ContentsBreaker(new ChapterMarkersProvider(options, new ContentsDetector())),
                     new EpubMaker(_log, options, _resourceLocator),
                     new SentenceBreaker()
                 );
