@@ -2,6 +2,7 @@
 using FluentAssertions;
 using JpAnnotator.Common.Portable.Configuration;
 using JpAnnotator.Common.Portable.PlainText;
+using NSubstitute;
 using NUnit.Framework;
 
 namespace JpAnnotator.Common.Portable.Tests.PlainText
@@ -9,54 +10,33 @@ namespace JpAnnotator.Common.Portable.Tests.PlainText
     [TestFixture]
     public class ChapterMarkersProviderTest
     {
-        ChapterMarkersProvider _provider;
-        ChapterMarkersProvider _emptyOptionsProvider;
-        IOptionProviderChapterMarkers _fullOptions;
-        IOptionProviderChapterMarkers _emptyOptions;
+        IOptionProviderChapterMarkers _options;
         IContentsDetector _detector;
+        ChapterMarkersProvider _provider;
 
         [SetUp]
         public void Setup()
         {
-            _fullOptions = new TestMarkersProvider();
-            _emptyOptions = new TestEmptyMarkersProvider();
-            _detector = new TestDetector();
-            _provider = new ChapterMarkersProvider(_fullOptions, _detector);
-            _emptyOptionsProvider = new ChapterMarkersProvider(_emptyOptions, _detector);
+            _options = Substitute.For<IOptionProviderChapterMarkers>();
+            _detector = Substitute.For<IContentsDetector>();
+            _provider = new ChapterMarkersProvider(_options, _detector);
         }
 
         [Test]
         public void ProvideChapterMarkersShouldProvideMarkersFromOptionsWhenPresent()
         {
+            _options.ChapterMarkers.Returns(new List<string> { "ch1", "ch2" });
+
             _provider.ProvideChapterMarkers(null).Should().BeEquivalentTo("ch1", "ch2");
         }
 
         [Test]
         public void ProvideChapterMarkersShouldProvideMarkersFromDetectorWhenOptionsAreEmpty()
         {
-            _emptyOptionsProvider.ProvideChapterMarkers(null).Should().BeEquivalentTo("chA", "chB");
-        }
-    }
+            _options.ChapterMarkers.Returns(new List<string>());
+            _detector.DetectContents(null).Returns(new List<string> { "chA", "chB" });
 
-    class TestMarkersProvider : IOptionProviderChapterMarkers
-    {
-        IReadOnlyList<string> IOptionProviderChapterMarkers.ChapterMarkers => new List<string>
-        {
-            "ch1", "ch2"
-        };
-    }
-
-    class TestEmptyMarkersProvider : IOptionProviderChapterMarkers
-    {
-        IReadOnlyList<string> IOptionProviderChapterMarkers.ChapterMarkers => new List<string>();
-    }
-
-    class TestDetector : IContentsDetector
-    {
-        IEnumerable<string> IContentsDetector.DetectContents(List<string> textLines)
-        {
-            return new List<string> { "chA", "chB" };
+            _provider.ProvideChapterMarkers(null).Should().BeEquivalentTo("chA", "chB");
         }
     }
 }
-
