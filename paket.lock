@@ -1,7 +1,7 @@
 NUGET
   remote: https://www.nuget.org/api/v2
     EPubFactory (1.1)
-    FAKE (4.39.1)
+    FAKE (4.37.2)
     FluentAssertions (4.14)
       NETStandard.Library (>= 1.6) - framework: >= netstandard13
       System.Reflection.TypeExtensions (>= 4.1) - framework: >= netstandard13
