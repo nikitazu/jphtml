@@ -27,6 +27,7 @@ namespace JpAnnotator.Core
         readonly JmdicFastReader _dicReader;
         readonly ContentsBreaker _breaker;
         readonly EpubMaker _epubMaker;
+        readonly SentenceBreaker _sentenceBreaker;
 
         public HtmlToEpubConverter(
             Counter counter,
@@ -38,8 +39,10 @@ namespace JpAnnotator.Core
             XHtmlMaker xhtmlMaker,
             JmdicFastReader dicReader,
             ContentsBreaker breaker,
-            EpubMaker epubMaker)
+            EpubMaker epubMaker,
+            SentenceBreaker sentenceBreaker)
         {
+            _inputFile = options.InputFile;
             _counter = counter;
             _log = log;
             _parser = parser;
@@ -49,7 +52,7 @@ namespace JpAnnotator.Core
             _dicReader = dicReader;
             _breaker = breaker;
             _epubMaker = epubMaker;
-            _inputFile = options.InputFile;
+            _sentenceBreaker = sentenceBreaker;
         }
 
         public async Task Convert()
@@ -87,23 +90,26 @@ namespace JpAnnotator.Core
             var xhtmlParagraphs = new List<XElement>();
             foreach (var plainTextLine in chapterMapping.PlainTextContent)
             {
-                IList<string> lines;
-                using (var reader = _mecabBackend.ParseText(plainTextLine))
+                foreach (var sentence in _sentenceBreaker.BreakToSentences(plainTextLine))
                 {
-                    lines = _reader.ReadResponse(reader);
-                }
-                var words = new List<WordInfo>();
+                    IList<string> lines;
+                    using (var reader = _mecabBackend.ParseText(sentence))
+                    {
+                        lines = _reader.ReadResponse(reader);
+                    }
+                    var words = new List<WordInfo>();
 
-                foreach (var line in lines)
-                {
-                    var word = _parser.ParseWord(line);
-                    word.Translation = _dicReader.Lookup(word.RootForm);
-                    words.Add(word);
-                }
+                    foreach (var line in lines)
+                    {
+                        var word = _parser.ParseWord(line);
+                        word.Translation = _dicReader.Lookup(word.RootForm);
+                        words.Add(word);
+                    }
 
-                xhtmlParagraphs.Add(_xhtmlMaker.MakeParagraph(words.Select(w => _xhtmlMaker.MakeWord(w))));
-                xhtmlParagraphs.Add(_xhtmlMaker.MakeContextHelpParagraph(words.DistinctBy(w => w.Text)));
-                words.Clear();
+                    xhtmlParagraphs.Add(_xhtmlMaker.MakeParagraph(words.Select(w => _xhtmlMaker.MakeWord(w))));
+                    xhtmlParagraphs.Add(_xhtmlMaker.MakeContextHelpParagraph(words.DistinctBy(w => w.Text)));
+                    words.Clear();
+                }
             }
 
             chapterMapping.XhtmlContent = _xhtmlMaker.MakeRootNode(xhtmlParagraphs);

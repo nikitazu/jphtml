@@ -15,6 +15,7 @@ using JpAnnotator.Core.Make.Html;
 using JpAnnotator.Logging;
 using JpAnnotator.Common.Mac.Gui;
 using JpAnnotator.Common.Portable.Configuration;
+using JpAnnotator.Common.Portable.PlainText;
 
 namespace JpAnnotator
 {
@@ -119,7 +120,8 @@ namespace JpAnnotator
                     new XHtmlMaker(),
                     await _jmdicReaderTask,
                     new ContentsBreaker(options),
-                    new EpubMaker(_log, options, _resourceLocator)
+                    new EpubMaker(_log, options, _resourceLocator),
+                    new SentenceBreaker()
                 );
 
                 options.Print(Console.Out);

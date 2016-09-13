@@ -6,6 +6,7 @@ using JpAnnotator.Core.Dic;
 using JpAnnotator.Core.Make.Epub;
 using JpAnnotator.Core.Make.Html;
 using JpAnnotator.Logging;
+using JpAnnotator.Common.Portable.PlainText;
 
 namespace JpAnnotator
 {
@@ -33,7 +34,8 @@ namespace JpAnnotator
                     new Jmdictionary()
                 ),
                 new ContentsBreaker(options),
-                new EpubMaker(log, options, resourceLocator)
+                new EpubMaker(log, options, resourceLocator),
+                new SentenceBreaker()
             );
 
             options.Print(Console.Out);

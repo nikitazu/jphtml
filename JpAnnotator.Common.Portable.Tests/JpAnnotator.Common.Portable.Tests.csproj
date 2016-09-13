@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Configuration\OptionsTest.cs" />
     <Compile Include="PlainText\MarkingTextReaderTest.cs" />
+    <Compile Include="PlainText\SentenceBreakerTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Choose>
