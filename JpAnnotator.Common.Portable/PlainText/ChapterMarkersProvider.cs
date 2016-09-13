@@ -3,7 +3,7 @@ using JpAnnotator.Common.Portable.Configuration;
 
 namespace JpAnnotator.Common.Portable.PlainText
 {
-    public class ChapterMarkersProvider
+    public class ChapterMarkersProvider : IChapterMarkersProvider
     {
         readonly IOptionProviderChapterMarkers _options;
         readonly IContentsDetector _detector;
@@ -16,7 +16,7 @@ namespace JpAnnotator.Common.Portable.PlainText
             _detector = detector;
         }
 
-        public IEnumerable<string> ProvideChapterMarkers(List<string> textLines)
+        IEnumerable<string> IChapterMarkersProvider.ProvideChapterMarkers(List<string> textLines)
         {
             return _options.ChapterMarkers.Count > 0 ? _options.ChapterMarkers : _detector.DetectContents(textLines);
         }

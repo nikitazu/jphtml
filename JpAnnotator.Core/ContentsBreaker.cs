@@ -7,9 +7,9 @@ namespace JpAnnotator.Core
 {
     public class ContentsBreaker
     {
-        readonly ChapterMarkersProvider _markersProvider;
+        readonly IChapterMarkersProvider _markersProvider;
 
-        public ContentsBreaker(ChapterMarkersProvider markersProvider)
+        public ContentsBreaker(IChapterMarkersProvider markersProvider)
         {
             _markersProvider = markersProvider;
         }

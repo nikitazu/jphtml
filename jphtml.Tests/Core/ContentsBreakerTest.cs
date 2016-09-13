@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using FluentAssertions;
 using JpAnnotator.Common.Portable.Configuration;
 using JpAnnotator.Common.Portable.PlainText;
 using JpAnnotator.Core;
 using JpAnnotator.Core.Format;
+using NSubstitute;
 using NUnit.Framework;
 
 namespace JpAnnotator.Tests.Core
@@ -13,27 +12,19 @@ namespace JpAnnotator.Tests.Core
     [TestFixture]
     public class ContentsBreakerTest
     {
-        class TestChapterMarkersProvider : IOptionProviderChapterMarkers
-        {
-            public IReadOnlyList<string> ChapterMarkers => new string[] { "第1章", "第2章", "第3章" };
-        }
-
-        class TestZeroContentsDetector : IContentsDetector
-        {
-            IEnumerable<string> IContentsDetector.DetectContents(List<string> textLines)
-            {
-                return new List<string>();
-            }
-        }
-
         const string _text = "Heading\n第1章 a\n第2章 b\n第3章 c\n\n第1章 aa\nfoo\n\n第2章 bb\nbar\n\n第3章 cc\ncux";
+        IOptionProviderChapterMarkers _options;
         ContentsBreaker _breaker;
         ContentsInfo _contents;
 
         [SetUp]
         public void Setup()
         {
-            _breaker = new ContentsBreaker(new ChapterMarkersProvider(new TestChapterMarkersProvider(), null));
+            _options = Substitute.For<IOptionProviderChapterMarkers>();
+            _options.ChapterMarkers.Returns(new string[] { "第1章", "第2章", "第3章" });
+
+
+            _breaker = new ContentsBreaker(new ChapterMarkersProvider(_options, null));
             using (var reader = new MarkingTextReader(new StringReader(_text)))
             {
                 _contents = _breaker.Analyze(reader);
@@ -90,8 +81,11 @@ namespace JpAnnotator.Tests.Core
         [Test]
         public void AnalyzeShouldDetectSingleChapter0WhenChapterMarkersAreEmpty()
         {
+            var noMarkers = Substitute.For<IChapterMarkersProvider>();
+            noMarkers.ProvideChapterMarkers(null).Returns(new string[] { });
+
             ContentsInfo zeroContents;
-            var zeroBreaker = new ContentsBreaker(new ChapterMarkersProvider(new Options(new string[] { }), new TestZeroContentsDetector()));
+            var zeroBreaker = new ContentsBreaker(noMarkers);
             using (var reader = new MarkingTextReader(new StringReader(_text)))
             {
                 zeroContents = zeroBreaker.Analyze(reader);

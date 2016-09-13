@@ -12,7 +12,7 @@ namespace JpAnnotator.Common.Portable.Tests.PlainText
     {
         IOptionProviderChapterMarkers _options;
         IContentsDetector _detector;
-        ChapterMarkersProvider _provider;
+        IChapterMarkersProvider _provider;
 
         [SetUp]
         public void Setup()
