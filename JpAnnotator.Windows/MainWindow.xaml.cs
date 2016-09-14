@@ -59,8 +59,6 @@ namespace JpAnnotator.Windows
                 return;
             }
 
-            _dialog.Info("TODO", $"Converting {_sourceFile} to {targetFile}");
-
             var resourceLocator = new WindowsResourceLocator();
             var log = new LoggingConfig(resourceLocator).CreateRootLogWriter();
             log.Debug("start");
@@ -94,6 +92,8 @@ namespace JpAnnotator.Windows
             {
                 log.Debug("end");
             });
+
+            _dialog.Info("TODO", $"Converted {_sourceFile} to {targetFile} successfully");
         }
     }
 }
