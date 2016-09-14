@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Windows;
 using JpAnnotator.Common.Portable.Gui;
 using JpAnnotator.Common.Windows.Gui;
 
@@ -30,11 +31,26 @@ namespace JpAnnotator.Windows
 
         private void ConvertButtonClick(object sender, RoutedEventArgs e)
         {
-            string path;
-            if (_dialog.SaveFile("Choose file to save", "Epub files|*.epub|All Files|*.*", _sourceFile + ".epub", out path))
+            if (string.IsNullOrWhiteSpace(_sourceFile))
             {
-                Title = path ?? "None";
+                _dialog.Info("Source file not chosen", "Choose source file to convert");
+                return;
             }
+
+            if (!File.Exists(_sourceFile))
+            {
+                _dialog.Info("Source file not exists", "Choose source file that exists to convert");
+                return;
+            }
+
+            string path;
+            if (!_dialog.SaveFile("Choose file to save", "Epub files|*.epub|All Files|*.*", _sourceFile + ".epub", out path))
+            {
+                _dialog.Info("Target file not chosen", "Choose target file to convert");
+                return;
+            }
+
+            _dialog.Info("TODO", $"Converting {_sourceFile} to {path}");
         }
     }
 }

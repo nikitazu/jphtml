@@ -16,7 +16,7 @@ namespace JpAnnotator.Common.Windows.Gui
 
         void IDialogCreator.Info(string title, string message)
         {
-            throw new NotImplementedException();
+            MessageBox.Show(_owner, message, title, MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         bool IDialogCreator.OpenFile(string title, string extensions, out string path)
@@ -55,7 +55,7 @@ namespace JpAnnotator.Common.Windows.Gui
 
         void IDialogCreator.UnexpectedError(Exception ex)
         {
-            throw new NotImplementedException();
+            MessageBox.Show(_owner, ex.ToString(), "Unexpected error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }
