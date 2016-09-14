@@ -5,8 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:JpAnnotator.Windows"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
+        Title="JpAnnotator"
+        Height="350"
+        Width="525">
+    <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
@@ -14,6 +16,7 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -25,14 +28,15 @@
 
         <TextBox Grid.Column="1" />
 
-        <ProgressBar Grid.ColumnSpan="2"
-                     Grid.Row="1" />
-
         <TextBlock Grid.ColumnSpan="2"
-                   Grid.Row="2" />
+                   Grid.Row="2"
+                   Text="Open file to start convertion" />
+
+        <ProgressBar Grid.ColumnSpan="2"
+                     Grid.Row="3" />
 
         <Button Grid.ColumnSpan="2"
-                Grid.Row="4"
+                Grid.Row="5"
                 Click="ConvertButtonClick"
                 Content="Convert" />
     </Grid>

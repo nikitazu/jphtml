@@ -111,6 +111,24 @@
       <Paket>True</Paket>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JpAnnotator.Common.Portable\JpAnnotator.Common.Portable.csproj">
+      <Project>{92c5ba8e-2187-43a4-8606-5cc8472c06f3}</Project>
+      <Name>JpAnnotator.Common.Portable</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JpAnnotator.Common.Windows\JpAnnotator.Common.Windows.csproj">
+      <Project>{0444e8ed-3c47-49ef-821a-fcccd6cb035d}</Project>
+      <Name>JpAnnotator.Common.Windows</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JpAnnotator.Core\JpAnnotator.Core.csproj">
+      <Project>{7873aa65-1ca0-4276-b3dc-565af66abb7b}</Project>
+      <Name>JpAnnotator.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JpAnnotator.Logging\JpAnnotator.Logging.csproj">
+      <Project>{69287217-3531-4756-9e39-b87c019afba1}</Project>
+      <Name>JpAnnotator.Logging</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v3.0')">
       <ItemGroup>
