@@ -10,16 +10,22 @@ Japanese text analyzer with html output
 # Building from source
 
 ## Mac OS X
-* git clone git@github.com:nikitazu/jphtml.git
-* cd jphtml
-* ./osx.paket.install
-* ./osx.make test
+
+```sh
+git clone git@github.com:nikitazu/jphtml.git
+cd jphtml
+./osx.paket.install
+./osx.make test
+```
 
 ## Windows
-* git clone git@github.com:nikitazu/jphtml.git
-* cd jphtml
-* .\win.paket.install
-* .\win.make test
+
+```bat
+git clone git@github.com:nikitazu/jphtml.git
+cd jphtml
+.\win.paket.install
+.\win.make test
+```
 
 # 3rd party dependencies
 
