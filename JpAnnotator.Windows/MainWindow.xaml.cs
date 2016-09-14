@@ -9,19 +9,19 @@ namespace JpAnnotator.Windows
     /// </summary>
     public partial class MainWindow : Window
     {
-        readonly IDialogCreator _dialogs;
+        readonly IDialogCreator _dialog;
         string _sourceFile;
 
         public MainWindow()
         {
             InitializeComponent();
-            _dialogs = new WpfDialogCreator(this);
+            _dialog = new WpfDialogCreator(this);
         }
 
         private void OpenButtonClick(object sender, RoutedEventArgs e)
         {
             string path;
-            if (_dialogs.OpenFile("Choose file to convert", "Text files|*.txt|All Files|*.*", out path))
+            if (_dialog.OpenFile("Choose file to convert", "Text files|*.txt|All Files|*.*", out path))
             {
                 _sourceFile = path;
                 Title = path ?? "nope";
@@ -31,7 +31,7 @@ namespace JpAnnotator.Windows
         private void ConvertButtonClick(object sender, RoutedEventArgs e)
         {
             string path;
-            if (_dialogs.SaveFile("Choose file to save", "Epub files|*.epub|All Files|*.*", _sourceFile + ".epub", out path))
+            if (_dialog.SaveFile("Choose file to save", "Epub files|*.epub|All Files|*.*", _sourceFile + ".epub", out path))
             {
                 Title = path ?? "None";
             }
