@@ -31,22 +31,15 @@ namespace JpAnnotator.Tests.Core.Make.Html
         [Test]
         public void MakeDocumentShouldReturnXHtml()
         {
-            var expected =
-                "<html xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:m=\"http://www.w3.org/1998/Math/MathML\" xmlns:epub=\"http://www.ipdf.org/2007/ops\" xml:lang=\"ru\" xmlns=\"http://www.w3.org/1999/xhtml\">" +
-                Environment.NewLine +
-                "  <head>" +
-                Environment.NewLine +
-                "    <meta http-equiv=\"Content-Type\" content=\"application/xhtml+xml; charset=utf-8\" />" +
-                Environment.NewLine +
-                "    <link href=\"style.css\" rel=\"stylesheet\" type=\"text/css\" />" +
-                Environment.NewLine +
-                "    <title>JpHtml</title>" +
-                Environment.NewLine +
-                "  </head>" +
-                Environment.NewLine +
-                "  <body>foo</body>" +
-                Environment.NewLine +
-                "</html>";
+            var expected = JoinWithNewLines(
+                "<html xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:m=\"http://www.w3.org/1998/Math/MathML\" xmlns:epub=\"http://www.ipdf.org/2007/ops\" xml:lang=\"ru\" xmlns=\"http://www.w3.org/1999/xhtml\">",
+                "  <head>",
+                "    <meta http-equiv=\"Content-Type\" content=\"application/xhtml+xml; charset=utf-8\" />",
+                "    <link href=\"style.css\" rel=\"stylesheet\" type=\"text/css\" />",
+                "    <title>JpHtml</title>",
+                "  </head>",
+                "  <body>foo</body>",
+                "</html>");
             var actual = _maker.MakeRootNode(new List<XText> { new XText("foo") });
             AssertEqualNodes(expected, actual);
         }
@@ -196,5 +189,7 @@ namespace JpAnnotator.Tests.Core.Make.Html
 
         void AssertEqualNodes(string expected, XNode actual) =>
             Assert.AreEqual(expected, actual.ToString());
+
+        string JoinWithNewLines(params string[] args) => string.Join(Environment.NewLine, args);
     }
 }
