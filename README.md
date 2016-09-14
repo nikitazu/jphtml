@@ -5,8 +5,21 @@ Japanese text analyzer with html output
 * Allow to setup which parts of speech to highlight
 * Allow to setup which Kanji are names
 * Try to use alternatives to MeCab as a backend
-* Try to build on windows
 * Support PDF output format
+
+# Building from source
+
+## Mac OS X
+* git clone git@github.com:nikitazu/jphtml.git
+* cd jphtml
+* ./osx.paket.install
+* ./osx.make test
+
+## Windows
+* git clone git@github.com:nikitazu/jphtml.git
+* cd jphtml
+* .\win.paket.install
+* .\win.make test
 
 # 3rd party dependencies
 
