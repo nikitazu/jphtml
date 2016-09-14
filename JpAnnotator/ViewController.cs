@@ -22,7 +22,7 @@ namespace JpAnnotator
     public partial class ViewController : NSViewController
     {
         readonly IDialogCreator _dialog;
-        readonly INativeFileManager _finder;
+        readonly INativeFileManager _fileManager;
         readonly IResourceLocator _resourceLocator;
         readonly ILogWriter _log;
         readonly Task<JmdicFastReader> _jmdicReaderTask;
@@ -30,7 +30,7 @@ namespace JpAnnotator
         public ViewController(IntPtr handle) : base(handle)
         {
             _dialog = new CocoaDialogCreator();
-            _finder = new FinderFileManager();
+            _fileManager = new FinderFileManager();
             _resourceLocator = new MacResourceLocator();
             _log = new LoggingConfig(_resourceLocator).CreateRootLogWriter();
             _log.Debug("start");
@@ -46,7 +46,6 @@ namespace JpAnnotator
             base.ViewDidLoad();
 
             // Do any additional setup after loading the view.
-            _log.Debug("view did load");
         }
 
         public override NSObject RepresentedObject
@@ -109,7 +108,7 @@ namespace JpAnnotator
 
             try
             {
-                var _htmlToEpub = new HtmlToEpubConverter(
+                var htmlToEpub = new HtmlToEpubConverter(
                     new Counter(_log),
                     _log,
                     options,
@@ -125,7 +124,7 @@ namespace JpAnnotator
 
                 options.Print(Console.Out);
 
-                await _htmlToEpub.Convert();
+                await htmlToEpub.Convert();
             }
             catch (Exception ex)
             {
@@ -139,7 +138,7 @@ namespace JpAnnotator
                 ConversionStatus.StringValue = "Conversion done";
                 ConversionProgress.StopAnimation(null);
 
-                _finder.OpenFileManagerAndShowFile(outputFile);
+                _fileManager.OpenFileManagerAndShowFile(outputFile);
             }
 
             _log.Debug("end");
