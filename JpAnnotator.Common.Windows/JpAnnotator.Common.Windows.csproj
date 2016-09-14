@@ -34,6 +34,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Gui\WpfDialogCreator.cs" />
+    <Compile Include="OperatingSystem\WindowsExplorerFileManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Bundling\WindowsResourceLocator.cs" />
   </ItemGroup>

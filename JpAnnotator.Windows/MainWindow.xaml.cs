@@ -3,9 +3,11 @@ using System.IO;
 using System.Windows;
 using JpAnnotator.Common.Portable.Configuration;
 using JpAnnotator.Common.Portable.Gui;
+using JpAnnotator.Common.Portable.OperatingSystem;
 using JpAnnotator.Common.Portable.PlainText;
 using JpAnnotator.Common.Windows;
 using JpAnnotator.Common.Windows.Gui;
+using JpAnnotator.Common.Windows.OperatingSystem;
 using JpAnnotator.Core;
 using JpAnnotator.Core.Dic;
 using JpAnnotator.Core.Make.Epub;
@@ -20,12 +22,14 @@ namespace JpAnnotator.Windows
     public partial class MainWindow : Window
     {
         readonly IDialogCreator _dialog;
+        readonly INativeFileManager _fileManager;
         string _sourceFile;
 
         public MainWindow()
         {
             InitializeComponent();
             _dialog = new WpfDialogCreator(this);
+            _fileManager = new WindowsExplorerFileManager();
         }
 
         void OpenButtonClick(object sender, RoutedEventArgs e)
@@ -93,7 +97,8 @@ namespace JpAnnotator.Windows
                 log.Debug("end");
             });
 
-            _dialog.Info("TODO", $"Converted {_sourceFile} to {targetFile} successfully");
+            _dialog.Info("TODO", $"Converted {_sourceFile} to {Path.GetDirectoryName(targetFile)} successfully");
+            _fileManager.OpenFileManagerAndShowFile(Path.GetDirectoryName(targetFile));
         }
     }
 }
