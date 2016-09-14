@@ -35,6 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="LibNMeCab45Mono, Version=0.0.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\NMeCab\LibNMeCab45Mono\LibNMeCab45Mono.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -86,6 +90,27 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="data\dic\JMdict_e">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="data\ipadic\char.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="data\ipadic\dicrc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="data\ipadic\matrix.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="data\ipadic\sys.dic">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="data\ipadic\unk.dic">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="log4net.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="paket.references" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -128,6 +153,31 @@
       <Project>{69287217-3531-4756-9e39-b87c019afba1}</Project>
       <Name>JpAnnotator.Logging</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\dic\ELECTRONIC DICTIONARY RESEARCH AND DEVELOPMENT GROUP.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\dic\ELECTRONIC DICTIONARY RESEARCH AND DEVELOPMENT GROUP_files\edrdg.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\dic\ELECTRONIC DICTIONARY RESEARCH AND DEVELOPMENT GROUP_files\somerights20.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\dic\ELECTRONIC DICTIONARY RESEARCH AND DEVELOPMENT GROUP_files\x-click-but21.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\dic\JMdict_EDICT Project.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\epub\style.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\html\style.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v3.0')">
