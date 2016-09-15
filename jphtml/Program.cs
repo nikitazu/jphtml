@@ -1,12 +1,12 @@
 using System;
+using JpAnnotator.Common.Bundling;
 using JpAnnotator.Common.Portable.Configuration;
-using JpAnnotator.Common.Windows;
+using JpAnnotator.Common.Portable.PlainText;
 using JpAnnotator.Core;
 using JpAnnotator.Core.Dic;
 using JpAnnotator.Core.Make.Epub;
 using JpAnnotator.Core.Make.Html;
 using JpAnnotator.Logging;
-using JpAnnotator.Common.Portable.PlainText;
 
 namespace JpAnnotator
 {
@@ -14,7 +14,7 @@ namespace JpAnnotator
     {
         public static void Main(string[] args)
         {
-            var resourceLocator = new WindowsResourceLocator();
+            var resourceLocator = new ConsoleAppResourceLocator();
             var log = new LoggingConfig(resourceLocator).CreateRootLogWriter();
             log.Debug("start");
 

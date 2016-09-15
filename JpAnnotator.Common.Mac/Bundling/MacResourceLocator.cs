@@ -2,7 +2,7 @@
 using System.Reflection;
 using JpAnnotator.Common.Portable.Bundling;
 
-namespace JpAnnotator.Common.Mac
+namespace JpAnnotator.Common.Mac.Bundling
 {
     public class MacResourceLocator : IResourceLocator
     {

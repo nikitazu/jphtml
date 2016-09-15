@@ -3,7 +3,6 @@ using System.IO;
 using System.Threading.Tasks;
 using AppKit;
 using Foundation;
-using JpAnnotator.Common.Mac;
 using JpAnnotator.Common.Mac.OperatingSystem;
 using JpAnnotator.Common.Portable.Bundling;
 using JpAnnotator.Common.Portable.Gui;
@@ -16,6 +15,7 @@ using JpAnnotator.Logging;
 using JpAnnotator.Common.Mac.Gui;
 using JpAnnotator.Common.Portable.Configuration;
 using JpAnnotator.Common.Portable.PlainText;
+using JpAnnotator.Common.Mac.Bundling;
 
 namespace JpAnnotator
 {

@@ -40,6 +40,7 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Common.Bundling\ConsoleAppResourceLocator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="paket.references" />
@@ -91,13 +92,10 @@
       <Project>{69287217-3531-4756-9E39-B87C019AFBA1}</Project>
       <Name>JpAnnotator.Logging</Name>
     </ProjectReference>
-    <ProjectReference Include="..\JpAnnotator.Common.Windows\JpAnnotator.Common.Windows.csproj">
-      <Project>{0444E8ED-3C47-49EF-821A-FCCCD6CB035D}</Project>
-      <Name>JpAnnotator.Common.Windows</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />
+    <Folder Include="Common.Bundling\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="EPubFactory">
