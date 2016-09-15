@@ -33,6 +33,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Gui\MainWindow\MainWindowViewModel.cs" />
     <Compile Include="Gui\WpfDialogCreator.cs" />
     <Compile Include="OperatingSystem\WindowsExplorerFileManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

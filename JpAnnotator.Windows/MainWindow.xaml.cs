@@ -5,10 +5,12 @@ using System.Windows;
 using JpAnnotator.Common.Portable.Bundling;
 using JpAnnotator.Common.Portable.Configuration;
 using JpAnnotator.Common.Portable.Gui;
+using JpAnnotator.Common.Portable.Gui.MainWindow;
 using JpAnnotator.Common.Portable.OperatingSystem;
 using JpAnnotator.Common.Portable.PlainText;
 using JpAnnotator.Common.Windows;
 using JpAnnotator.Common.Windows.Gui;
+using JpAnnotator.Common.Windows.Gui.MainWindow;
 using JpAnnotator.Common.Windows.OperatingSystem;
 using JpAnnotator.Core;
 using JpAnnotator.Core.Dic;
@@ -23,16 +25,17 @@ namespace JpAnnotator.Windows
     /// </summary>
     public partial class MainWindow : Window
     {
+        readonly IMainWindowViewModel _model;
         readonly IDialogCreator _dialog;
         readonly INativeFileManager _fileManager;
         readonly IResourceLocator _resourceLocator;
         readonly ILogWriter _log;
         readonly Task<JmdicFastReader> _jmdicReaderTask;
-        string _sourceFile;
 
         public MainWindow()
         {
             InitializeComponent();
+            _model = new MainWindowViewModel();
             _dialog = new WpfDialogCreator(this);
             _fileManager = new WindowsExplorerFileManager();
             _resourceLocator = new WindowsResourceLocator();
@@ -43,44 +46,45 @@ namespace JpAnnotator.Windows
                 _resourceLocator,
                 new Jmdictionary())
             );
+            DataContext = _model;
         }
 
         void OpenButtonClick(object sender, RoutedEventArgs e)
         {
-            string inputFile;
-            if (_dialog.OpenFile("Choose source file", "Text files|*.txt|Markdown files|*.md|All Files|*.*", out inputFile))
+            string sourceFile;
+            if (_dialog.OpenFile("Choose source file", "Text files|*.txt|Markdown files|*.md|All Files|*.*", out sourceFile))
             {
-                _sourceFile = inputFile;
+                _model.SourceFile = sourceFile;
             }
         }
 
         async void ConvertButtonClick(object sender, RoutedEventArgs e)
         {
-            _log.Debug($"Convert {_sourceFile}");
-
-            if (string.IsNullOrWhiteSpace(_sourceFile))
+            if (string.IsNullOrWhiteSpace(_model.SourceFile))
             {
                 _dialog.Info("Source file wasn't chosen", "Conversion is cancelled because the source file wasn't chosen");
                 return;
             }
 
-            if (!File.Exists(_sourceFile))
+            if (!File.Exists(_model.SourceFile))
             {
                 _dialog.Info("Source file doesn't exist", "Conversion is cancelled because the source file doesn't exist");
                 return;
             }
 
-            string outputFile;
-            string filename = string.IsNullOrWhiteSpace(_sourceFile) ? string.Empty : Path.GetFileNameWithoutExtension(_sourceFile);
-            if (!_dialog.SaveFile("Save epub as file", "Epub files|*.epub", filename, out outputFile))
+            string targetFile;
+            string filename = string.IsNullOrWhiteSpace(_model.SourceFile) ? string.Empty : Path.GetFileNameWithoutExtension(_model.SourceFile);
+            if (!_dialog.SaveFile("Save epub as file", "Epub files|*.epub", filename, out targetFile))
             {
                 _dialog.Info("Target file wasn't chosen", "Conversion is cancelled because the target file wasn't chosen");
                 return;
             }
 
+            _model.TargetFile = targetFile;
+
             var options = new Options(new string[] {
-                "--inputFile", _sourceFile,
-                "--outputFile", outputFile
+                "--inputFile", _model.SourceFile,
+                "--outputFile", _model.TargetFile
             });
 
             // lock ui
@@ -113,7 +117,7 @@ namespace JpAnnotator.Windows
             finally
             {
                 // unlock ui
-                _fileManager.OpenFileManagerAndShowFile(Path.GetDirectoryName(outputFile));
+                _fileManager.OpenFileManagerAndShowFile(Path.GetDirectoryName(targetFile));
             }
             _log.Debug("end");
         }
