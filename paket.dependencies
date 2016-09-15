@@ -7,3 +7,5 @@ nuget NUnit.Runners = 3.4.1
 nuget FluentAssertions = 4.14.0
 nuget NSubstitute = 1.10.0
 nuget FAKE = 4.37.2
+nuget Fody = 1.29.4
+nuget PropertyChanged.Fody = 1.51.3

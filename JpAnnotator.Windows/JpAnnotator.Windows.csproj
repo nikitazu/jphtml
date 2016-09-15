@@ -130,13 +130,6 @@
   </Target>
   -->
   <ItemGroup>
-    <Reference Include="EPubFactory">
-      <HintPath>..\packages\EPubFactory\lib\EPubFactory.dll</HintPath>
-      <Private>True</Private>
-      <Paket>True</Paket>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\JpAnnotator.Common.Portable\JpAnnotator.Common.Portable.csproj">
       <Project>{92c5ba8e-2187-43a4-8606-5cc8472c06f3}</Project>
       <Name>JpAnnotator.Common.Portable</Name>
@@ -178,6 +171,13 @@
     <None Include="data\html\style.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="EPubFactory">
+      <HintPath>..\packages\EPubFactory\lib\EPubFactory.dll</HintPath>
+      <Private>True</Private>
+      <Paket>True</Paket>
+    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v3.0')">
