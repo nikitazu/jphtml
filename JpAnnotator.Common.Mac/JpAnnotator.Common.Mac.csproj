@@ -34,7 +34,6 @@
     <Compile Include="Bundling\MacResourceLocator.cs" />
     <Compile Include="OperatingSystem\FinderFileManager.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\JpAnnotator.Common.Portable\JpAnnotator.Common.Portable.csproj">
       <Project>{92C5BA8E-2187-43A4-8606-5CC8472C06F3}</Project>
