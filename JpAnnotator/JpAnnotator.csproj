@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>JpAnnotator</RootNamespace>
     <AssemblyName>JpAnnotator</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
